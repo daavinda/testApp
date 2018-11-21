@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<!--USER ROLE CREATION FORM-->
+<form id="userRoleForm" class="w3-margin" th:action="@{/system/role/save}" th:object="${userRole}">
+    <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
+
+    <label for="name" th:text="#{Role name}"></label>
+    <input id="name" type="text" class="w3-input" th:field="*{roleName}" th:placeholder="#{Role name}"/>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}"></div>
+
+    <div class="w3-container" th:each="permission : ${permissions}">
+        <input type="checkbox" name="checkedPermissions" th:value="${permission.id}" th:checked="${permission.checked}"/>
+        <label th:text="${permission.name}"></label>
+    </div>
+</form>
+
+<!--APPLICATION CREATION FORM-->
+<form id="applicationForm" class="w3-margin" th:action="@{/application/save}" th:object="${application}">
+    <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
+    <label for="name" th:text="#{Application Name}"></label>
+    <input id="name" type="text" class="w3-input" th:field="*{applicationName}" th:placeholder="#{Application Name}"/>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('applicationName')}" th:errors="*{applicationName}"></div>
+
+    <label for="desc" th:text="#{Application Description}"></label>
+    <textarea id="desc" type="text" class="w3-input" th:field="*{applicationDescription}" th:placeholder="#{Application Description}"/>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('applicationDescription')}" th:errors="*{applicationDescription}"></div>
+
+    <label for="url" th:text="#{Service URL}"></label>
+    <input id="url" type="text" class="w3-input" th:field="*{serviceURL}" th:placeholder="#{serviceURL}"/>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('serviceURL')}" th:errors="*{serviceURL}"></div>
+</form>
+
+<!--Subscriber deactivation reason FORM-->
+<form id="deactivationReasonForm" class="w3-margin" th:action="@{/subscriber/deactivate}" th:object="${subscriber}">
+    <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
+    <input readonly="true" hidden="hidden" type="text" th:field="*{msisdn}" id="msisdn">
+    <input readonly="true" hidden="hidden" type="text" th:field="*{applicationName}" id="applicationName">
+    <input readonly="true" hidden="hidden" type="date" th:field="*{deactivationDate}" id="deactivationDate">
+    <label for="desc" th:text="#{Deactivation Reason}"></label>
+    <textarea id="desc" type="text" class="w3-input" th:field="*{deactivationReason}" th:placeholder="#{Deactivation Reason}"/>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('deactivationReason')}" th:errors="*{deactivationReason}"></div>
+
+</form>
+
+<!--USERS CREATION FORM-->
+<form id="systemUserForm" class="w3-margin" th:action="@{/system/user/save}" th:object="${systemUser}">
+    <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
+    <input readonly="true" hidden="hidden" th:field="*{state}" id="state"/>
+
+    <label for="name" th:text="#{First Name}"></label>
+    <input id="name" type="text" class="w3-input" th:field="*{name}" th:placeholder="#{First Name}"/>
+    <label for="username" th:text="#{Login username}"></label>
+    <input id="username" type="text" class="w3-input" th:field="*{username}" th:placeholder="#{User name}"/>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+    <div th:switch="*{id}">
+        <label for="newPassword" th:case="${0}" th:text="#{Password}"></label>
+    </div>
+    <div th:switch="*{id}">
+        <input id="newPassword" th:case="${0}" type="password" class="w3-input" th:field="*{password}" th:placeholder="#{Password}"/>
+    </div>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <label for="role" th:text="#{Select role}"></label>
+    <select id="role" class="w3-input" th:field="*{role.id}">
+        <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.roleName}"></option>
+    </select>
+</form>
+
+<!--USER PASSWORD CHANGE FORM-->
+<form id="changePasswordForm" class="w3-margin" th:action="@{/system/user/save/password}" th:object="${systemUser}">
+    <input readonly="true" hidden="hidden" type="number" th:field="*{id}"/>
+    <input readonly="true" hidden="hidden" type="text" th:field="*{name}"/>
+    <input readonly="true" hidden="hidden" type="text" th:field="*{username}"/>
+
+    <h6>Password changing of user: <span th:text="${systemUser.username}"></span></h6>
+    <label for="password" th:text="#{New password}"></label>
+    <input id="password" type="password" name="password" class="w3-input" th:placeholder="#{New password}"/>
+    <label for="confirmPassword" th:text="#{Confirmed password}"></label>
+    <input id="confirmPassword" type="password" name="confirmPassword" class="w3-input" th:placeholder="#{Confirm password}"/>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+</form>
+
+</body>
+</html>

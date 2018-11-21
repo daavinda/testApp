@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div th:replace="common-alerts :: body"></div>
+<div th:replace="common-loader :: body"></div>
+<div>
+    <div class="w3-cell-row">
+        <div class="w3-cell">
+            <h1 class="w3-xxlarge w3-text-blue"><b><span th:text="#{systemUser.page.heading}"></span></b></h1>
+        </div>
+        <div class="w3-cell" align="right">
+            <button onclick="loadForm('system/user?id=0');" th:text="#{systemUser.button.new}" class="w3-btn w3-green w3-tiny"></button>
+        </div>
+    </div>
+    <!--<hr style="width:50px;border:5px solid red" class="w3-round">-->
+
+    <table id="systemUserTable" class="display cell-border" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th th:text="#{systemUser.table.heading.name}">Name</th>
+            <th th:text="#{systemUser.table.heading.username}">Username</th>
+            <th th:text="#{systemUser.table.heading.state}">Name</th>
+            <th th:text="#{systemUser.table.heading.role}">Name</th>
+            <th th:text="#{systemUser.table.heading.action}">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="acc: ${systemUsers}">
+            <td th:text="${acc.name}"></td>
+            <td th:text="${acc.username}"></td>
+            <td th:text="${acc.state}"></td>
+            <td th:text="${acc.role.roleName}"></td>
+            <td>
+                <a href="#" th:text="#{label.edit.link}"
+                   th:onclick="'loadForm(\'system/user?id=' + ${acc.id} + '\');'"></a>
+                <span> | </span>
+                <a href="#" th:text="#{label.edit.password.link}"
+                   th:onclick="'loadForm(\'system/user/password?id=' + ${acc.id} + '\');'"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#systemUserTable').DataTable({})
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <style>
+        .error-page {
+            margin: 50px;
+            padding: 50px;
+            background: #03A9F4;
+            color: white;
+            font-family: monospace;
+            font-size: x-large;
+            font-weight: 900;
+        }
+    </style>
+</head>
+<body>
+<div class="error-page">
+    Oops..! <span th:text="${username}"></span>, <span th:text="#{error.page.system.error}"></span>
+    <a th:href="@{/home}" th:text="#{error.page.go.back.home}">Back to Home Page</a>
+</div>
+</body>
+</html>

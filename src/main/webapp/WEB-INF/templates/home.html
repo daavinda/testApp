@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<title>Customer Care</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" type="text/css"
+      href="/css/jquery.dataTables.min.css"/>
+<link rel="stylesheet" th:href="@{/css/jquery.responsive.dataTables.min.css}" type="text/css"
+      href="/css/jquery.responsive.dataTables.min.css"/>
+<link rel="stylesheet" th:href="@{/css/w3.css}" type="text/css" href="/css/w3.css"/>
+<link rel="stylesheet" th:href="@{/css/custom.css}" type="text/css" href="/css/custom.css"/>
+<link rel="stylesheet" th:href="@{/css/loading.css}" type="text/css" href="/css/loading.css"/>
+<script type="text/javascript" th:href="@{/js/jquery.min.js}" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:href="@{/js/jquery.dataTables.min.js}"
+        th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:href="@{/js/jquery.dataTables.responsive.js}"
+        th:src="@{/js/jquery.dataTables.responsive.js}"></script>
+<script type="text/javascript" th:href="@{/js/jquery.dataTables.sort.js}"
+        th:src="@{/js/jquery.dataTables.sort.js}"></script>
+<script type="text/javascript" th:href="@{/js/jqueryLiveValidation.js}"
+        th:src="@{/js/jqueryLiveValidation.js}"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="shortcut icon" type="image/png" href="images/hms-favicon.png"/>
+
+<body>
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-blue w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;"
+     id="mySidebar"><br>
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
+       style="width:100%;font-size:22px">Close Menu</a>
+
+    <div class="w3-container">
+        <img class="w3-padding-16" src="images/hms-logo.png" th:width="235" th:height="160">
+        <!--<h3 class="w3-padding-64"><b>hSenid</b><br>Mobile Solutions (Pvt) Ltd</h3>-->
+    </div>
+    <div class="w3-bar-block">
+        <!--<a href="#" onclick="w3_close(); load(this.id)" th:id="@{/homeview/view}" class="w3-bar-item w3-button w3-hover-white">Home</a>-->
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_SUBSCRIBER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/subscriber/load}"
+           class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.subs.management.title}">
+        </a>
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/application/list}"
+           class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.app.management.title}">
+        </a>
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_ROLE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/system/role/list}"
+           class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.user.role.title}">
+        </a>
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_USER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/system/user/list}"
+           class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.user.user.title}"></a>
+        <a th:href="@{/logout}" class="w3-bar-item w3-button w3-hover-white">
+            <span th:text="#{nav.logout.title}"></span>
+        </a>
+    </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+    <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">&#9776;</a>
+    <span>Company Name</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu"
+     id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main spring-thymeleaf-main-body">
+    <div id="mainContent" class="" th:fragment="body"></div>
+</div>
+
+<div id="fountainG" class="fountainG">
+    <div id="fountainG_1" class="fountainG"></div>
+    <div id="fountainG_2" class="fountainG"></div>
+    <div id="fountainG_3" class="fountainG"></div>
+    <div id="fountainG_4" class="fountainG"></div>
+    <div id="fountainG_5" class="fountainG"></div>
+    <div id="fountainG_6" class="fountainG"></div>
+    <div id="fountainG_7" class="fountainG"></div>
+    <div id="fountainG_8" class="fountainG"></div>
+</div>
+
+<div id="footer" class="footer">
+        <hr/>
+        <p>Copyright © 1997-2018 hSenid Mobile Solutions (Pvt) Ltd ®. All rights reserved.</p>
+</div>
+
+<script>
+
+    var loading = $('#fountainG');
+
+    $(window).load(function() {
+        load('subscriber/load');
+        loading.fadeOut(1500);
+    });
+
+    function load(url) {
+        loading.show();
+        $('#mainContent').load(url, function (response, status, xhr) {
+            if ($(response).find('.form-signin').length) {
+                document.body.innerHTML = response;
+            }
+            if (status == "error" ) {
+                $('#mainContent').html('<div class="w3-panel w3-deep-orange w3-animate-top">' +
+                '<h2>Oops..! Server not responding, please wait a moment.</h2>' +
+                '<span>This may be caused of due to server down or internet failure.</span>' +
+                '');
+            }
+        }).slideDown(500);
+        loading.fadeOut(1500);
+    }
+
+    $.extend(true, $.fn.dataTable.defaults, {
+        autoWidth: false,
+        responsive: true,
+        columnDefs: [
+            {
+                defaultContent: "",
+                targets: '_all',
+                "render": function (o) {
+                    if (o == "" || o == null) {
+                        return "<span class='fade-message'>" + '[[#{label.table.value.not.available}]]' + "</span>"
+                    } else {
+                        return o;
+                    }
+                }
+            },
+            {"type": "natural", "targets": '_all'}
+        ]
+    });
+
+    // Script to open and close sidebar
+    function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("myOverlay").style.display = "block";
+    }
+
+    function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("myOverlay").style.display = "none";
+    }
+
+    // Modal Image Gallery
+    function onClick(element) {
+        document.getElementById("img01").src = element.src;
+        document.getElementById("modal01").style.display = "block";
+        var captionText = document.getElementById("caption");
+        captionText.innerHTML = element.alt;
+    }
+</script>
+</body>
+</html>

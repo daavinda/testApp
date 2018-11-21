@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.2.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+       http://www.springframework.org/schema/data/jpa
+       http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security-4.2.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <mvc:annotation-driven/>
+    <context:annotation-config/>
+    <context:component-scan base-package="hms.common"/>
+    <jpa:repositories base-package="hms.common.orm.repo"/>
+    <mvc:resources mapping="/css/**" location="css" cache-period="3600"/>
+    <mvc:resources mapping="/js/**" location="js" cache-period="3600"/>
+    <mvc:resources mapping="/images/**" location="images" cache-period="3600"/>
+    <!--<mvc:resources mapping="/language/**" location="language" cache-period="3600"/>-->
+
+    <!--************************************************************************
+    THYMELEAF CONFIGURATIONS
+    ************************************************************************-->
+
+    <bean id="templateResolver"
+          class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+        <constructor-arg ref="servletContext"/>
+        <property name="prefix" value="/WEB-INF/templates/" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML" />
+        <property name="characterEncoding" value="UTF-8" />
+    </bean>
+
+    <bean id="templateEngine"
+          class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+        <property name="additionalDialects">
+            <set>
+                <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect"/>
+                <bean class="nz.net.ultraq.thymeleaf.LayoutDialect"/>
+            </set>
+        </property>
+    </bean>
+
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <property name="characterEncoding" value="UTF-8"/>
+        <property name="contentType" value="text/html; charset=UTF-8"/>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+        <property name="cacheSeconds" value="600"/>
+    </bean>
+
+    <bean class="org.thymeleaf.spring4.messageresolver.SpringMessageResolver">
+        <property name="messageSource" ref="messageSource"/>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="ja"/>
+        <property name="cookieName" value="gate-locale-cookie"/>
+        <!--<property name="cookieMaxAge" value="3600"/>-->
+    </bean>
+
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>
+        </bean>
+    </mvc:interceptors>
+
+    <!--<bean class="nz.net.ultraq.thymeleaf.LayoutDialect">-->
+    <!--<constructor-arg ref="groupingStrategy"/>-->
+    <!--</bean>-->
+
+    <!--************************************************************************
+    PROPERTY PLACEHOLDER CONFIGURATIONS
+    ************************************************************************-->
+
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="order" value="1"/>
+        <property name="location" value="classpath:system_configuration.properties"/>
+    </bean>
+
+    <!--    <bean class="hms.gate.web.utils.DBResourcePlaceHolderConfigure">
+            <property name="order" value="2"/>
+            <property name="placeholderPrefix" value="%{"/>
+            <property name="placeholderSuffix" value="}"/>
+            <property name="ignoreResourceNotFound" value="true"/>
+        </bean>-->
+
+    <!--************************************************************************
+    JASPER REPORT CONFIGURATIONS
+    ************************************************************************-->
+
+<!--    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="/WEB-INF/jasper-view.xml"/>
+        <property name="order" value="0"/>
+    </bean>-->
+
+    <!--************************************************************************
+    SPRING DATA JPA CONFIGURATIONS
+    ************************************************************************-->
+
+    <bean id="dataSource_c3p0" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="idleConnectionTestPeriod" value="3600"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="minPoolSize" value="2"/>
+        <property name="autoCommitOnClose" value="true"/>
+    </bean>
+
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" destroy-method="destroy">
+        <property name="dataSource" ref="dataSource_c3p0" />
+        <property name="persistenceProvider">
+            <bean class="org.hibernate.jpa.HibernatePersistenceProvider"/>
+        </property>
+        <property name="packagesToScan" value="hms.common.orm.model" />
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.connection.CharSet">utf-8</prop>
+                <prop key="hibernate.connection.useUnicode">true</prop>
+                <prop key="hibernate.connection.characterEncoding">utf-8</prop>
+                <prop key="show_sql">true</prop>
+                <prop key="format_sql">false</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--************************************************************************
+    SPRING SECURITY CONFIGURATIONS
+    ************************************************************************-->
+    <security:authentication-manager id="authenticationManager">
+        <security:authentication-provider user-service-ref="systemUserDetailsService">
+            <security:password-encoder hash="bcrypt"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <security:http auto-config="true" use-expressions="true" authentication-manager-ref="authenticationManager">
+        <security:headers>
+            <security:cache-control disabled="false"/>
+        </security:headers>
+        <security:csrf disabled="true"/>
+        <security:form-login
+                login-page="/login"
+                authentication-failure-url="/login_error"
+                username-parameter="username"
+                password-parameter="password"
+                default-target-url="/home"
+                always-use-default-target="true"
+                />
+        <security:remember-me key="uniqueAndSecret" token-validity-seconds="604800" remember-me-parameter="remember-me"/>
+        <security:intercept-url pattern="/login" access="permitAll"/>
+        <security:intercept-url pattern="/home" access="hasRole('ROLE_LOGIN')"/>
+        <!--<security:intercept-url pattern="/system/**" access="permitAll"/>-->
+        <security:intercept-url pattern="/system/role/**" access="hasRole('ROLE_MANAGE_ROLE')"/>
+        <security:intercept-url pattern="/system/user/**" access="hasRole('ROLE_MANAGE_USER')"/>
+        <security:intercept-url pattern="/subscriber/**" access="hasRole('ROLE_MANAGE_SUBSCRIBER')"/>
+        <security:intercept-url pattern="/application/**" access="hasRole('ROLE_MANAGE_APPLICATION')"/>
+        <security:access-denied-handler error-page="/403"/>
+        <security:session-management session-fixation-protection="migrateSession" invalid-session-url="/login" session-authentication-error-url="/logout">
+            <!--<security:concurrency-control max-sessions="100" expired-url="/login" error-if-maximum-exceeded="true"/>-->
+        </security:session-management>
+        <security:logout invalidate-session="true" logout-success-url="/login?logout" logout-url="/logout" delete-cookies="JSESSIONID"/>
+    </security:http>
+
+    <!--***********************************************************************-->
+
+    <!--************************************************************************
+    APPLICATION CONTEXT BEANS
+    ************************************************************************-->
+
+    <!--    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+            <property name="corePoolSize" value="5" />
+            <property name="maxPoolSize" value="10" />
+            <property name="queueCapacity" value="1000" />
+        </bean>-->
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5368709120"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+</beans>

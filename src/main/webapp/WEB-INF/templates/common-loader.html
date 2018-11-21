@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="formRegion" class="w3-card-4 w3-animate-zoom spring-thymeleaf-form">
+    <div id="form"></div>
+    <div class="w3-margin">
+        <input type="button" class="w3-btn w3-indigo w3-tiny" onclick="closeForm()" th:value="#{button.cancel}"/>
+        <input type="submit" class="w3-btn w3-green w3-tiny" onclick="closeForm(); submit($('form').attr('id'));" th:value="#{button.save}"/>
+    </div>
+</div>
+
+<script>
+    var update_modal = document.getElementById('formRegion');
+
+    function closeForm() {
+        update_modal.style.display = 'none';
+        $('.w3-alert').remove();
+    }
+
+    function submit(id) {
+        var $form = $('#' + id);
+        $.ajax({
+            url: $form.attr('action'),
+            type: 'post',
+            data: $form.serialize(),
+            success: function (response) {
+                if ($(response).find('.w3-alert').length) {
+                    update_modal.style.display = 'block';
+                    $form.html(response);
+                } else {
+                    $('#mainContent').html(response);
+                }
+            }
+        });
+    }
+
+    function loadForm(url) {
+        update_modal.style.display = 'block';
+        $.ajax({
+            url: url,
+//            type: 'post',
+//            data: {id: id},
+            success: function (response) {
+                $('#form').html(response);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#mainContent').html('<div class="w3-panel w3-deep-orange w3-animate-top">' +
+                '<h2>Oops..! Server not responding, please wait a moment.</h2>' +
+                '<span>This may be caused of due to server down or internet failure.</span>' +
+                '');
+            }
+        });
+    }
+</script>
+</body>
+</html>

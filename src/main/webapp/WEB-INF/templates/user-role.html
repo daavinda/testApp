@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div th:replace="common-alerts :: body"></div>
+<div th:replace="common-loader :: body"></div>
+<div>
+    <div class="w3-cell-row">
+        <div class="w3-cell">
+            <h1 class="w3-xxlarge w3-text-blue"><b><span th:text="#{userrole.page.heading}"></span></b></h1>
+        </div>
+        <div class="w3-cell" align="right">
+            <button onclick="loadForm('system/role?id=0');" th:text="#{userrole.button.new}" class="w3-btn w3-green w3-tiny"></button>
+        </div>
+    </div>
+    <!--<hr style="width:50px;border:5px solid red" class="w3-round">-->
+
+    <table id="userroleTable" class="display cell-border" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th th:text="#{userrole.table.heading.name}">Name</th>
+            <th th:text="#{userrole.table.heading.permission}">Name</th>
+            <th th:text="#{userrole.table.heading.action}">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="acc: ${userRoles}">
+            <td th:text="${acc.roleName}"></td>
+            <td>
+                <div th:each="role : ${acc.permissionList}">
+                    <span th:text="${role.name}"></span>
+                </div>
+            </td>
+            <td>
+                <a href="#" th:text="#{label.edit.link}"
+                   th:onclick="'loadForm(\'system/role?id=' + ${acc.id} + '\');'"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#userroleTable').DataTable({})
+    });
+</script>
+</body>
+</html>

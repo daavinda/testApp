@@ -1,0 +1,22 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    /* Center and scale the image nicely */
+    background: url(../images/hsenid-login.jpg) no-repeat left bottom;
+    background-size: 60%;
+}
+
+.form-login {
+    background: #e0e0e0;
+    padding: 15px;
+    border-radius: 15px;
+    border: #d8d8d8;
+    width: 30%;
+    right: 5%;
+}
+
+.error {
+    color: #D8000C;
+    background-color: rgba(255, 185, 185, 0.64);
+    font-size: small;
+}
