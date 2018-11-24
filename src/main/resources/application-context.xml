@@ -22,8 +22,8 @@
 
     <mvc:annotation-driven/>
     <context:annotation-config/>
-    <context:component-scan base-package="hms.common"/>
-    <jpa:repositories base-package="hms.common.orm.repo"/>
+    <context:component-scan base-package="market.common"/>
+    <jpa:repositories base-package="market.common.orm.repo"/>
     <mvc:resources mapping="/css/**" location="css" cache-period="3600"/>
     <mvc:resources mapping="/js/**" location="js" cache-period="3600"/>
     <mvc:resources mapping="/images/**" location="images" cache-period="3600"/>
@@ -95,12 +95,6 @@
         <property name="location" value="classpath:system_configuration.properties"/>
     </bean>
 
-    <!--    <bean class="hms.gate.web.utils.DBResourcePlaceHolderConfigure">
-            <property name="order" value="2"/>
-            <property name="placeholderPrefix" value="%{"/>
-            <property name="placeholderSuffix" value="}"/>
-            <property name="ignoreResourceNotFound" value="true"/>
-        </bean>-->
 
     <!--************************************************************************
     JASPER REPORT CONFIGURATIONS
@@ -132,7 +126,7 @@
         <property name="persistenceProvider">
             <bean class="org.hibernate.jpa.HibernatePersistenceProvider"/>
         </property>
-        <property name="packagesToScan" value="hms.common.orm.model" />
+        <property name="packagesToScan" value="market.common.orm.model" />
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>

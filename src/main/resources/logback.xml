@@ -2,7 +2,7 @@
 
 <configuration>
 
-    <property name="LOG_PATH" value="/hms/logs/customer-care"/>
+    <property name="LOG_PATH" value="/logs/customer-care"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/login.css" th:href="@{/css/login.css}"/>
     <script type="text/javascript" th:href="@{/js/jquery.min.js}" src="js/jquery.min.js"></script>
     <script type="text/javascript" th:href="@{/js/jquery-ui.min.js}" src="js/jquery-ui.min.js"></script>
-    <link rel="shortcut icon" type="image/png" href="images/hms-favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
 </head>
 <body>
 
@@ -18,7 +18,7 @@
     <div class="w3-display-right form-login">
         <div>
             <div align="center">
-                <h1 class="w3-large w3-text-blue"><b><span th:text="#{login.title}"></span></b></h1>
+                <h1 class="w3-large w3-text-teal"><b><span th:text="#{login.title}"></span></b></h1>
             </div>
             <p th:if="${loginError}" class="error"> &nbsp; Incorrect Username or Password</p>
             <form th:action="@{/login}" method="post">
@@ -29,7 +29,7 @@
                        class="w3-input"/>
                 <br>
                 <div align="right">
-                    <input type="submit" th:value="#{login.submit}" class="w3-button w3-blue w3-small w3-block"/>
+                    <input type="submit" th:value="#{login.submit}" class="w3-button w3-teal w3-small w3-block"/>
                 </div>
             </form>
         </div>

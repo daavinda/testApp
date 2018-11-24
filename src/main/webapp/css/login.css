@@ -2,7 +2,7 @@ body, html {
     height: 100%;
     margin: 0;
     /* Center and scale the image nicely */
-    background: url(../images/hsenid-login.jpg) no-repeat left bottom;
+    background: url(../images/login1.jpg) no-repeat left center;
     background-size: 60%;
 }
 
