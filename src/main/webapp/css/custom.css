@@ -93,7 +93,8 @@ table.dataTable thead th, table.dataTable thead td {
 }
 
 table.dataTable thead {
-    background-color: lightgrey;
+    background-color: #009688;
+    color: #ffffff;
 }
 
 .footer {
