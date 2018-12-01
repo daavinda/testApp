@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export JPDA_ADDRESS="5005"
 sh $tom/bin/catalina.sh stop
 rm -rf $tom/webapps/customer-care*
 mvn clean install -DskipTests
