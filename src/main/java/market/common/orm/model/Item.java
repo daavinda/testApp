@@ -4,13 +4,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-/**
- * Created by devinda on 11/30/18.
- */
 @Entity(name = "item")
 public class Item implements Serializable {
 
-    public enum ItemTye {
+    public enum ItemType {
         NORMAL,
         FREEZER
     }
@@ -23,14 +20,8 @@ public class Item implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "quantity")
-    private float quantity;
-
-    @Column(name = "amount")
-    private BigDecimal amount;
-
-    @Column(name = "status")
-    private String status;
+    @Column(name = "unit_price")
+    private BigDecimal unitPrice;
 
     public long getId() {
         return id;
@@ -48,27 +39,12 @@ public class Item implements Serializable {
         this.name = name;
     }
 
-    public float getQuantity() {
-        return quantity;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setQuantity(float quantity) {
-        this.quantity = quantity;
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

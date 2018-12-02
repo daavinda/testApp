@@ -2,6 +2,7 @@ package market.common.orm.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -23,6 +24,12 @@ public class SellerItem implements Serializable {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    @Column(name = "quantity")
+    private float quantity;
+
+    @Column(name = "seller_unit_price")
+    private BigDecimal sellerUnitPrice;
+
     @Column(name = "date")
     private Date date;
 
@@ -31,7 +38,7 @@ public class SellerItem implements Serializable {
     private Payment payment;
 
     @Enumerated(EnumType.STRING)
-    private Item.ItemTye type;
+    private Item.ItemType type;
 
     public long getId() {
         return id;
@@ -57,6 +64,22 @@ public class SellerItem implements Serializable {
         this.item = item;
     }
 
+    public float getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(float quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getSellerUnitPrice() {
+        return sellerUnitPrice;
+    }
+
+    public void setSellerUnitPrice(BigDecimal sellerUnitPrice) {
+        this.sellerUnitPrice = sellerUnitPrice;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -73,11 +96,11 @@ public class SellerItem implements Serializable {
         this.payment = payment;
     }
 
-    public Item.ItemTye getType() {
+    public Item.ItemType getType() {
         return type;
     }
 
-    public void setType(Item.ItemTye type) {
+    public void setType(Item.ItemType type) {
         this.type = type;
     }
 }

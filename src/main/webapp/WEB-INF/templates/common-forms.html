@@ -63,6 +63,19 @@
 
 </form>
 
+<!--ITEM CREATION FORM-->
+<form id="itemForm" class="w3-margin" th:action="@{/item/save}" th:object="${item}">
+    <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
+    <label for="name" th:text="#{Item Name}"></label>
+    <input id="name" type="text" class="w3-input" th:field="*{name}" th:placeholder="#{Item Name}"/>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+    <label for="unitPrice" th:text="#{Unit Price}"></label>
+    <textarea id="unitPrice" type="text" class="w3-input" th:field="*{unitPrice}" th:placeholder="#{Unit Price}"/>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('unitPrice')}" th:errors="*{unitPrice}"></div>
+
+</form>
+
 <!--Subscriber deactivation reason FORM-->
 <form id="deactivationReasonForm" class="w3-margin" th:action="@{/subscriber/deactivate}" th:object="${subscriber}">
     <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
