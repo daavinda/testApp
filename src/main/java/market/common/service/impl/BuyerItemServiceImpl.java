@@ -21,4 +21,9 @@ public class BuyerItemServiceImpl implements BuyerItemService {
     public List<BuyerItem> getAllBuyerItems() {
         return buyerItemRepository.findAll();
     }
+
+    @Override
+    public void saveBuyerItem(BuyerItem buyerItem) {
+        buyerItemRepository.saveAndFlush(buyerItem);
+    }
 }

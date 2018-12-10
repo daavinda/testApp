@@ -1,0 +1,95 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="resultsList" class="results-block">
+    <div id="resultBlock">
+        <div th:replace="common-alerts :: body"></div>
+        <div th:replace="common-loader :: body"></div>
+        <div>
+            <div class="w3-cell-row">
+                <div class="w3-cell">
+                    <h1 class="w3-xxlarge w3-text-teal"><b><span
+                            th:text="#{selling.management.page.heading}"></span></b>
+                    </h1>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label th:for="selectBuyer">Select Buyer</label>
+                <select class="form-control w3-select" name="buyer" id="buyer" >
+                    <option th:each="buyer : ${buyers}"
+                            th:value="${buyer.getId()}"
+                            th:text="${buyer.getName()}">
+                    </option>
+                </select>
+                <label th:for="selectItem">Select Item</label>
+                <select class="w3-select" name="item" id="item" onchange="getUnitPrice()" >
+                    <option disabled selected value>Select Item</option>
+                    <option th:each="item : ${items}"
+                            th:value="${item.getUnitPrice()}"
+                            th:text="${item.getName()}">
+                    </option>
+                </select>
+                <label th:for="unitPrice">Unit Price</label>
+                <input class="w3-input w3-border" name="unitPrice" id="unitPrice" type="number" step="0.01">
+                <label th:for="quantity">Quantity ( KG )</label>
+                <input class="w3-input w3-border" name="quantity" id="quantity" type="number" step="0.001">
+                <input type="submit" value="Add" onclick="addItem()" class="w3-button w3-teal"/>
+            </div>
+
+            <table id="buyerItemTable" class="display cell-border" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{buyer.item.management.table.heading.buyer}">Buyer</th>
+                    <th th:text="#{buyer.item.management.table.heading.item}">Item</th>
+                    <th th:text="#{buyer.item.management.table.heading.quantity}">Quantity</th>
+                    <th th:text="#{buyer.item.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{buyer.item.management.table.heading.date}">Date</th>
+                    <th th:text="#{buyer.item.management.table.heading.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="buyerItem: ${buyerItems}">
+                    <td th:text="${buyerItem.buyer.name}"></td>
+                    <td th:text="${buyerItem.item.name}"></td>
+                    <td th:text="${buyerItem.quantity}"></td>
+                    <td th:text="${buyerItem.buyerUnitPrice}"></td>
+                    <td th:text="${buyerItem.date}"></td>
+                    <td>
+                        <a href="#" th:text="#{label.edit.link}"
+                           th:onclick="'loadForm(\'buyer/new?id=' + ${buyerItem.id} + '\');'"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#buyerItemTable').DataTable({})
+    });
+
+    function getUnitPrice() {
+        var selectBox = document.getElementById("item");
+        var unitPrice = selectBox.options[selectBox.selectedIndex].value;
+        document.getElementById("unitPrice").value = unitPrice;
+    }
+
+    function addItem() {
+        var buyer = document.getElementById("buyer").value;
+        var selectBox = document.getElementById("item");
+        var item = selectBox.options[selectBox.selectedIndex].text;
+        var unitPrice = document.getElementById("unitPrice").value;
+        var quantity = document.getElementById("quantity").value;
+        //alert(buyer + " - " + item + " - " + unitPrice + " - " + quantity);
+        var url = "selling/add?buyer=" + buyer + "&item=" + item + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
+        $("#resultBlock").load(url);
+    }
+
+</script>
+</html>

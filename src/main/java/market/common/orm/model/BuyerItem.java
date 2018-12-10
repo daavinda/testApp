@@ -25,17 +25,13 @@ public class BuyerItem implements Serializable {
     private Item item;
 
     @Column(name = "quantity")
-    private float quantity;
+    private BigDecimal quantity;
 
     @Column(name = "buyer_unit_price")
     private BigDecimal buyerUnitPrice;
 
     @Column(name = "date")
     private Date date;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
 
     @Enumerated(EnumType.STRING)
     private Item.ItemType type;
@@ -64,11 +60,11 @@ public class BuyerItem implements Serializable {
         this.item = item;
     }
 
-    public float getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(float quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
@@ -86,14 +82,6 @@ public class BuyerItem implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
     }
 
     public Item.ItemType getType() {

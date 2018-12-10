@@ -36,6 +36,9 @@
     </div>
     <div class="w3-bar-block">
         <!--<a href="#" onclick="w3_close(); load(this.id)" th:id="@{/homeview/view}" class="w3-bar-item w3-button w3-hover-white">Home</a>-->
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_SUBSCRIBER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/selling/new}"
+           class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.selling.management.title}">
+        </a>
         <a sec:authorize="hasAuthority('ROLE_MANAGE_SUBSCRIBER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/subscriber/load}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.subs.management.title}">
         </a>

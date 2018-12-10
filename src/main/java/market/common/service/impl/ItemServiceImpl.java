@@ -30,4 +30,9 @@ public class ItemServiceImpl implements ItemService {
     public void saveItem(Item item) {
         itemRepository.saveAndFlush(item);
     }
+
+    @Override
+    public Item findByName(String name) {
+        return itemRepository.findByName(name);
+    }
 }

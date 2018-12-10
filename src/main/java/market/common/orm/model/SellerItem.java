@@ -33,10 +33,6 @@ public class SellerItem implements Serializable {
     @Column(name = "date")
     private Date date;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
-
     @Enumerated(EnumType.STRING)
     private Item.ItemType type;
 
@@ -86,14 +82,6 @@ public class SellerItem implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
     }
 
     public Item.ItemType getType() {

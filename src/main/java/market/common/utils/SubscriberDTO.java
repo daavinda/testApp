@@ -1,8 +1,5 @@
 package market.common.utils;
 
-/**
- * Created by devinda on 4/18/18.
- */
 public class SubscriberDTO {
 
     private String applicationName;
