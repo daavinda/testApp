@@ -3,10 +3,7 @@ package market.common.service.impl;
 import market.common.orm.model.Buyer;
 import market.common.orm.model.BuyerItem;
 import market.common.orm.model.Item;
-import market.common.service.BuyerItemService;
-import market.common.service.BuyerService;
-import market.common.service.ItemService;
-import market.common.service.SellingService;
+import market.common.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +19,8 @@ public class SellingServiceImpl implements SellingService {
     private BuyerService buyerService;
     @Autowired
     private BuyerItemService buyerItemService;
+    @Autowired
+    private PendingPaymentService pendingPaymentService;
 
     @Override
     public void saveSale(Long buyerId, String itemName, BigDecimal unitPrice, BigDecimal quantity) {
@@ -38,8 +37,9 @@ public class SellingServiceImpl implements SellingService {
         buyerItem.setQuantity(quantity);
         buyerItem.setBuyerUnitPrice(unitPrice);
 
+        BigDecimal amount = quantity.multiply(unitPrice);
+        pendingPaymentService.updateWithSelling(buyer, amount);
+
         buyerItemService.saveBuyerItem(buyerItem);
-
-
     }
 }

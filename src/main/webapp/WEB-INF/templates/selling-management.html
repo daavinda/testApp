@@ -56,8 +56,8 @@
                     <td th:text="${buyerItem.buyerUnitPrice}"></td>
                     <td th:text="${buyerItem.date}"></td>
                     <td>
-                        <a href="#" th:text="#{label.edit.link}"
-                           th:onclick="'loadForm(\'buyer/new?id=' + ${buyerItem.id} + '\');'"></a>
+                        <a href="#" th:text="#{label.remove.link}"
+                           th:onclick="'removeItem(\'' + ${buyerItem.id} + '\');'"></a>
                     </td>
                 </tr>
                 </tbody>
@@ -89,6 +89,10 @@
         //alert(buyer + " - " + item + " - " + unitPrice + " - " + quantity);
         var url = "selling/add?buyer=" + buyer + "&item=" + item + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
         $("#resultBlock").load(url);
+    }
+
+    function removeItem(itemId) {
+        alert(itemId);
     }
 
 </script>
