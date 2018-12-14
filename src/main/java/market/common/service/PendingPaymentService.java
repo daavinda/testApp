@@ -20,4 +20,6 @@ public interface PendingPaymentService {
     void updateWithSelling(Buyer buyer, BigDecimal amount);
 
     void updateWithBuying(Seller seller, BigDecimal amount);
+
+    void updateWithDeleteSelling(Buyer buyer, BigDecimal amount);
 }

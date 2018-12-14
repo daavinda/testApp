@@ -36,7 +36,7 @@ public class SellingController {
     public String load(Model model) {
         model.addAttribute("buyers", buyerService.getAllBuyers());
         model.addAttribute("items", itemService.findAllItems());
-        List<BuyerItem> buyerItems = buyerItemService.getAllBuyerItems();
+        List<BuyerItem> buyerItems = buyerItemService.findByStatus(BuyerItem.Status.ACTIVE.toString());
         model.addAttribute("buyerItems", buyerItems);
         return "selling-management";
     }
@@ -52,7 +52,20 @@ public class SellingController {
 
         model.addAttribute("buyers", buyerService.getAllBuyers());
         model.addAttribute("items", itemService.findAllItems());
-        List<BuyerItem> buyerItems = buyerItemService.getAllBuyerItems();
+        List<BuyerItem> buyerItems = buyerItemService.findByStatus(BuyerItem.Status.ACTIVE.toString());
+        model.addAttribute("buyerItems", buyerItems);
+
+        return "selling-management";
+    }
+
+    @RequestMapping(value = "/remove", method = RequestMethod.GET)
+    public String remove(Model model, @RequestParam("item") Long item) {
+
+        sellingService.removeSale(item);
+
+        model.addAttribute("buyers", buyerService.getAllBuyers());
+        model.addAttribute("items", itemService.findAllItems());
+        List<BuyerItem> buyerItems = buyerItemService.findByStatus(BuyerItem.Status.ACTIVE.toString());
         model.addAttribute("buyerItems", buyerItems);
 
         return "selling-management";

@@ -11,6 +11,11 @@ import java.util.Date;
 @Entity(name = "buyer_item")
 public class BuyerItem implements Serializable {
 
+    public enum Status {
+        ACTIVE,
+        REMOVED
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -35,6 +40,9 @@ public class BuyerItem implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Item.ItemType type;
+
+    @Enumerated(EnumType.STRING)
+    private BuyerItem.Status status;
 
     public long getId() {
         return id;
@@ -90,5 +98,13 @@ public class BuyerItem implements Serializable {
 
     public void setType(Item.ItemType type) {
         this.type = type;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

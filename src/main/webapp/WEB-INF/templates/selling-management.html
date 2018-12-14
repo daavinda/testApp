@@ -93,6 +93,8 @@
 
     function removeItem(itemId) {
         alert(itemId);
+        var url = "selling/remove?item=" + itemId ;
+        $("#resultBlock").load(url);
     }
 
 </script>

@@ -9,4 +9,6 @@ import java.math.BigDecimal;
 public interface SellingService {
 
     void saveSale(Long buyerId, String itemName, BigDecimal unitPrice, BigDecimal quantity);
+
+    void removeSale(Long item);
 }
