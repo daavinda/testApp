@@ -28,6 +28,11 @@ public class BuyerItemServiceImpl implements BuyerItemService {
     }
 
     @Override
+    public List<BuyerItem> findByStatusAndType(String status, String type) {
+        return buyerItemRepository.findByStatusAndType(status, type);
+    }
+
+    @Override
     public void saveBuyerItem(BuyerItem buyerItem) {
         buyerItemRepository.saveAndFlush(buyerItem);
     }

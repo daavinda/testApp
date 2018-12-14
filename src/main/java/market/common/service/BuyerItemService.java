@@ -11,6 +11,8 @@ public interface BuyerItemService {
 
     List<BuyerItem> findByStatus(String status);
 
+    List<BuyerItem> findByStatusAndType(String string, String type);
+
     void saveBuyerItem(BuyerItem buyerItem);
 
     BuyerItem findById(Long item);

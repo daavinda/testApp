@@ -13,4 +13,8 @@ public interface BuyerItemRepository extends JpaRepository<BuyerItem, Long> {
 
     @Query(value = "SELECT * FROM buyer_item u WHERE u.status = ?1",  nativeQuery = true)
     List<BuyerItem> findByStatus(String status);
+
+    @Query(value = "SELECT * FROM buyer_item u WHERE u.status = ?1 AND u.type = ?2",  nativeQuery = true)
+    List<BuyerItem> findByStatusAndType(String status, String type);
+
 }

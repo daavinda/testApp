@@ -14,4 +14,6 @@ public interface SystemUserService {
 
     void saveSystemUserPassword(SystemUser systemUser);
 
+    SystemUser getCurrentUser();
+
 }

@@ -4,6 +4,9 @@ import market.common.orm.model.SystemUser;
 import market.common.orm.repo.SystemUserRepository;
 import market.common.service.SystemUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,6 +49,16 @@ public class SystemUserServiceImpl implements SystemUserService {
         SystemUser user = systemUserRepository.findById(systemUser.getId());
         user.setPassword(processHashedPassword(systemUser.getPassword()));
         systemUserRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public SystemUser getCurrentUser() {
+        String currentUserName;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            currentUserName = authentication.getName();
+        } else currentUserName = "";
+        return systemUserRepository.findByUsername(currentUserName);
     }
 
     private String processHashedPassword(String password) {

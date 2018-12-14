@@ -44,6 +44,14 @@ public class BuyerItem implements Serializable {
     @Enumerated(EnumType.STRING)
     private BuyerItem.Status status;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "added_by")
+    private SystemUser addedUser;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "removed_by")
+    private SystemUser removedUser;
+
     public long getId() {
         return id;
     }
@@ -106,5 +114,21 @@ public class BuyerItem implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public SystemUser getAddedUser() {
+        return addedUser;
+    }
+
+    public void setAddedUser(SystemUser addedUser) {
+        this.addedUser = addedUser;
+    }
+
+    public SystemUser getRemovedUser() {
+        return removedUser;
+    }
+
+    public void setRemovedUser(SystemUser removedUser) {
+        this.removedUser = removedUser;
     }
 }

@@ -3,8 +3,12 @@ package market.common.service.impl;
 import market.common.orm.model.Buyer;
 import market.common.orm.model.BuyerItem;
 import market.common.orm.model.Item;
+import market.common.orm.model.SystemUser;
 import market.common.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,6 +25,8 @@ public class SellingServiceImpl implements SellingService {
     private BuyerItemService buyerItemService;
     @Autowired
     private PendingPaymentService pendingPaymentService;
+    @Autowired
+    private SystemUserService systemUserService;
 
     @Override
     public void saveSale(Long buyerId, String itemName, BigDecimal unitPrice, BigDecimal quantity) {
@@ -29,6 +35,7 @@ public class SellingServiceImpl implements SellingService {
 
         Buyer buyer = buyerService.getBuyerById(buyerId);
         Item item = itemService.findByName(itemName);
+        SystemUser currentUser = systemUserService.getCurrentUser();
 
         buyerItem.setBuyer(buyer);
         buyerItem.setItem(item);
@@ -37,6 +44,7 @@ public class SellingServiceImpl implements SellingService {
         buyerItem.setQuantity(quantity);
         buyerItem.setBuyerUnitPrice(unitPrice);
         buyerItem.setStatus(BuyerItem.Status.ACTIVE);
+        buyerItem.setAddedUser(currentUser);
 
         BigDecimal amount = quantity.multiply(unitPrice);
         pendingPaymentService.updateWithSelling(buyer, amount);
@@ -52,7 +60,10 @@ public class SellingServiceImpl implements SellingService {
         BigDecimal amount = buyerItem.getBuyerUnitPrice().multiply(buyerItem.getQuantity());
         pendingPaymentService.updateWithDeleteSelling(buyerItem.getBuyer(), amount);
 
+        SystemUser currentUser = systemUserService.getCurrentUser();
+
         buyerItem.setStatus(BuyerItem.Status.REMOVED);
+        buyerItem.setRemovedUser(currentUser);
         buyerItemService.saveBuyerItem(buyerItem);
 
     }

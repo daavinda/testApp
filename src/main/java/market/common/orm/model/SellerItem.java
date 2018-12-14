@@ -11,6 +11,11 @@ import java.util.Date;
 @Entity(name = "seller_item")
 public class SellerItem implements Serializable {
 
+    public enum Status {
+        ACTIVE,
+        REMOVED
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -35,6 +40,17 @@ public class SellerItem implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Item.ItemType type;
+
+    @Enumerated(EnumType.STRING)
+    private SellerItem.Status status;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "added_by")
+    private SystemUser addedUser;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "removed_by")
+    private SystemUser removedUser;
 
     public long getId() {
         return id;
@@ -90,5 +106,29 @@ public class SellerItem implements Serializable {
 
     public void setType(Item.ItemType type) {
         this.type = type;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public SystemUser getAddedUser() {
+        return addedUser;
+    }
+
+    public void setAddedUser(SystemUser addedUser) {
+        this.addedUser = addedUser;
+    }
+
+    public SystemUser getRemovedUser() {
+        return removedUser;
+    }
+
+    public void setRemovedUser(SystemUser removedUser) {
+        this.removedUser = removedUser;
     }
 }
