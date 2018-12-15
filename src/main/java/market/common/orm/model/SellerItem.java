@@ -30,7 +30,7 @@ public class SellerItem implements Serializable {
     private Item item;
 
     @Column(name = "quantity")
-    private float quantity;
+    private BigDecimal quantity;
 
     @Column(name = "seller_unit_price")
     private BigDecimal sellerUnitPrice;
@@ -76,11 +76,11 @@ public class SellerItem implements Serializable {
         this.item = item;
     }
 
-    public float getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(float quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 

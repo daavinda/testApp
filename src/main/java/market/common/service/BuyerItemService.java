@@ -1,6 +1,5 @@
 package market.common.service;
 
-import market.common.orm.model.Buyer;
 import market.common.orm.model.BuyerItem;
 
 import java.util.List;

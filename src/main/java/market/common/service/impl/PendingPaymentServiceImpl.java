@@ -73,4 +73,15 @@ public class PendingPaymentServiceImpl implements PendingPaymentService {
             savePayment(payment);
         }
     }
+
+    @Override
+    public void updateWithDeleteBuying(Seller seller, BigDecimal amount) {
+        PendingPayment payment = findBySeller(seller);
+        BigDecimal newAmount;
+        if (payment != null) {
+            newAmount = payment.getAmount().subtract(amount);
+            payment.setAmount(newAmount);
+            savePayment(payment);
+        }
+    }
 }

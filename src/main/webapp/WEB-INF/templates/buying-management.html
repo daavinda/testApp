@@ -8,19 +8,19 @@
             <div class="w3-cell-row">
                 <div class="w3-cell">
                     <h1 class="w3-xxlarge w3-text-teal"><b><span
-                            th:text="#{selling.management.page.heading}"></span></b>
+                            th:text="#{buying.management.page.heading}"></span></b>
                     </h1>
                 </div>
             </div>
 
 
             <div class="form-group">
-                <label th:for="selectBuyer">Buyer</label>
-                <select style="margin-bottom: 10px" class="form-control w3-select" name="buyer" id="buyer">
-                    <option disabled selected value>- - SELECT BUYER - -</option>
-                    <option th:each="buyer : ${buyers}"
-                            th:value="${buyer.getId()}"
-                            th:text="${buyer.getName()}">
+                <label th:for="selectSeller">Seller</label>
+                <select style="margin-bottom: 10px" class="form-control w3-select" name="serller" id="seller">
+                    <option disabled selected value>- - SELECT SELLER - -</option>
+                    <option th:each="seller : ${sellers}"
+                            th:value="${seller.getId()}"
+                            th:text="${seller.getName()}">
                     </option>
                 </select>
                 <label th:for="selectItem">Item</label>
@@ -48,28 +48,28 @@
 
             </div>
 
-            <table style="padding-top: 10px" id="buyerItemTable" class="display cell-border" cellspacing="0"
+            <table style="padding-top: 10px" id="sellerItemTable" class="display cell-border" cellspacing="0"
                    width="100%">
                 <thead>
                 <tr>
-                    <th th:text="#{buyer.item.management.table.heading.buyer}">Buyer</th>
-                    <th th:text="#{buyer.item.management.table.heading.item}">Item</th>
-                    <th th:text="#{buyer.item.management.table.heading.quantity}">Quantity</th>
-                    <th th:text="#{buyer.item.management.table.heading.unit.price}">Unit Price</th>
-                    <th th:text="#{buyer.item.management.table.heading.date}">Date</th>
-                    <th th:text="#{buyer.item.management.table.heading.action}">Action</th>
+                    <th th:text="#{seller.item.management.table.heading.seller}">Seller</th>
+                    <th th:text="#{seller.item.management.table.heading.item}">Item</th>
+                    <th th:text="#{seller.item.management.table.heading.quantity}">Quantity</th>
+                    <th th:text="#{seller.item.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{seller.item.management.table.heading.date}">Date</th>
+                    <th th:text="#{seller.item.management.table.heading.action}">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="buyerItem: ${buyerItems}">
-                    <td th:text="${buyerItem.buyer.name}"></td>
-                    <td th:text="${buyerItem.item.name}"></td>
-                    <td th:text="${buyerItem.quantity}"></td>
-                    <td th:text="${buyerItem.buyerUnitPrice}"></td>
-                    <td th:text="${buyerItem.date}"></td>
+                <tr th:each="sellerItem: ${sellerItems}">
+                    <td th:text="${sellerItem.seller.name}"></td>
+                    <td th:text="${sellerItem.item.name}"></td>
+                    <td th:text="${sellerItem.quantity}"></td>
+                    <td th:text="${sellerItem.sellerUnitPrice}"></td>
+                    <td th:text="${sellerItem.date}"></td>
                     <td>
                         <a href="#" th:text="#{label.remove.link}"
-                           th:onclick="'removeItem(\'' + ${buyerItem.id} + '\');'"></a>
+                           th:onclick="'removeItem(\'' + ${sellerItem.id} + '\');'"></a>
                     </td>
                 </tr>
                 </tbody>
@@ -83,7 +83,7 @@
 <script>
 
     $(document).ready(function () {
-        $('#buyerItemTable').DataTable({})
+        $('#sellerItemTable').DataTable({})
     });
 
     function getUnitPrice() {
@@ -93,19 +93,18 @@
     }
 
     function addItem() {
-        var buyer = document.getElementById("buyer").value;
+        var seller = document.getElementById("seller").value;
         var selectBox = document.getElementById("item");
         var item = selectBox.options[selectBox.selectedIndex].text;
         var unitPrice = document.getElementById("unitPrice").value;
         var quantity = document.getElementById("quantity").value;
-        //alert(buyer + " - " + item + " - " + unitPrice + " - " + quantity);
-        var url = "selling/add?buyer=" + buyer + "&item=" + item + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
+        var url = "buying/add?seller=" + seller + "&item=" + item + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
         $("#resultBlock").load(url);
     }
 
     function removeItem(itemId) {
         if (confirm("Are you sure you need to remove this entry ?") == true) {
-            var url = "selling/remove?item=" + itemId;
+            var url = "buying/remove?item=" + itemId;
             $("#resultBlock").load(url);
         } else {
         }
