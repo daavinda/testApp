@@ -98,7 +98,7 @@
         var item = selectBox.options[selectBox.selectedIndex].text;
         var unitPrice = document.getElementById("unitPrice").value;
         var quantity = document.getElementById("quantity").value;
-        var url = "buying/add?seller=" + seller + "&item=" + item + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
+        var url = "buying/add?seller=" + seller + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
         $("#resultBlock").load(url);
     }
 

@@ -1,0 +1,134 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="resultsList" class="results-block">
+    <div id="resultBlock">
+        <div th:replace="common-alerts :: body"></div>
+        <div th:replace="common-loader :: body"></div>
+        <div>
+            <div class="w3-cell-row">
+                <div class="w3-cell">
+                    <h1 class="w3-xxlarge w3-text-teal"><b><span
+                            th:text="#{payment.management.page.heading}"></span></b></h1>
+                </div>
+            </div>
+            <div>
+                <div style="float: left; width: 45%">
+                    <h3 class="w3-large w3-text-teal"><b><span th:text="#{Payment To}"></span></b></h3>
+                    <label th:for="seller">Seller</label>
+                    <select style="margin-bottom: 10px" class="form-control w3-select" name="seller" id="seller">
+                        <option disabled selected value>- - SELECT SELLER - -</option>
+                        <option th:each="seller : ${sellers}"
+                                th:value="${seller.getId()}"
+                                th:text="${seller.getName()}">
+                        </option>
+                    </select>
+                    <label th:for="paymentType">Payment Type</label>
+                    <select style="margin-bottom: 10px" class="form-control w3-select" name="paymentType"
+                            id="paymentType">
+                        <option th:value="1" th:text="CASH">
+                        <option th:value="2" th:text="CHEQUE">
+                        </option>
+                    </select>
+
+                    <div style="float: left;">
+                        <label th:for="amount">Amount</label>
+                        <input class="w3-input w3-border" name="amount" id="amount" type="number" step="0.01">
+                    </div>
+                    <div style="float: left; padding-left: 108px; padding-top: 18px;">
+                        <input type="submit" value="SAVE" onclick="saveSellerPayment()" class="w3-button w3-teal"/>
+                    </div>
+                </div>
+                <div style="float: left; width: 10%; border-left: 6px solid #ffffff;  height: 100px; ">
+                </div>
+                <div style="float: left; width: 45%; ">
+                    <h3 class="w3-large w3-text-teal"><b><span th:text="#{Payment From}"></span></b></h3>
+                    <label th:for="buyer">Buyer</label>
+                    <select style="margin-bottom: 10px" class="form-control w3-select" name="buyer" id="buyer">
+                        <option disabled selected value>- - SELECT BUYER - -</option>
+                        <option th:each="buyer : ${buyers}"
+                                th:value="${buyer.getId()}"
+                                th:text="${buyer.getName()}">
+                        </option>
+                    </select>
+                    <label th:for="paymentType2">Payment Type</label>
+                    <select style="margin-bottom: 10px" class="form-control w3-select" name="paymentType2"
+                            id="paymentType2">
+                        <option th:value="1" th:text="CASH">
+                        <option th:value="2" th:text="CHEQUE">
+                        </option>
+                    </select>
+
+                    <div style="float: left;">
+                        <label th:for="amount2">Amount</label>
+                        <input class="w3-input w3-border" name="amount2" id="amount2" type="number" step="0.01">
+                    </div>
+                    <div style="float: left; padding-left: 108px; padding-top: 18px; padding-bottom: 20px">
+                        <input type="submit" value="SAVE" onclick="saveBuyerPayment()" class="w3-button w3-teal"/>
+                    </div>
+                </div>
+            </div>
+
+            <table style="padding-top: 10px" id="paymentTable" class="display cell-border" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{payment.management.table.heading.seller}">Seller</th>
+                    <th th:text="#{payment.management.table.heading.buyer}">Buyer</th>
+                    <th th:text="#{payment.management.table.heading.amount}">Amount</th>
+                    <th th:text="#{payment.management.table.heading.type}">Payment Type</th>
+                    <th th:text="#{payment.management.table.heading.date}">Date</th>
+                    <th th:text="#{payment.management.table.heading.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="payment: ${payments}">
+                    <td th:if="${payment.seller != null}" th:text="${payment.seller.name}"></td>
+                    <td th:if="${payment.seller == null}" ></td>
+                    <td th:if="${payment.buyer != null}" th:text="${payment.buyer.name}"></td>
+                    <td th:if="${payment.buyer == null}" ></td>
+                    <td th:text="${payment.amount}"></td>
+                    <td th:text="${payment.paymentType}"></td>
+                    <td th:text="${payment.date}"></td>
+                    <td>
+                        <a href="#" th:text="#{label.remove.link}"
+                           th:onclick="'removePayment(\'' + ${payment.id} + '\');'"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#paymentTable').DataTable({})
+            });
+
+            function removePayment(paymentId) {
+                if (confirm("Are you sure you need to remove this entry ?") == true) {
+                    var url = "payment/remove?paymentId=" + paymentId;
+                    $("#resultBlock").load(url);
+                } else {
+                }
+            }
+
+            function saveSellerPayment() {
+                var seller = document.getElementById("seller").value;
+                var paymentType = document.getElementById("paymentType").value;
+                var amount = document.getElementById("amount").value;
+                var url = "payment/saveSellerPayment?seller=" + seller + "&paymentType=" + paymentType + "&amount=" + amount;
+                $("#resultBlock").load(url);
+            }
+
+            function saveBuyerPayment() {
+                var buyer = document.getElementById("buyer").value;
+                var paymentType = document.getElementById("paymentType2").value;
+                var amount = document.getElementById("amount2").value;
+                var url = "payment/saveBuyerPayment?buyer=" + buyer + "&paymentType=" + paymentType + "&amount=" + amount;
+                $("#resultBlock").load(url);
+            }
+
+        </script>
+    </div>
+</div>
+</html>

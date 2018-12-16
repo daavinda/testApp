@@ -24,4 +24,12 @@ public interface PendingPaymentService {
     void updateWithDeleteSelling(Buyer buyer, BigDecimal amount);
 
     void updateWithDeleteBuying(Seller seller, BigDecimal amount);
+
+    void updateWithBuyerPayment(Buyer buyer, BigDecimal amount);
+
+    void updateWithSellerPayment(Seller seller, BigDecimal amount);
+
+    void updateWithDeleteSellerPayment(Seller seller, BigDecimal amount);
+
+    void updateWithDeleteBuyerPayment(Buyer buyer, BigDecimal amount);
 }

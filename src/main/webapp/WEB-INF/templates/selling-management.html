@@ -99,7 +99,7 @@
         var unitPrice = document.getElementById("unitPrice").value;
         var quantity = document.getElementById("quantity").value;
         //alert(buyer + " - " + item + " - " + unitPrice + " - " + quantity);
-        var url = "selling/add?buyer=" + buyer + "&item=" + item + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
+        var url = "selling/add?buyer=" + buyer + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
         $("#resultBlock").load(url);
     }
 

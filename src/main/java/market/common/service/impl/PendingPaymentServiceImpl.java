@@ -84,4 +84,58 @@ public class PendingPaymentServiceImpl implements PendingPaymentService {
             savePayment(payment);
         }
     }
+
+    @Override
+    public void updateWithBuyerPayment(Buyer buyer, BigDecimal amount) {
+        PendingPayment payment = findByBuyer(buyer);
+        BigDecimal newAmount;
+        if (payment != null) {
+            newAmount = payment.getAmount().subtract(amount);
+            payment.setAmount(newAmount);
+            savePayment(payment);
+        } else {
+            PendingPayment newPayment = new PendingPayment();
+            newPayment.setBuyer(buyer);
+            newPayment.setAmount(amount.negate());
+            savePayment(newPayment);
+        }
+    }
+
+    @Override
+    public void updateWithSellerPayment(Seller seller, BigDecimal amount) {
+        PendingPayment payment = findBySeller(seller);
+        BigDecimal newAmount;
+        if (payment != null) {
+            newAmount = payment.getAmount().subtract(amount);
+            payment.setAmount(newAmount);
+            savePayment(payment);
+        } else {
+            PendingPayment newPayment = new PendingPayment();
+            newPayment.setSeller(seller);
+            newPayment.setAmount(amount.negate());
+            savePayment(newPayment);
+        }
+    }
+
+    @Override
+    public void updateWithDeleteBuyerPayment(Buyer buyer, BigDecimal amount) {
+        PendingPayment payment = findByBuyer(buyer);
+        BigDecimal newAmount;
+        if (payment != null) {
+            newAmount = amount.add(payment.getAmount());
+            payment.setAmount(newAmount);
+            savePayment(payment);
+        }
+    }
+
+    @Override
+    public void updateWithDeleteSellerPayment(Seller seller, BigDecimal amount) {
+        PendingPayment payment = findBySeller(seller);
+        BigDecimal newAmount;
+        if (payment != null) {
+            newAmount = amount.add(payment.getAmount());
+            payment.setAmount(newAmount);
+            savePayment(payment);
+        }
+    }
 }
