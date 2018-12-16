@@ -34,7 +34,7 @@
                         <label th:for="amount">Amount</label>
                         <input class="w3-input w3-border" name="amount" id="amount" type="number" step="0.01">
                     </div>
-                    <div style="float: left; padding-left: 108px; padding-top: 18px;">
+                    <div style="float: left; padding-left: 100px; padding-top: 18px;">
                         <input type="submit" value="SAVE" onclick="saveSellerPayment()" class="w3-button w3-teal"/>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                         <label th:for="amount2">Amount</label>
                         <input class="w3-input w3-border" name="amount2" id="amount2" type="number" step="0.01">
                     </div>
-                    <div style="float: left; padding-left: 108px; padding-top: 18px; padding-bottom: 20px">
+                    <div style="float: left; padding-left: 100px; padding-top: 18px; padding-bottom: 20px">
                         <input type="submit" value="SAVE" onclick="saveBuyerPayment()" class="w3-button w3-teal"/>
                     </div>
                 </div>
@@ -83,9 +83,9 @@
                 <tbody>
                 <tr th:each="payment: ${payments}">
                     <td th:if="${payment.seller != null}" th:text="${payment.seller.name}"></td>
-                    <td th:if="${payment.seller == null}" ></td>
+                    <td th:if="${payment.seller == null}" >T H S</td>
                     <td th:if="${payment.buyer != null}" th:text="${payment.buyer.name}"></td>
-                    <td th:if="${payment.buyer == null}" ></td>
+                    <td th:if="${payment.buyer == null}" >T H S</td>
                     <td th:text="${payment.amount}"></td>
                     <td th:text="${payment.paymentType}"></td>
                     <td th:text="${payment.date}"></td>
