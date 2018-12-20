@@ -76,6 +76,15 @@
 
 </form>
 
+
+<!--EXPENSE TYPE CREATION FORM-->
+<form id="expenseTypeForm" class="w3-margin" th:action="@{/expenseType/save}" th:object="${expenseType}">
+    <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
+    <label for="name" th:text="#{Expense Type Name}"></label>
+    <input id="name" type="text" class="w3-input" th:field="*{name}" th:placeholder="#{Expense Type Name}"/>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+</form>
+
 <!--Subscriber deactivation reason FORM-->
 <form id="deactivationReasonForm" class="w3-margin" th:action="@{/subscriber/deactivate}" th:object="${subscriber}">
     <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div th:replace="common-alerts :: body"></div>
+<div th:replace="common-loader :: body"></div>
+<div>
+    <div class="w3-cell-row">
+        <div class="w3-cell">
+            <h1 class="w3-xxlarge w3-text-teal"><b><span th:text="#{expense.type.management.page.heading}"></span></b></h1>
+        </div>
+        <div class="w3-cell" align="right">
+            <button onclick="loadForm('expenseType/new?id=0');" th:text="#{expense.type.management.button.new}" class="w3-btn w3-teal w3-tiny"></button>
+        </div>
+    </div>
+
+    <table style="padding-top: 10px" id="expenseTypeTable" class="display cell-border" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th th:text="#{expense.type.management.table.heading.name}">Name</th>
+            <th th:text="#{expense.type.management.table.heading.action}">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="expenseType: ${expenseTypes}">
+            <td th:text="${expenseType.name}"></td>
+            <td>
+                <a href="#" th:text="#{label.edit.link}"
+                   th:onclick="'loadForm(\'expenseType/new?id=' + ${expenseType.id} + '\');'"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#expenseTypeTable').DataTable({})
+    });
+</script>
+</body>
+</html>
