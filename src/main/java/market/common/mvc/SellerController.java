@@ -37,7 +37,7 @@ public class SellerController extends MessageResolver {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model, @ModelAttribute("seller") Seller seller, BindingResult result) {
-        model.addAttribute("sellers", sellerService.getAllSellers());
+        model.addAttribute("sellerDetails", sellerService.getAllSellerDetails());
         return "seller-management";
     }
 
@@ -55,7 +55,7 @@ public class SellerController extends MessageResolver {
             return "common-forms :: #sellerForm";
         }
         sellerService.saveSeller(seller);
-        model.addAttribute("sellers", sellerService.getAllSellers());
+        model.addAttribute("sellerDetails", sellerService.getAllSellerDetails());
         model.addAttribute("success", getMessage("alert.save.success"));
         return "seller-management :: body";
     }

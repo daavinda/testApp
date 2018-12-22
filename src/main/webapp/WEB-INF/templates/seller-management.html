@@ -23,17 +23,19 @@
             <th th:text="#{seller.management.table.heading.code}">Code</th>
             <th th:text="#{seller.management.table.heading.name}">Name</th>
             <th th:text="#{seller.management.table.heading.phone}">Phone</th>
+            <th th:text="#{seller.management.table.heading.debt}">Phone</th>
             <th th:text="#{seller.management.table.heading.action}">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="seller: ${sellers}">
-            <td th:text="${seller.code}"></td>
-            <td th:text="${seller.name}"></td>
-            <td th:text="${seller.phone}"></td>
+        <tr th:each="sellerDetail: ${sellerDetails}">
+            <td th:text="${sellerDetail.seller.code}"></td>
+            <td th:text="${sellerDetail.seller.name}"></td>
+            <td th:text="${sellerDetail.seller.phone}"></td>
+            <td th:text="${sellerDetail.debtAmount}"></td>
             <td>
                 <a href="#" th:text="#{label.edit.link}"
-                   th:onclick="'loadForm(\'seller/new?id=' + ${seller.id} + '\');'"></a>
+                   th:onclick="'loadForm(\'seller/new?id=' + ${sellerDetail.seller.id} + '\');'"></a>
             </td>
         </tr>
         </tbody>
