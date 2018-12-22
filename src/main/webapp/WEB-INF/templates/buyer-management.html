@@ -13,7 +13,8 @@
             <h1 class="w3-xxlarge w3-text-teal"><b><span th:text="#{buyer.management.page.heading}"></span></b></h1>
         </div>
         <div class="w3-cell" align="right">
-            <button onclick="loadForm('buyer/new?id=0');" th:text="#{buyer.management.button.new}" class="w3-btn w3-teal w3-tiny"></button>
+            <button onclick="loadForm('buyer/new?id=0');" th:text="#{buyer.management.button.new}"
+                    class="w3-btn w3-teal w3-tiny"></button>
         </div>
     </div>
 
@@ -23,17 +24,24 @@
             <th th:text="#{buyer.management.table.heading.code}">Code</th>
             <th th:text="#{buyer.management.table.heading.name}">Name</th>
             <th th:text="#{buyer.management.table.heading.phone}">Phone</th>
+            <th th:text="#{buyer.management.table.heading.credit}">Phone</th>
             <th th:text="#{buyer.management.table.heading.action}">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="buyer: ${buyers}">
-            <td th:text="${buyer.code}"></td>
-            <td th:text="${buyer.name}"></td>
-            <td th:text="${buyer.phone}"></td>
+        <tr th:each="buyerDetail: ${buyerDetails}">
+            <td th:text="${buyerDetail.buyer.code}"></td>
+            <td th:text="${buyerDetail.buyer.name}"></td>
+            <td th:text="${buyerDetail.buyer.phone}"></td>
+            <td class="creditGreen" th:if="${!buyerDetail.isLowerLimit()&& !buyerDetail.isUpperLimit()}"
+                th:text="${buyerDetail.creditAmount}"></td>
+            <td class="creditOrange" th:if="${buyerDetail.isLowerLimit()}"
+                th:text="${buyerDetail.creditAmount}"></td>
+            <td class="creditRed" th:if="${buyerDetail.isUpperLimit()}"
+                th:text="${buyerDetail.creditAmount}"></td>
             <td>
                 <a href="#" th:text="#{label.edit.link}"
-                   th:onclick="'loadForm(\'buyer/new?id=' + ${buyer.id} + '\');'"></a>
+                   th:onclick="'loadForm(\'buyer/new?id=' + ${buyerDetail.buyer.id} + '\');'"></a>
             </td>
         </tr>
         </tbody>

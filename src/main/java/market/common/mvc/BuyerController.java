@@ -35,7 +35,7 @@ public class BuyerController extends MessageResolver {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model, @ModelAttribute("buyer") Buyer buyer, BindingResult result) {
-        model.addAttribute("buyers", buyerService.getAllBuyers());
+        model.addAttribute("buyerDetails", buyerService.getAllBuyerDetails());
         return "buyer-management";
     }
 
@@ -53,7 +53,7 @@ public class BuyerController extends MessageResolver {
             return "common-forms :: #buyerForm";
         }
         buyerService.saveBuyer(buyer);
-        model.addAttribute("buyers", buyerService.getAllBuyers());
+        model.addAttribute("buyerDetails", buyerService.getAllBuyerDetails());
         model.addAttribute("success", getMessage("alert.save.success"));
         return "buyer-management :: body";
     }

@@ -120,3 +120,15 @@ hr { margin-top: 0px;
 .freezerItem {
     background-color: skyblue;
 }
+
+.creditGreen{
+    background-color: rgba(81, 177, 90, 0.80);
+}
+
+.creditOrange{
+    background-color: rgba(238, 171, 67, 0.78);
+}
+
+.creditRed{
+    background-color: rgba(188, 9, 0, 0.58);
+}
