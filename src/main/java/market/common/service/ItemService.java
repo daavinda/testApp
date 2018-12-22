@@ -2,6 +2,7 @@ package market.common.service;
 
 import market.common.orm.model.Item;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -16,4 +17,8 @@ public interface ItemService {
     void saveItem(Item item);
 
     Item findByName(String name);
+
+    void updateWithBuying(Item item, BigDecimal quantity);
+
+    void updateWithSelling(Item item, BigDecimal quantity);
 }

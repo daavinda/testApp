@@ -23,6 +23,9 @@ public class Item implements Serializable {
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
+    @Column(name = "quantity")
+    private BigDecimal quantity;
+
     public long getId() {
         return id;
     }
@@ -47,4 +50,11 @@ public class Item implements Serializable {
         this.unitPrice = unitPrice;
     }
 
+    public BigDecimal getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
+    }
 }

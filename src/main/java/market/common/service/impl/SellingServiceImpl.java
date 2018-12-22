@@ -35,6 +35,7 @@ public class SellingServiceImpl implements SellingService {
 
         Buyer buyer = buyerService.getBuyerById(buyerId);
         Item item = itemService.findByName(itemName);
+        itemService.updateWithSelling(item, quantity);
         SystemUser currentUser = systemUserService.getCurrentUser();
 
         buyerItem.setBuyer(buyer);

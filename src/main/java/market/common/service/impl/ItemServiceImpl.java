@@ -6,6 +6,7 @@ import market.common.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -28,11 +29,26 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void saveItem(Item item) {
+        if(item.getQuantity()==null) {
+            item.setQuantity(BigDecimal.ZERO);
+        }
         itemRepository.saveAndFlush(item);
     }
 
     @Override
     public Item findByName(String name) {
         return itemRepository.findByName(name);
+    }
+
+    @Override
+    public void updateWithBuying(Item item, BigDecimal quantity) {
+        item.setQuantity(item.getQuantity().add(quantity));
+        saveItem(item);
+    }
+
+    @Override
+    public void updateWithSelling(Item item, BigDecimal quantity) {
+        item.setQuantity(item.getQuantity().subtract(quantity));
+        saveItem(item);
     }
 }

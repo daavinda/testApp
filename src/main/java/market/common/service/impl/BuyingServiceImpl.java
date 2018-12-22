@@ -29,6 +29,7 @@ public class BuyingServiceImpl implements BuyingService {
 
         Seller seller = sellerService.findById(sellerId);
         Item item = itemService.findByName(itemName);
+        itemService.updateWithBuying(item, quantity);
         SystemUser currentUser = systemUserService.getCurrentUser();
 
         sellerItem.setSeller(seller);
