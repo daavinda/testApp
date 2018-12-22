@@ -1,5 +1,7 @@
 package market.common.orm.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -22,6 +24,8 @@ public class Payment implements Serializable {
     private BigDecimal amount;
 
     @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     @OneToOne(fetch = FetchType.EAGER)

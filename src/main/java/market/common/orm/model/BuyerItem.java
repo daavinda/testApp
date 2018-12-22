@@ -1,5 +1,7 @@
 package market.common.orm.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -36,6 +38,8 @@ public class BuyerItem implements Serializable {
     private BigDecimal buyerUnitPrice;
 
     @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     @Enumerated(EnumType.STRING)

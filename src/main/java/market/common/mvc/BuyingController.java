@@ -36,7 +36,7 @@ public class BuyingController {
     public String load(Model model) {
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("items", itemService.findAllItems());
-        List<SellerItem> sellerItems = sellerItemService.findByStatusAndType(SellerItem.Status.ACTIVE.toString(), Item.ItemType.NORMAL.toString());
+        List<SellerItem> sellerItems = sellerItemService.findByStatus(SellerItem.Status.ACTIVE.toString());
         model.addAttribute("sellerItems", sellerItems);
         return "buying-management";
     }
@@ -44,15 +44,16 @@ public class BuyingController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String loadOne(Model model, @RequestParam("seller") Long sellerId,
+                          @RequestParam("itemType") Long itemType,
                           @RequestParam("item") String itemName,
                           @RequestParam("unitPrice") BigDecimal unitPrice,
                           @RequestParam("quantity") BigDecimal quantity) {
 
-        buyingService.saveBuying(sellerId, itemName, unitPrice, quantity);
+        buyingService.saveBuying(sellerId, itemName, unitPrice, quantity, itemType);
 
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("items", itemService.findAllItems());
-        List<SellerItem> sellerItems = sellerItemService.findByStatusAndType(SellerItem.Status.ACTIVE.toString(), Item.ItemType.NORMAL.toString());
+        List<SellerItem> sellerItems = sellerItemService.findByStatus(SellerItem.Status.ACTIVE.toString());
         model.addAttribute("sellerItems", sellerItems);
 
         return "buying-management";
@@ -65,7 +66,7 @@ public class BuyingController {
 
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("items", itemService.findAllItems());
-        List<SellerItem> sellerItems = sellerItemService.findByStatusAndType(SellerItem.Status.ACTIVE.toString(), Item.ItemType.NORMAL.toString());
+        List<SellerItem> sellerItems = sellerItemService.findByStatus(SellerItem.Status.ACTIVE.toString());
         model.addAttribute("sellerItems", sellerItems);
 
         return "buying-management";

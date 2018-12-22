@@ -23,14 +23,28 @@
                             th:text="${buyer.getName()}">
                     </option>
                 </select>
-                <label th:for="selectItem">Item</label>
-                <select class="w3-select" name="item" id="item" onchange="getUnitPrice()">
-                    <option disabled selected value>- - SELECT ITEM - -</option>
-                    <option th:each="item : ${items}"
-                            th:value="${item.getUnitPrice()}"
-                            th:text="${item.getName()}">
-                    </option>
-                </select>
+
+                <div>
+                    <div style="float: left; width: 45%">
+                        <label th:for="selectItem">Item</label>
+                        <select class="w3-select" name="item" id="item" onchange="getUnitPrice()">
+                            <option disabled selected value>- - SELECT ITEM - -</option>
+                            <option th:each="item : ${items}"
+                                    th:value="${item.getUnitPrice()}"
+                                    th:text="${item.getName()}">
+                            </option>
+                        </select>
+                    </div>
+                    <div style="float: left; width: 10%; border-left: 6px solid #ffffff;  height: 10px; "></div>
+                    <div style="float: left; width: 45%">
+                        <label th:for="itemType">Item Type</label>
+                        <select class="w3-select" name="itemType" id="itemType">
+                            <option selected th:value="1" th:text="NORMAL">
+                            <option th:value="2" th:text="FREEZER">
+                        </select>
+                    </div>
+                </div>
+                <div style="clear:left;"></div>
 
                 <div>
                     <div style="float: left;">
@@ -63,7 +77,8 @@
                 <tbody>
                 <tr th:each="buyerItem: ${buyerItems}">
                     <td th:text="${buyerItem.buyer.name}"></td>
-                    <td th:text="${buyerItem.item.name}"></td>
+                    <td class="normalItem" th:if="${buyerItem.type.toString() == 'NORMAL'}" th:text="${buyerItem.item.name+' - NORMAL'}"></td>
+                    <td class="freezerItem" th:if="${buyerItem.type.toString() == 'FREEZER'}" th:text="${buyerItem.item.name+' - FREEZER'}"></td>
                     <td th:text="${buyerItem.quantity}"></td>
                     <td th:text="${buyerItem.buyerUnitPrice}"></td>
                     <td th:text="${buyerItem.date}"></td>
@@ -98,8 +113,8 @@
         var item = selectBox.options[selectBox.selectedIndex].text;
         var unitPrice = document.getElementById("unitPrice").value;
         var quantity = document.getElementById("quantity").value;
-        //alert(buyer + " - " + item + " - " + unitPrice + " - " + quantity);
-        var url = "selling/add?buyer=" + buyer + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
+        var itemType = document.getElementById("itemType").value;
+        var url = "selling/add?buyer=" + buyer + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity+ "&itemType=" + itemType;
         $("#resultBlock").load(url);
     }
 

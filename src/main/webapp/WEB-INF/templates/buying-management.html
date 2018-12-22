@@ -23,25 +23,38 @@
                             th:text="${seller.getName()}">
                     </option>
                 </select>
-                <label th:for="selectItem">Item</label>
-                <select class="w3-select" name="item" id="item" onchange="getUnitPrice()">
-                    <option disabled selected value>- - SELECT ITEM - -</option>
-                    <option th:each="item : ${items}"
-                            th:value="${item.getUnitPrice()}"
-                            th:text="${item.getName()}">
-                    </option>
-                </select>
 
+                <div>
+                    <div style="float: left; width: 45%">
+                        <label th:for="selectItem">Item</label>
+                        <select class="w3-select" name="item" id="item" onchange="getUnitPrice()">
+                            <option disabled selected value>- - SELECT ITEM - -</option>
+                            <option th:each="item : ${items}"
+                                    th:value="${item.getUnitPrice()}"
+                                    th:text="${item.getName()}">
+                            </option>
+                        </select>
+                    </div>
+                    <div style="float: left; width: 10%; border-left: 6px solid #ffffff;  height: 10px; "></div>
+                    <div style="float: left; width: 45%">
+                        <label th:for="itemType">Item Type</label>
+                        <select class="w3-select" name="itemType" id="itemType">
+                            <option selected th:value="1" th:text="NORMAL">
+                            <option th:value="2" th:text="FREEZER">
+                        </select>
+                    </div>
+                </div>
+                <div style="clear:left;"></div>
                 <div>
                     <div style="float: left;">
                         <label th:for="unitPrice">Unit Price - 1 KG</label>
                         <input class="w3-input w3-border" name="unitPrice" id="unitPrice" type="number" step="0.01">
                     </div>
-                    <div style="float: left; padding-left: 130px">
+                    <div style="float: left; padding-left: 20%">
                         <label th:for="quantity">Quantity - KG </label>
                         <input class="w3-input w3-border" name="quantity" id="quantity" type="number" step="0.001">
                     </div>
-                    <div style="float: left; padding-left: 130px; padding-top: 18px; padding-bottom: 20px">
+                    <div style="float: right; padding-top: 18px; padding-bottom: 20px">
                         <input type="submit" value="SAVE" onclick="addItem()" class="w3-button w3-teal"/>
                     </div>
                 </div>
@@ -63,7 +76,8 @@
                 <tbody>
                 <tr th:each="sellerItem: ${sellerItems}">
                     <td th:text="${sellerItem.seller.name}"></td>
-                    <td th:text="${sellerItem.item.name}"></td>
+                    <td class="normalItem" th:if="${sellerItem.type.toString() == 'NORMAL'}" th:text="${sellerItem.item.name+' - NORMAL'}"></td>
+                    <td class="freezerItem" th:if="${sellerItem.type.toString() == 'FREEZER'}" th:text="${sellerItem.item.name+' - FREEZER'}"></td>
                     <td th:text="${sellerItem.quantity}"></td>
                     <td th:text="${sellerItem.sellerUnitPrice}"></td>
                     <td th:text="${sellerItem.date}"></td>
@@ -98,7 +112,8 @@
         var item = selectBox.options[selectBox.selectedIndex].text;
         var unitPrice = document.getElementById("unitPrice").value;
         var quantity = document.getElementById("quantity").value;
-        var url = "buying/add?seller=" + seller + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
+        var itemType = document.getElementById("itemType").value;
+        var url = "buying/add?seller=" + seller + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity+ "&itemType=" + itemType;
         $("#resultBlock").load(url);
     }
 
