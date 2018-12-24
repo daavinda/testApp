@@ -51,4 +51,9 @@ public class ItemServiceImpl implements ItemService {
         item.setQuantity(item.getQuantity().subtract(quantity));
         saveItem(item);
     }
+
+    @Override
+    public List<Item> findByType(Item.ItemType type) {
+        return itemRepository.findByType(type);
+    }
 }

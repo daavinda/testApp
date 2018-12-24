@@ -21,4 +21,6 @@ public interface ItemService {
     void updateWithBuying(Item item, BigDecimal quantity);
 
     void updateWithSelling(Item item, BigDecimal quantity);
+
+    List<Item> findByType(Item.ItemType type);
 }
