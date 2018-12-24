@@ -45,12 +45,12 @@ public class SellingController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String loadOne(Model model, @RequestParam("buyer") Long buyerId,
-                          @RequestParam("itemType") Long itemType,
+
                           @RequestParam("item") String itemName,
                           @RequestParam("unitPrice") BigDecimal unitPrice,
                           @RequestParam("quantity") BigDecimal quantity) {
 
-        sellingService.saveSale(buyerId, itemName, unitPrice, quantity, itemType);
+        sellingService.saveSale(buyerId, itemName, unitPrice, quantity);
 
         model.addAttribute("buyers", buyerService.getAllBuyers());
         model.addAttribute("items", itemService.findAllItems());
@@ -58,6 +58,13 @@ public class SellingController {
         model.addAttribute("buyerItems", buyerItems);
 
         return "selling-management";
+    }
+
+    @RequestMapping(value = "/getDetails", method = RequestMethod.GET)
+    public String getDetails(Model model, @RequestParam("item") String item) {
+        Item selectedItem = itemService.findByName(item);
+        model.addAttribute("itemType", selectedItem.getType().toString());
+        return "selling-management :: resultsList2";
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.GET)

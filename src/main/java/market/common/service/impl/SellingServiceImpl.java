@@ -29,7 +29,7 @@ public class SellingServiceImpl implements SellingService {
     private SystemUserService systemUserService;
 
     @Override
-    public void saveSale(Long buyerId, String itemName, BigDecimal unitPrice, BigDecimal quantity, Long itemType) {
+    public void saveSale(Long buyerId, String itemName, BigDecimal unitPrice, BigDecimal quantity) {
 
         BuyerItem buyerItem = new BuyerItem();
 
@@ -41,11 +41,6 @@ public class SellingServiceImpl implements SellingService {
         buyerItem.setBuyer(buyer);
         buyerItem.setItem(item);
         buyerItem.setDate(new Date());
-        if (itemType == 1) {
-            buyerItem.setType(Item.ItemType.NORMAL);
-        } else {
-            buyerItem.setType(Item.ItemType.FREEZER);
-        }
         buyerItem.setQuantity(quantity);
         buyerItem.setBuyerUnitPrice(unitPrice);
         buyerItem.setStatus(BuyerItem.Status.ACTIVE);

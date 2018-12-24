@@ -36,11 +36,10 @@
                         </select>
                     </div>
                     <div style="float: left; width: 10%; border-left: 6px solid #ffffff;  height: 10px; "></div>
-                    <div style="float: left; width: 45%">
+                    <div style="float: left; width: 45%" th:fragment="resultsList2" class="results-block" id="resultBlock2">
                         <label th:for="itemType">Item Type</label>
-                        <select class="w3-select" name="itemType" id="itemType">
-                            <option selected th:value="1" th:text="NORMAL">
-                            <option th:value="2" th:text="FREEZER">
+                        <select class="w3-select" name="itemType" id="itemType" disabled>
+                            <option th:text="${itemType}"></option>
                         </select>
                     </div>
                 </div>
@@ -51,11 +50,11 @@
                         <label th:for="unitPrice">Unit Price - 1 KG</label>
                         <input class="w3-input w3-border" name="unitPrice" id="unitPrice" type="number" step="0.01">
                     </div>
-                    <div style="float: left; padding-left: 130px">
+                    <div style="float: left; padding-left: 20%">
                         <label th:for="quantity">Quantity - KG </label>
                         <input class="w3-input w3-border" name="quantity" id="quantity" type="number" step="0.001">
                     </div>
-                    <div style="float: left; padding-left: 130px; padding-top: 18px; padding-bottom: 20px">
+                    <div style="float: right; padding-top: 18px; padding-bottom: 20px">
                         <input type="submit" value="SAVE" onclick="addItem()" class="w3-button w3-teal"/>
                     </div>
                 </div>
@@ -77,8 +76,8 @@
                 <tbody>
                 <tr th:each="buyerItem: ${buyerItems}">
                     <td th:text="${buyerItem.buyer.name}"></td>
-                    <td class="normalItem" th:if="${buyerItem.type.toString() == 'NORMAL'}" th:text="${buyerItem.item.name+' - NORMAL'}"></td>
-                    <td class="freezerItem" th:if="${buyerItem.type.toString() == 'FREEZER'}" th:text="${buyerItem.item.name+' - FREEZER'}"></td>
+                    <td class="normalItem" th:if="${buyerItem.item.type.toString() == 'NORMAL'}" th:text="${buyerItem.item.name+' - NORMAL'}"></td>
+                    <td class="freezerItem" th:if="${buyerItem.item.type.toString() == 'FREEZER'}" th:text="${buyerItem.item.name+' - FREEZER'}"></td>
                     <td th:text="${buyerItem.quantity}"></td>
                     <td th:text="${buyerItem.buyerUnitPrice}"></td>
                     <td th:text="${buyerItem.date}"></td>
@@ -105,6 +104,9 @@
         var selectBox = document.getElementById("item");
         var unitPrice = selectBox.options[selectBox.selectedIndex].value;
         document.getElementById("unitPrice").value = unitPrice;
+        var item = selectBox.options[selectBox.selectedIndex].text;
+        var url = "selling/getDetails?item=" + encodeURIComponent(item);
+        $("#resultBlock2").load(url);
     }
 
     function addItem() {
@@ -113,8 +115,7 @@
         var item = selectBox.options[selectBox.selectedIndex].text;
         var unitPrice = document.getElementById("unitPrice").value;
         var quantity = document.getElementById("quantity").value;
-        var itemType = document.getElementById("itemType").value;
-        var url = "selling/add?buyer=" + buyer + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity+ "&itemType=" + itemType;
+        var url = "selling/add?buyer=" + buyer + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
         $("#resultBlock").load(url);
     }
 

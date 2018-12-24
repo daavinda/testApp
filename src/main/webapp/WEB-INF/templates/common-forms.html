@@ -57,6 +57,14 @@
     <textarea id="unitPrice" type="text" class="w3-input" th:field="*{unitPrice}" th:placeholder="#{Unit Price}"/>
     <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('unitPrice')}" th:errors="*{unitPrice}"></div>
 
+    <label th:for="itemType">Item Type</label>
+    <select class="w3-select" name="itemType" id="itemType" th:field="*{type}">
+        <option th:each="type : ${T(market.common.orm.model.Item.ItemType).values()}"
+                th:value="${type}"
+                th:text="${type}">
+        </option>
+    </select>
+
 </form>
 
 

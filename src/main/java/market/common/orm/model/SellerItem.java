@@ -43,9 +43,6 @@ public class SellerItem implements Serializable {
     private Date date;
 
     @Enumerated(EnumType.STRING)
-    private Item.ItemType type;
-
-    @Enumerated(EnumType.STRING)
     private SellerItem.Status status;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -102,14 +99,6 @@ public class SellerItem implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Item.ItemType getType() {
-        return type;
-    }
-
-    public void setType(Item.ItemType type) {
-        this.type = type;
     }
 
     public Status getStatus() {
