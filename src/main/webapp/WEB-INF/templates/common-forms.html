@@ -20,23 +20,6 @@
     </div>
 </form>
 
-<!--APPLICATION CREATION FORM-->
-<form id="applicationForm" class="w3-margin" th:action="@{/application/save}" th:object="${application}">
-    <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
-    <label for="name" th:text="#{Application Name}"></label>
-    <input id="name" type="text" class="w3-input" th:field="*{applicationName}" th:placeholder="#{Application Name}"/>
-    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('applicationName')}" th:errors="*{applicationName}"></div>
-
-    <label for="desc" th:text="#{Application Description}"></label>
-    <textarea id="desc" type="text" class="w3-input" th:field="*{applicationDescription}" th:placeholder="#{Application Description}"/>
-    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('applicationDescription')}" th:errors="*{applicationDescription}"></div>
-
-    <label for="url" th:text="#{Service URL}"></label>
-    <input id="url" type="text" class="w3-input" th:field="*{serviceURL}" th:placeholder="#{serviceURL}"/>
-    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('serviceURL')}" th:errors="*{serviceURL}"></div>
-</form>
-
-
 <!--BUYER CREATION FORM-->
 <form id="buyerForm" class="w3-margin" th:action="@{/buyer/save}" th:object="${buyer}">
     <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
@@ -83,18 +66,6 @@
     <label for="name" th:text="#{Expense Type Name}"></label>
     <input id="name" type="text" class="w3-input" th:field="*{name}" th:placeholder="#{Expense Type Name}"/>
     <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-</form>
-
-<!--Subscriber deactivation reason FORM-->
-<form id="deactivationReasonForm" class="w3-margin" th:action="@{/subscriber/deactivate}" th:object="${subscriber}">
-    <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
-    <input readonly="true" hidden="hidden" type="text" th:field="*{msisdn}" id="msisdn">
-    <input readonly="true" hidden="hidden" type="text" th:field="*{applicationName}" id="applicationName">
-    <input readonly="true" hidden="hidden" type="date" th:field="*{deactivationDate}" id="deactivationDate">
-    <label for="desc" th:text="#{Deactivation Reason}"></label>
-    <textarea id="desc" type="text" class="w3-input" th:field="*{deactivationReason}" th:placeholder="#{Deactivation Reason}"/>
-    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('deactivationReason')}" th:errors="*{deactivationReason}"></div>
-
 </form>
 
 <!--USERS CREATION FORM-->

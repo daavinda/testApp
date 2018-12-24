@@ -1,0 +1,108 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="resultsList" class="results-block">
+    <div id="resultBlock">
+        <div th:replace="common-alerts :: body"></div>
+        <div th:replace="common-loader :: body"></div>
+        <div>
+            <div class="w3-cell-row">
+                <div class="w3-cell">
+                    <h1 class="w3-xxlarge w3-text-teal"><b><span
+                            th:text="#{cr.management.page.heading}"></span></b>
+                    </h1>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label th:for="selectItem">Item</label>
+                <select class="w3-select" name="item" id="item" onchange="getItemDetails()">
+                    <option disabled selected value>- - SELECT ITEM - -</option>
+                    <option th:each="item : ${items}"
+                            th:value="${item.id}"
+                            th:text="${item.name}">
+                    </option>
+                </select>
+
+                <div style="clear:left;"></div>
+                <div th:fragment="resultsList2" class="results-block" id="resultBlock2">
+                    <input readonly="true" hidden="hidden" type="number" th:value="*{itemId}" id="itemId"/>
+                    <div style="float: left;">
+                        <label th:for="unitPrice">Unit Price - 1 KG</label>
+                        <input class="w3-input w3-border" name="unitPrice" id="unitPrice" th:value="${unitPrice}"
+                               type="number" step="0.01">
+                    </div>
+                    <div style="float: left; padding-left: 20%">
+                        <label th:for="quantity">Remaining Quantity - KG </label>
+                        <input class="w3-input w3-border" name="quantity" id="quantity" th:value="${quantity}"
+                               type="number" step="0.001">
+                    </div>
+                    <div style="float: right; padding-top: 18px; padding-bottom: 20px">
+                        <input type="submit" value="SAVE" onclick="addItem()" class="w3-button w3-teal"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <table style="padding-top: 10px" id="crTable" class="display cell-border" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{cr.management.table.heading.item}">Item</th>
+                    <th th:text="#{cr.management.table.heading.quantity}">Quantity</th>
+                    <th th:text="#{cr.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{cr.management.table.heading.from.date}">From Date</th>
+                    <th th:text="#{cr.management.table.heading.to.date}">To Date</th>
+                    <th th:text="#{cr.management.table.heading.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cr: ${crs}">
+                    <td th:text="${cr.item.name}"></td>
+                    <td th:text="${cr.quantity}"></td>
+                    <td th:text="${cr.unitPrice}"></td>
+                    <td th:text="${cr.fromDate}"></td>
+                    <td th:text="${cr.toDate}"></td>
+                    <td>
+                        <a href="#" th:text="#{label.remove.link}"
+                           th:onclick="'removeItem(\'' + ${cr.id} + '\');'"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#crTable').DataTable({})
+    });
+
+    function getItemDetails() {
+        var selectBox = document.getElementById("item");
+        var id = selectBox.options[selectBox.selectedIndex].value;
+        var url = "cr/getDetails?id=" + id;
+        $("#resultBlock2").load(url);
+    }
+
+    function addItem() {
+        var item = document.getElementById("itemId").value;
+        var unitPrice = document.getElementById("unitPrice").value;
+        var quantity = document.getElementById("quantity").value;
+        var url = "cr/add?item=" + item + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
+        $("#resultBlock").load(url);
+    }
+
+    function removeItem(itemId) {
+        if (confirm("Are you sure you need to remove this entry ?") == true) {
+            var url = "buying/remove?item=" + itemId;
+            $("#resultBlock").load(url);
+        } else {
+        }
+    }
+
+</script>
+</html>

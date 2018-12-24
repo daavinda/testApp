@@ -1,7 +1,6 @@
 package market.common.validator;
 
 import market.common.orm.model.Buyer;
-import market.common.orm.model.Subscriber;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

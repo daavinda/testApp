@@ -26,6 +26,9 @@ public class Item implements Serializable {
     @Column(name = "quantity")
     private BigDecimal quantity;
 
+    @Enumerated(EnumType.STRING)
+    private ItemType type;
+
     public long getId() {
         return id;
     }
@@ -56,5 +59,13 @@ public class Item implements Serializable {
 
     public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
+    }
+
+    public ItemType getType() {
+        return type;
+    }
+
+    public void setType(ItemType type) {
+        this.type = type;
     }
 }
