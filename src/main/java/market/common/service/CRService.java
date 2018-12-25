@@ -13,4 +13,8 @@ public interface CRService {
     void save(Long itemId, BigDecimal unitPrice, BigDecimal quantity);
 
     void remove(CR cr);
+
+    CR findById(Long id);
+
+    void finishCr();
 }

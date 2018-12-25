@@ -1,6 +1,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="resultsList" class="results-block">
+<div th:if="${crDone}">
+
+    <div class="w3-cell-row">
+        <div class="w3-cell">
+            <h1 class="w3-xxlarge w3-text-teal"><b><span
+                    th:text="#{cr.management.page.heading}"></span></b>
+            </h1>
+        </div>
+    </div>
+
+    <h4 style="color: rgba(157, 9, 0, 0.88)">CR Done for the day</h4>
+
+    <table style="padding-top: 10px" id="crTable" class="display cell-border" cellspacing="0"
+           width="100%">
+        <thead>
+        <tr>
+            <th th:text="#{cr.management.table.heading.item}">Item</th>
+            <th th:text="#{cr.management.table.heading.quantity}">Quantity</th>
+            <th th:text="#{cr.management.table.heading.unit.price}">Unit Price</th>
+            <th th:text="#{cr.management.table.heading.date}">From Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cr: ${crs}">
+            <td th:text="${cr.item.name}"></td>
+            <td th:text="${cr.quantity}"></td>
+            <td th:text="${cr.unitPrice}"></td>
+            <td th:text="${cr.date}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:fragment="resultsList" class="results-block" th:if="${!crDone}">
     <div id="resultBlock">
         <div th:replace="common-alerts :: body"></div>
         <div th:replace="common-loader :: body"></div>
@@ -10,6 +42,10 @@
                     <h1 class="w3-xxlarge w3-text-teal"><b><span
                             th:text="#{cr.management.page.heading}"></span></b>
                     </h1>
+                </div>
+                <div class="w3-cell" align="right">
+                    <button onclick="finishCR()" th:text="#{cr.finish.cr}"
+                            class="w3-btn w3-red w3-medium"></button>
                 </div>
             </div>
 
@@ -50,8 +86,7 @@
                     <th th:text="#{cr.management.table.heading.item}">Item</th>
                     <th th:text="#{cr.management.table.heading.quantity}">Quantity</th>
                     <th th:text="#{cr.management.table.heading.unit.price}">Unit Price</th>
-                    <th th:text="#{cr.management.table.heading.from.date}">From Date</th>
-                    <th th:text="#{cr.management.table.heading.to.date}">To Date</th>
+                    <th th:text="#{cr.management.table.heading.date}">From Date</th>
                     <th th:text="#{cr.management.table.heading.action}">Action</th>
                 </tr>
                 </thead>
@@ -60,8 +95,7 @@
                     <td th:text="${cr.item.name}"></td>
                     <td th:text="${cr.quantity}"></td>
                     <td th:text="${cr.unitPrice}"></td>
-                    <td th:text="${cr.fromDate}"></td>
-                    <td th:text="${cr.toDate}"></td>
+                    <td th:text="${cr.date}"></td>
                     <td>
                         <a href="#" th:text="#{label.remove.link}"
                            th:onclick="'removeItem(\'' + ${cr.id} + '\');'"></a>
@@ -98,7 +132,15 @@
 
     function removeItem(itemId) {
         if (confirm("Are you sure you need to remove this entry ?") == true) {
-            var url = "buying/remove?item=" + itemId;
+            var url = "cr/remove?item=" + itemId;
+            $("#resultBlock").load(url);
+        } else {
+        }
+    }
+
+    function finishCR() {
+        if (confirm("Are you sure you need to finish CR for the day ?") == true) {
+            var url = "cr/finish";
             $("#resultBlock").load(url);
         } else {
         }

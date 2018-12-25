@@ -1,11 +1,14 @@
 package market.common.service.impl;
 
 import market.common.orm.model.BuyerItem;
+import market.common.orm.model.CRStatus;
 import market.common.orm.repo.BuyerItemRepository;
 import market.common.service.BuyerItemService;
+import market.common.service.CRStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +19,8 @@ public class BuyerItemServiceImpl implements BuyerItemService {
 
     @Autowired
     private BuyerItemRepository buyerItemRepository;
+    @Autowired
+    private CRStatusService crStatusService;
 
     @Override
     public List<BuyerItem> getAllBuyerItems() {
@@ -34,6 +39,7 @@ public class BuyerItemServiceImpl implements BuyerItemService {
 
     @Override
     public void saveBuyerItem(BuyerItem buyerItem) {
+        crStatusService.updateStatus();
         buyerItemRepository.saveAndFlush(buyerItem);
     }
 

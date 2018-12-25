@@ -24,6 +24,8 @@ public class CRController {
     private ItemService itemService;
     @Autowired
     private CRService crService;
+    @Autowired
+    private CRStatusService crStatusService;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String load(Model model) {
@@ -52,7 +54,14 @@ public class CRController {
 
     @RequestMapping(value = "/remove", method = RequestMethod.GET)
     public String remove(Model model, @RequestParam("item") Long item) {
+        crService.remove(crService.findById(item));
+        loadAttributes(model);
+        return "cr-management";
+    }
 
+    @RequestMapping(value = "/finish", method = RequestMethod.GET)
+    public String finishCr(Model model) {
+        crService.finishCr();
         loadAttributes(model);
         return "cr-management";
     }
@@ -60,5 +69,6 @@ public class CRController {
     private void loadAttributes(Model model) {
         model.addAttribute("items", itemService.findByType(Item.ItemType.NORMAL));
         model.addAttribute("crs", crService.findAll());
+        model.addAttribute("crDone", crStatusService.getTodayCRStatus());
     }
 }

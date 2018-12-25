@@ -3,6 +3,7 @@ package market.common.service.impl;
 import market.common.orm.model.CR;
 import market.common.orm.repo.CRRepository;
 import market.common.service.CRService;
+import market.common.service.CRStatusService;
 import market.common.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class CRServiceImpl implements CRService {
     private CRRepository crRepository;
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private CRStatusService crStatusService;
 
 
     @Override
@@ -31,12 +34,22 @@ public class CRServiceImpl implements CRService {
         cr.setQuantity(quantity);
         cr.setUnitPrice(unitPrice);
         cr.setItem(itemService.findById(itemId));
-        cr.setFromDate(new Date());
+        cr.setDate(new Date());
         crRepository.saveAndFlush(cr);
     }
 
     @Override
     public void remove(CR cr) {
         crRepository.delete(cr);
+    }
+
+    @Override
+    public CR findById(Long id) {
+        return crRepository.findOne(id);
+    }
+
+    @Override
+    public void finishCr() {
+        crStatusService.finishCr();
     }
 }
