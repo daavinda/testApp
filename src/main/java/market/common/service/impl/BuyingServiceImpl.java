@@ -50,6 +50,7 @@ public class BuyingServiceImpl implements BuyingService {
     public void removeBuying(Long item) {
 
         SellerItem sellerItem = sellerItemService.findById(item);
+        itemService.updateWithSelling(sellerItem.getItem(), sellerItem.getQuantity());
 
         BigDecimal amount = sellerItem.getSellerUnitPrice().multiply(sellerItem.getQuantity());
         pendingPaymentService.updateWithDeleteBuying(sellerItem.getSeller(), amount);

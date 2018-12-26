@@ -56,6 +56,7 @@ public class SellingServiceImpl implements SellingService {
     public void removeSale(Long item) {
 
         BuyerItem buyerItem = buyerItemService.findById(item);
+        itemService.updateWithBuying(buyerItem.getItem(), buyerItem.getQuantity());
 
         BigDecimal amount = buyerItem.getBuyerUnitPrice().multiply(buyerItem.getQuantity());
         pendingPaymentService.updateWithDeleteSelling(buyerItem.getBuyer(), amount);

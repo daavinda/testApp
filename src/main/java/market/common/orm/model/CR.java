@@ -10,6 +10,11 @@ import java.util.Date;
 @Entity(name = "cr")
 public class CR implements Serializable {
 
+    public enum Status {
+        ACTIVE,
+        INACTIVE
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,6 +34,10 @@ public class CR implements Serializable {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
 
     public long getId() {
         return id;
@@ -68,5 +77,13 @@ public class CR implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

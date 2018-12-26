@@ -1,6 +1,7 @@
 package market.common.service.impl;
 
 import market.common.orm.model.CR;
+import market.common.orm.model.Item;
 import market.common.orm.repo.CRRepository;
 import market.common.service.CRService;
 import market.common.service.CRStatusService;
@@ -35,12 +36,14 @@ public class CRServiceImpl implements CRService {
         cr.setUnitPrice(unitPrice);
         cr.setItem(itemService.findById(itemId));
         cr.setDate(new Date());
+        cr.setStatus(CR.Status.ACTIVE);
         crRepository.saveAndFlush(cr);
     }
 
     @Override
     public void remove(CR cr) {
         crRepository.delete(cr);
+        crStatusService.updateStatus();
     }
 
     @Override
@@ -48,8 +51,30 @@ public class CRServiceImpl implements CRService {
         return crRepository.findOne(id);
     }
 
+    public List<CR> findByDate(Date date) {
+        return crRepository.findByDate(date);
+    }
+
     @Override
     public void finishCr() {
-        crStatusService.finishCr();
+
+        List<Item> allItems = itemService.findByType(Item.ItemType.NORMAL);
+        for (Item item : allItems) {
+            item.setQuantity(BigDecimal.ZERO);
+            itemService.saveItem(item);
+        }
+
+        List<CR> crList = findByDate(new Date());
+        for(CR cr: crList) {
+            if(cr.getStatus()==CR.Status.ACTIVE) {
+                Item item = cr.getItem();
+                item.setQuantity(cr.getQuantity());
+                item.setUnitPrice(cr.getUnitPrice());
+                itemService.saveItem(item);
+                cr.setStatus(CR.Status.INACTIVE);
+                crRepository.saveAndFlush(cr);
+            }
+        }
+                crStatusService.finishCr();
     }
 }
