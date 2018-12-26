@@ -27,8 +27,8 @@ body, h1, h2, h3, h4, h5 {
 }
 
 .spring-thymeleaf-main-body {
-    margin-left:340px;
-    margin-right:40px;
+    margin-left: 340px;
+    margin-right: 40px;
     padding-bottom: 60px;
 }
 
@@ -59,7 +59,7 @@ body, h1, h2, h3, h4, h5 {
 
 .LV_invalid_field {
     color: #F41010 !important;
-    background-color: #fcf8e3!important;
+    background-color: #fcf8e3 !important;
 }
 
 /*END Live validations*/
@@ -108,7 +108,8 @@ table.dataTable thead {
     z-index: 3;
 }
 
-hr { margin-top: 0px;
+hr {
+    margin-top: 0px;
     margin-bottom: 10px;
     color: #080808;
 }
@@ -121,14 +122,42 @@ hr { margin-top: 0px;
     background-color: skyblue;
 }
 
-.creditGreen{
+.creditGreen {
     background-color: rgba(81, 177, 90, 0.80);
 }
 
-.creditOrange{
+.creditOrange {
     background-color: rgba(238, 171, 67, 0.78);
 }
 
-.creditRed{
+.creditRed {
     background-color: rgba(188, 9, 0, 0.58);
+}
+
+.reportTable {
+
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.reportTable td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.reportTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.reportTable tr:hover {
+    background-color: #ddd;
+}
+
+.reportTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: rgba(199, 65, 84, 0.93);
+    color: white;
 }

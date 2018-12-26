@@ -74,4 +74,9 @@ public class PaymentServiceImpl implements PaymentService {
         }
         paymentRepository.delete(payment);
     }
+
+    @Override
+    public List<Payment> findByDate(Date date) {
+        return paymentRepository.findByDate(date);
+    }
 }

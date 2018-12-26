@@ -69,6 +69,9 @@
         <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/removal/load}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.removal.title}">
         </a>
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/report/list}"
+           class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.report.title}">
+        </a>
         <a sec:authorize="hasAuthority('ROLE_MANAGE_ROLE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/system/role/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.user.role.title}">
         </a>
@@ -81,10 +84,10 @@
 </nav>
 
 <!-- Top menu on small screens -->
-<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
-    <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">&#9776;</a>
-    <span>T H S</span>
-</header>
+<!--<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">-->
+    <!--<a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">&#9776;</a>-->
+    <!--<span>T H S</span>-->
+<!--</header>-->
 
 <!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu"

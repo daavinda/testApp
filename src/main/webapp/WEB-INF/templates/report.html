@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div th:replace="common-alerts :: body"></div>
+<div th:replace="common-loader :: body"></div>
+<div th:fragment="resultsList" class="results-block">
+    <div id="resultBlock">
+        <div class="w3-cell-row" th:if="${showTitle}">
+            <div class="w3-cell">
+                <h1 class="w3-xxlarge w3-text-teal"><b><span th:text="#{report.page.heading}"></span></b></h1>
+            </div>
+        </div>
+
+
+        <div th:if="${showReports}">
+            <button onclick="viewBuyerIncome()" th:text="#{Buyer Income Report}"
+                    class="w3-btn w3-cyan w3-medium"></button>
+        </div>
+
+        <div th:if="${showBuyerIncome}">
+            <h5>Daily Buyer Payments Report</h5>
+            <table style="padding-top: 10px" id="buyerIncomeTable" class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{Code}">Code</th>
+                    <th th:text="#{Name}">Name</th>
+                    <th th:text="#{Phone}">Phone</th>
+                    <th th:text="#{Payment}">Payment</th>
+                    <th th:text="#{Type}">Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="payment: ${payments}">
+                    <td th:text="${payment.buyer.code}"></td>
+                    <td th:text="${payment.buyer.name}"></td>
+                    <td th:text="${payment.buyer.phone}"></td>
+                    <td th:text="${payment.amount}"></td>
+                    <td th:text="${payment.paymentType}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+
+</div>
+<script>
+    $(document).ready(function () {
+        //$('#buyerIncomeTable').DataTable({})
+    });
+
+    function viewBuyerIncome() {
+        var url = "report/buyerIncome";
+        $("#resultBlock").load(url);
+    }
+</script>
+</body>
+</html>

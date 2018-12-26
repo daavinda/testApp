@@ -5,6 +5,7 @@ import market.common.orm.model.Payment;
 import market.common.orm.model.Seller;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,4 +20,6 @@ public interface PaymentService {
     List<Payment> findAllPayments();
 
     void removePayment(Long paymentId);
+
+    List<Payment> findByDate(Date date);
 }
