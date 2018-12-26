@@ -63,6 +63,9 @@
         <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/expenseType/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.expense.type.management.title}">
         </a>
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/freezer/list}"
+           class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.freezer.management.title}">
+        </a>
         <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/removal/load}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.removal.title}">
         </a>

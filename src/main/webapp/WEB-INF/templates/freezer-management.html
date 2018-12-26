@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div th:replace="common-alerts :: body"></div>
+<div th:replace="common-loader :: body"></div>
+<div>
+    <div class="w3-cell-row">
+        <div class="w3-cell">
+            <h1 class="w3-xxlarge w3-text-teal"><b><span th:text="#{freezer.management.page.heading}"></span></b></h1>
+        </div>
+    </div>
+
+    <table style="padding-top: 10px" id="appTable" class="display cell-border" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th th:text="#{item.management.table.heading.name}">Name</th>
+            <th th:text="#{item.management.table.heading.price}">Unit Price</th>
+            <th th:text="#{item.management.table.heading.quantity}">Quantity</th>
+            <th th:text="#{item.management.table.heading.type}">Item Type</th>
+            <!--<th th:text="#{item.management.table.heading.action}">Action</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item: ${items}">
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.unitPrice}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td class="normalItem" th:if="${item.type.toString() == 'NORMAL'}" th:text="${item.type}"></td>
+            <td class="freezerItem" th:if="${item.type.toString() == 'FREEZER'}" th:text="${item.type}"></td>
+            <!--<td>-->
+                <!--<a href="#" th:text="#{label.edit.link}"-->
+                   <!--th:onclick="'loadForm(\'item/new?id=' + ${item.id} + '\');'"></a>-->
+            <!--</td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#appTable').DataTable({})
+    });
+</script>
+</body>
+</html>
