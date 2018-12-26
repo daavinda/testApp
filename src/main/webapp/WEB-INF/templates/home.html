@@ -36,40 +36,40 @@
     </div>
     <div class="w3-bar-block" style="margin-bottom: 50px">
         <!--<a href="#" onclick="w3_close(); load(this.id)" th:id="@{/homeview/view}" class="w3-bar-item w3-button w3-hover-white">Home</a>-->
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_SUBSCRIBER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/selling/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_SELLING')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/selling/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.selling.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_SUBSCRIBER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/buying/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_BUYING')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/buying/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.buying.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_SUBSCRIBER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/payment/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_PAYMENT')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/payment/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.payment.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_SUBSCRIBER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/expense/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_EXPENSE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/expense/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.expense.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_SUBSCRIBER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/cr/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_CR')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/cr/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.cr.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/buyer/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_BUYER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/buyer/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.buyer.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/seller/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_SELLER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/seller/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.seller.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/item/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_ITEM')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/item/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.item.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/expenseType/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_EXPENSE_TYPE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/expenseType/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.expense.type.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/freezer/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_FREEZER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/freezer/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.freezer.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/removal/load}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_REMOVAL')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/removal/load}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.removal.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_APPLICATION')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/report/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_REPORT')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/report/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.report.title}">
         </a>
         <a sec:authorize="hasAuthority('ROLE_MANAGE_ROLE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/system/role/list}"

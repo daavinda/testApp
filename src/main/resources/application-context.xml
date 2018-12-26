@@ -171,11 +171,20 @@
         <security:remember-me key="uniqueAndSecret" token-validity-seconds="604800" remember-me-parameter="remember-me"/>
         <security:intercept-url pattern="/login" access="permitAll"/>
         <security:intercept-url pattern="/home" access="hasRole('ROLE_LOGIN')"/>
-        <!--<security:intercept-url pattern="/system/**" access="permitAll"/>-->
         <security:intercept-url pattern="/system/role/**" access="hasRole('ROLE_MANAGE_ROLE')"/>
         <security:intercept-url pattern="/system/user/**" access="hasRole('ROLE_MANAGE_USER')"/>
-        <security:intercept-url pattern="/subscriber/**" access="hasRole('ROLE_MANAGE_SUBSCRIBER')"/>
-        <security:intercept-url pattern="/application/**" access="hasRole('ROLE_MANAGE_APPLICATION')"/>
+        <security:intercept-url pattern="/buyer/**" access="hasRole('ROLE_MANAGE_BUYER')"/>
+        <security:intercept-url pattern="/seller/**" access="hasRole('ROLE_MANAGE_SELLER')"/>
+        <security:intercept-url pattern="/buying/**" access="hasRole('ROLE_MANAGE_BUYING')"/>
+        <security:intercept-url pattern="/selling/**" access="hasRole('ROLE_MANAGE_SELLING')"/>
+        <security:intercept-url pattern="/cr/**" access="hasRole('ROLE_MANAGE_CR')"/>
+        <security:intercept-url pattern="/expense/**" access="hasRole('ROLE_MANAGE_EXPENSE')"/>
+        <security:intercept-url pattern="/expenseType/**" access="hasRole('ROLE_MANAGE_EXPENSE_TYPE')"/>
+        <security:intercept-url pattern="/freezer/**" access="hasRole('ROLE_MANAGE_FREEZER')"/>
+        <security:intercept-url pattern="/item/**" access="hasRole('ROLE_MANAGE_ITEM')"/>
+        <security:intercept-url pattern="/payment/**" access="hasRole('ROLE_MANAGE_PAYMENT')"/>
+        <security:intercept-url pattern="/removal/**" access="hasRole('ROLE_MANAGE_REMOVAL')"/>
+        <security:intercept-url pattern="/report/**" access="hasRole('ROLE_MANAGE_REPORT')"/>
         <security:access-denied-handler error-page="/403"/>
         <security:session-management session-fixation-protection="migrateSession" invalid-session-url="/login" session-authentication-error-url="/logout">
             <!--<security:concurrency-control max-sessions="100" expired-url="/login" error-if-maximum-exceeded="true"/>-->
