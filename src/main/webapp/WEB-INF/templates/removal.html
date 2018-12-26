@@ -1,0 +1,81 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="resultsList" class="results-block">
+    <div id="resultBlock">
+        <div th:replace="common-alerts :: body"></div>
+        <div th:replace="common-loader :: body"></div>
+        <div>
+            <div class="w3-cell-row">
+                <div class="w3-cell">
+                    <h1 class="w3-xxlarge w3-text-teal"><b><span
+                            th:text="#{removal.page.heading}"></span></b>
+                    </h1>
+                </div>
+            </div>
+
+            <h5>Removed Sellings</h5>
+            <table style="padding-top: 10px" id="buyerItemTable" class="display cell-border" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{buyer.item.management.table.heading.buyer}">Buyer</th>
+                    <th th:text="#{buyer.item.management.table.heading.item}">Item</th>
+                    <th th:text="#{buyer.item.management.table.heading.quantity}">Quantity</th>
+                    <th th:text="#{buyer.item.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{buyer.item.management.table.heading.date}">Date</th>
+                    <th th:text="#{buyer.item.management.table.heading.removed.by}">Removed By</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="buyerItem: ${buyerItems}">
+                    <td th:text="${buyerItem.buyer.name}"></td>
+                    <td class="normalItem" th:if="${buyerItem.item.type.toString() == 'NORMAL'}" th:text="${buyerItem.item.name+' - NORMAL'}"></td>
+                    <td class="freezerItem" th:if="${buyerItem.item.type.toString() == 'FREEZER'}" th:text="${buyerItem.item.name+' - FREEZER'}"></td>
+                    <td th:text="${buyerItem.quantity}"></td>
+                    <td th:text="${buyerItem.buyerUnitPrice}"></td>
+                    <td th:text="${buyerItem.date}"></td>
+                    <td th:text="${buyerItem.removedUser.name}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h5>Removed Buyings</h5>
+            <table style="padding-top: 10px" id="sellerItemTable" class="display cell-border" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{seller.item.management.table.heading.seller}">Seller</th>
+                    <th th:text="#{seller.item.management.table.heading.item}">Item</th>
+                    <th th:text="#{seller.item.management.table.heading.quantity}">Quantity</th>
+                    <th th:text="#{seller.item.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{seller.item.management.table.heading.date}">Date</th>
+                    <th th:text="#{seller.item.management.table.heading.removed.by}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="sellerItem: ${sellerItems}">
+                    <td th:text="${sellerItem.seller.name}"></td>
+                    <td class="normalItem" th:if="${sellerItem.item.type.toString() == 'NORMAL'}" th:text="${sellerItem.item.name+' - NORMAL'}"></td>
+                    <td class="freezerItem" th:if="${sellerItem.item.type.toString() == 'FREEZER'}" th:text="${sellerItem.item.name+' - FREEZER'}"></td>
+                    <td th:text="${sellerItem.quantity}"></td>
+                    <td th:text="${sellerItem.sellerUnitPrice}"></td>
+                    <td th:text="${sellerItem.date}"></td>
+                    <td th:text="${sellerItem.removedUser.name}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#sellerItemTable').DataTable({})
+        $('#buyerItemTable').DataTable({})
+    });
+
+</script>
+</html>
