@@ -33,6 +33,11 @@ public class BuyerItemServiceImpl implements BuyerItemService {
     }
 
     @Override
+    public List<BuyerItem> findByDateAndStatus(Date date) {
+        return buyerItemRepository.findByDateAndStatus(date, BuyerItem.Status.ACTIVE);
+    }
+
+    @Override
     public List<BuyerItem> findByStatusAndType(String status, String type) {
         return buyerItemRepository.findByStatusAndType(status, type);
     }

@@ -37,6 +37,7 @@ public class SellingServiceImpl implements SellingService {
         Item item = itemService.findByName(itemName);
         itemService.updateWithSelling(item, quantity);
         SystemUser currentUser = systemUserService.getCurrentUser();
+        BigDecimal amount = quantity.multiply(unitPrice);
 
         buyerItem.setBuyer(buyer);
         buyerItem.setItem(item);
@@ -45,8 +46,8 @@ public class SellingServiceImpl implements SellingService {
         buyerItem.setBuyerUnitPrice(unitPrice);
         buyerItem.setStatus(BuyerItem.Status.ACTIVE);
         buyerItem.setAddedUser(currentUser);
+        buyerItem.setAmount(amount);
 
-        BigDecimal amount = quantity.multiply(unitPrice);
         pendingPaymentService.updateWithSelling(buyer, amount);
 
         buyerItemService.saveBuyerItem(buyerItem);

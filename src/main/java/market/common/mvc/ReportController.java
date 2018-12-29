@@ -2,7 +2,9 @@ package market.common.mvc;
 
 import market.common.orm.model.Payment;
 import market.common.service.PaymentService;
+import market.common.service.ReportService;
 import market.common.utils.MessageResolver;
+import market.common.utils.SalesReportDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class ReportController extends MessageResolver {
 
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private ReportService reportService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model) {
@@ -43,9 +47,9 @@ public class ReportController extends MessageResolver {
 
     @RequestMapping(value = "/salesReport", method = RequestMethod.GET)
     public String salesReport(Model model, @RequestParam("date") String date) {
-        List<Payment> payments = paymentService.findByDate(date);
+        SalesReportDto dto = reportService.getSalesReportDetails(date);
         model.addAttribute("reportDate", date);
-        model.addAttribute("payments", payments);
+        //model.addAttribute("payments", payments);
         model.addAttribute("showDailySales", true);
         return "report :: resultsList";
     }

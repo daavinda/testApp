@@ -37,6 +37,9 @@ public class SellerItem implements Serializable {
     @Column(name = "seller_unit_price")
     private BigDecimal sellerUnitPrice;
 
+    @Column(name = "amount")
+    private BigDecimal amount;
+
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -123,5 +126,13 @@ public class SellerItem implements Serializable {
 
     public void setRemovedUser(SystemUser removedUser) {
         this.removedUser = removedUser;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 }

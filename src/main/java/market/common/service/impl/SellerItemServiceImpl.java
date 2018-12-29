@@ -7,6 +7,7 @@ import market.common.service.SellerItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,6 +26,11 @@ public class SellerItemServiceImpl implements SellerItemService {
     @Override
     public List<SellerItem> findByStatus(String status) {
         return sellerItemRepository.findByStatus(status);
+    }
+
+    @Override
+    public List<SellerItem> findByDateAndStatus(Date date) {
+        return sellerItemRepository.findByDateAndStatus(date, SellerItem.Status.ACTIVE);
     }
 
     @Override

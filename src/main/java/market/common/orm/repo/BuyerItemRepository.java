@@ -4,6 +4,7 @@ import market.common.orm.model.BuyerItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,4 +18,5 @@ public interface BuyerItemRepository extends JpaRepository<BuyerItem, Long> {
     @Query(value = "SELECT * FROM buyer_item u WHERE u.status = ?1 AND u.type = ?2",  nativeQuery = true)
     List<BuyerItem> findByStatusAndType(String status, String type);
 
+    List<BuyerItem> findByDateAndStatus(Date date, BuyerItem.Status status);
 }
