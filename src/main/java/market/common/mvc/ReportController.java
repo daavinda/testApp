@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
@@ -32,10 +33,20 @@ public class ReportController extends MessageResolver {
     }
 
     @RequestMapping(value = "/buyerIncome", method = RequestMethod.GET)
-    public String buyerIncome(Model model) {
-        List<Payment> payments = paymentService.findByDate(new Date());
+    public String buyerIncome(Model model, @RequestParam("date") String date) {
+        List<Payment> payments = paymentService.findByDate(date);
+        model.addAttribute("reportDate", date);
         model.addAttribute("payments", payments);
         model.addAttribute("showBuyerIncome", true);
+        return "report :: resultsList";
+    }
+
+    @RequestMapping(value = "/salesReport", method = RequestMethod.GET)
+    public String salesReport(Model model, @RequestParam("date") String date) {
+        List<Payment> payments = paymentService.findByDate(date);
+        model.addAttribute("reportDate", date);
+        model.addAttribute("payments", payments);
+        model.addAttribute("showDailySales", true);
         return "report :: resultsList";
     }
 

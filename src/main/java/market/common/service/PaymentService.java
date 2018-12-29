@@ -21,5 +21,5 @@ public interface PaymentService {
 
     void removePayment(Long paymentId);
 
-    List<Payment> findByDate(Date date);
+    List<Payment> findByDate(String date);
 }

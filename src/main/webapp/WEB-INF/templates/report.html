@@ -17,13 +17,55 @@
 
 
         <div th:if="${showReports}">
-            <button onclick="viewBuyerIncome()" th:text="#{Buyer Income Report}"
-                    class="w3-btn w3-cyan w3-medium"></button>
+            <div style="float: left">
+                <button onclick="viewBuyerPayment()" th:text="#{Buyer Payments Report}"
+                        class="w3-btn w3-cyan w3-medium"></button>
+            </div>
+            <div style="float: left; margin-left: 20%">
+                <input style="border: 1px solid silver;" class="w3-input" id="datePicker1" type="date"
+                       name="incomeReportDate">
+            </div>
+            <div style="clear:left; margin-bottom:2%"></div>
+            <div style="float: left">
+                <button onclick="viewSalesReport()" th:text="#{Daily Sales Report}"
+                        class="w3-btn w3-cyan w3-medium"></button>
+            </div>
+            <div style="float: left; margin-left: 20%">
+                <input style="border: 1px solid silver;" class="w3-input" id="datePicker2" type="date"
+                       name="salesReportDate">
+            </div>
         </div>
 
         <div th:if="${showBuyerIncome}">
-            <h5>Daily Buyer Payments Report</h5>
+            <h5>Buyer Payments Report</h5>
+            <h6 th:text="${reportDate}"></h6>
             <table style="padding-top: 10px" id="buyerIncomeTable" class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{Code}">Code</th>
+                    <th th:text="#{Name}">Name</th>
+                    <th th:text="#{Phone}">Phone</th>
+                    <th th:text="#{Payment}">Payment</th>
+                    <th th:text="#{Type}">Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="payment: ${payments}">
+                    <td th:text="${payment.buyer.code}"></td>
+                    <td th:text="${payment.buyer.name}"></td>
+                    <td th:text="${payment.buyer.phone}"></td>
+                    <td th:text="${payment.amount}"></td>
+                    <td th:text="${payment.paymentType}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${showDailySales}">
+            <h5>Buyer Payments Report</h5>
+            <h6 th:text="${reportDate}"></h6>
+            <table style="padding-top: 10px" id="dailySalesTable" class="reportTable" cellspacing="0"
                    width="100%">
                 <thead>
                 <tr>
@@ -54,10 +96,19 @@
 <script>
     $(document).ready(function () {
         //$('#buyerIncomeTable').DataTable({})
+        document.getElementById('datePicker1').valueAsDate = new Date();
+        document.getElementById('datePicker2').valueAsDate = new Date();
     });
 
-    function viewBuyerIncome() {
-        var url = "report/buyerIncome";
+    function viewBuyerPayment() {
+        var selectedDate = document.getElementById('datePicker1').value;
+        var url = "report/buyerIncome?date=" + selectedDate;
+        $("#resultBlock").load(url);
+    }
+
+    function viewSalesReport() {
+        var selectedDate = document.getElementById('datePicker2').value;
+        var url = "report/salesReport?date=" + selectedDate;
         $("#resultBlock").load(url);
     }
 </script>
