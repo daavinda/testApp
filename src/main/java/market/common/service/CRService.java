@@ -4,6 +4,7 @@ package market.common.service;
 import market.common.orm.model.CR;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 public interface CRService {
@@ -17,4 +18,6 @@ public interface CRService {
     CR findById(Long id);
 
     void finishCr();
+
+    List<CR> findByDate(Date date);
 }

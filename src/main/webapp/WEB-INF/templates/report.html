@@ -65,30 +65,117 @@
         <div th:if="${showDailySales}">
             <h5>Buyer Payments Report</h5>
             <h6 th:text="${reportDate}"></h6>
-            <table style="padding-top: 10px" id="dailySalesTable" class="reportTable" cellspacing="0"
+            <hr/>
+            <h6>Buyings</h6>
+            <table style="padding-top: 10px" class="reportTable" cellspacing="0"
                    width="100%">
                 <thead>
                 <tr>
-                    <th th:text="#{Code}">Code</th>
-                    <th th:text="#{Name}">Name</th>
-                    <th th:text="#{Phone}">Phone</th>
-                    <th th:text="#{Payment}">Payment</th>
-                    <th th:text="#{Type}">Type</th>
+                    <th th:text="#{seller.item.management.table.heading.seller}">Seller</th>
+                    <th th:text="#{seller.item.management.table.heading.item}">Item</th>
+                    <th th:text="#{seller.item.management.table.heading.quantity}">Quantity</th>
+                    <th th:text="#{seller.item.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{seller.item.management.table.heading.amount}">Amount</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="payment: ${payments}">
-                    <td th:text="${payment.buyer.code}"></td>
-                    <td th:text="${payment.buyer.name}"></td>
-                    <td th:text="${payment.buyer.phone}"></td>
-                    <td th:text="${payment.amount}"></td>
-                    <td th:text="${payment.paymentType}"></td>
+                <tr th:each="sellerItem: ${dto.sellerItems}">
+                    <td th:text="${sellerItem.seller.name}"></td>
+                    <td class="normalItem" th:if="${sellerItem.item.type.toString() == 'NORMAL'}" th:text="${sellerItem.item.name+' - NORMAL'}"></td>
+                    <td class="freezerItem" th:if="${sellerItem.item.type.toString() == 'FREEZER'}" th:text="${sellerItem.item.name+' - FREEZER'}"></td>
+                    <td th:text="${sellerItem.quantity}"></td>
+                    <td th:text="${sellerItem.sellerUnitPrice}"></td>
+                    <td th:text="${sellerItem.amount}"></td>
                 </tr>
                 </tbody>
             </table>
+
+            <h6>Sellings</h6>
+            <table style="padding-top: 10px"  class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{buyer.item.management.table.heading.buyer}">Buyer</th>
+                    <th th:text="#{buyer.item.management.table.heading.item}">Item</th>
+                    <th th:text="#{buyer.item.management.table.heading.quantity}">Quantity</th>
+                    <th th:text="#{buyer.item.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{buyer.item.management.table.heading.amount}">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="buyerItem: ${dto.buyerItems}">
+                    <td th:text="${buyerItem.buyer.name}"></td>
+                    <td class="normalItem" th:if="${buyerItem.item.type.toString() == 'NORMAL'}" th:text="${buyerItem.item.name+' - NORMAL'}"></td>
+                    <td class="freezerItem" th:if="${buyerItem.item.type.toString() == 'FREEZER'}" th:text="${buyerItem.item.name+' - FREEZER'}"></td>
+                    <td th:text="${buyerItem.quantity}"></td>
+                    <td th:text="${buyerItem.buyerUnitPrice}"></td>
+                    <td th:text="${buyerItem.amount}"></td>
+
+                </tr>
+                </tbody>
+            </table>
+
+            <h6>CR</h6>
+            <table style="padding-top: 10px"  class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{cr.management.table.heading.item}">Item</th>
+                    <th th:text="#{cr.management.table.heading.quantity}">Quantity</th>
+                    <th th:text="#{cr.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{cr.management.table.heading.amount}">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cr: ${dto.crList}">
+                    <td th:text="${cr.item.name}"></td>
+                    <td th:text="${cr.quantity}"></td>
+                    <td th:text="${cr.unitPrice}"></td>
+                    <td th:text="${cr.amount}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div style="float: left">
+                <h5>Total Buyings - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${dto.totalAmountSeller}"></h5>
+            </div>
+            <div style="clear: both"></div>
+
+            <div style="float: left">
+                <h5>Total Sellings - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${dto.totalAmountBuyer}"></h5>
+            </div>
+            <div style="clear: both"></div>
+
+            <div style="float: left">
+                <h5>Total CR - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${dto.totalAmountCr}"></h5>
+            </div>
+            <div style="clear: both"></div>
+
+            <div style="float: left">
+                <h5>Profit With CR - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${dto.profitWithCr}"></h5>
+            </div>
+            <div style="clear: both"></div>
+
+            <div style="float: left">
+                <h5>Profit Without CR - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px; margin-bottom: 50px">
+                <h5 th:text="${dto.profitWithoutCr}"></h5>
+            </div>
+
         </div>
-
-
     </div>
 
 

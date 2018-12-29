@@ -27,6 +27,9 @@ public class CR implements Serializable {
     @Column(name = "quantity")
     private BigDecimal quantity;
 
+    @Column(name = "amount")
+    private BigDecimal amount;
+
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
@@ -85,5 +88,13 @@ public class CR implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 }

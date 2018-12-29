@@ -37,6 +37,7 @@ public class CRServiceImpl implements CRService {
         cr.setItem(itemService.findById(itemId));
         cr.setDate(new Date());
         cr.setStatus(CR.Status.ACTIVE);
+        cr.setAmount(unitPrice.multiply(quantity));
         crRepository.saveAndFlush(cr);
     }
 
@@ -51,6 +52,7 @@ public class CRServiceImpl implements CRService {
         return crRepository.findOne(id);
     }
 
+    @Override
     public List<CR> findByDate(Date date) {
         return crRepository.findByDate(date);
     }

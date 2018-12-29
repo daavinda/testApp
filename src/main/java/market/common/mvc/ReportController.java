@@ -49,8 +49,8 @@ public class ReportController extends MessageResolver {
     public String salesReport(Model model, @RequestParam("date") String date) {
         SalesReportDto dto = reportService.getSalesReportDetails(date);
         model.addAttribute("reportDate", date);
-        //model.addAttribute("payments", payments);
         model.addAttribute("showDailySales", true);
+        model.addAttribute("dto", dto);
         return "report :: resultsList";
     }
 
