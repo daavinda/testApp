@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -36,7 +37,7 @@ public class BuyingController {
     public String load(Model model) {
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("items", itemService.findAllItems());
-        List<SellerItem> sellerItems = sellerItemService.findByStatus(SellerItem.Status.ACTIVE.toString());
+        List<SellerItem> sellerItems = sellerItemService.findByDateAndStatus(new Date());
         model.addAttribute("sellerItems", sellerItems);
         return "buying-management";
     }
@@ -53,7 +54,7 @@ public class BuyingController {
 
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("items", itemService.findAllItems());
-        List<SellerItem> sellerItems = sellerItemService.findByStatus(SellerItem.Status.ACTIVE.toString());
+        List<SellerItem> sellerItems = sellerItemService.findByDateAndStatus(new Date());
         model.addAttribute("sellerItems", sellerItems);
 
         return "buying-management";
@@ -73,7 +74,7 @@ public class BuyingController {
 
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("items", itemService.findAllItems());
-        List<SellerItem> sellerItems = sellerItemService.findByStatus(SellerItem.Status.ACTIVE.toString());
+        List<SellerItem> sellerItems = sellerItemService.findByDateAndStatus(new Date());
         model.addAttribute("sellerItems", sellerItems);
 
         return "buying-management";
