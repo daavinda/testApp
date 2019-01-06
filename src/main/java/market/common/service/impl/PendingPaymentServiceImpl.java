@@ -18,7 +18,14 @@ public class PendingPaymentServiceImpl implements PendingPaymentService {
 
     @Override
     public PendingPayment findByBuyer(Buyer buyer) {
-        return pendingPaymentRepository.findByBuyer(buyer);
+        PendingPayment payment = pendingPaymentRepository.findByBuyer(buyer);
+        if (payment == null) {
+            PendingPayment newPayment = new PendingPayment();
+            newPayment.setBuyer(buyer);
+            newPayment.setAmount(BigDecimal.ZERO);
+            return newPayment;
+        }
+        return payment;
     }
 
     @Override

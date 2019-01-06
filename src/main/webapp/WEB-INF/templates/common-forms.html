@@ -12,10 +12,13 @@
 
     <label for="name" th:text="#{Role name}"></label>
     <input id="name" type="text" class="w3-input" th:field="*{roleName}" th:placeholder="#{Role name}"/>
-    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}"></div>
+
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('roleName')}"
+         th:errors="*{roleName}"></div>
 
     <div class="w3-container" th:each="permission : ${permissions}">
-        <input type="checkbox" name="checkedPermissions" th:value="${permission.id}" th:checked="${permission.checked}"/>
+        <input type="checkbox" name="checkedPermissions" th:value="${permission.id}"
+               th:checked="${permission.checked}"/>
         <label th:text="${permission.name}"></label>
     </div>
 </form>
@@ -25,12 +28,22 @@
     <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
     <label for="name" th:text="#{Buyer Name}"></label>
     <input id="name" type="text" class="w3-input" th:field="*{name}" th:placeholder="#{Buyer Name}"/>
+
     <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
     <label for="phone" th:text="#{Phone}"></label>
     <textarea id="phone" type="text" class="w3-input" th:field="*{phone}" th:placeholder="#{Phone}"/>
-    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+</form>
 
+<!--BUYER CREDIT FORM-->
+<form id="creditForm" class="w3-margin" th:action="@{/buyer/saveCredit}" th:object="${pendingPayment}">
+    <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
+    <input readonly="true" hidden="hidden" type="number" th:field="*{buyer.id}" id="buyer"/>
+    <label for="amount" th:text="#{Amount}"></label>
+    <input id="amount" type="text" class="w3-input" th:field="*{amount}" th:placeholder="#{Credit Amount}"/>
+
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('amount')}"
+         th:errors="*{amount}"></div>
 </form>
 
 <!--SELLER CREATION FORM-->
@@ -38,10 +51,12 @@
     <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
     <label for="name" th:text="#{Seller Name}"></label>
     <input id="name" type="text" class="w3-input" th:field="*{name}" th:placeholder="#{Seller Name}"/>
+
     <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
     <label for="phone" th:text="#{Phone}"></label>
     <textarea id="phone" type="text" class="w3-input" th:field="*{phone}" th:placeholder="#{Phone}"/>
+
     <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
 
 </form>
@@ -51,11 +66,14 @@
     <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
     <label for="name" th:text="#{Item Name}"></label>
     <input id="name" type="text" class="w3-input" th:field="*{name}" th:placeholder="#{Item Name}"/>
+
     <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
     <label for="unitPrice" th:text="#{Unit Price}"></label>
     <textarea id="unitPrice" type="text" class="w3-input" th:field="*{unitPrice}" th:placeholder="#{Unit Price}"/>
-    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('unitPrice')}" th:errors="*{unitPrice}"></div>
+
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('unitPrice')}"
+         th:errors="*{unitPrice}"></div>
 
     <label th:for="itemType">Item Type</label>
     <select class="w3-select" name="itemType" id="itemType" th:field="*{type}">
@@ -73,6 +91,7 @@
     <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
     <label for="name" th:text="#{Expense Type Name}"></label>
     <input id="name" type="text" class="w3-input" th:field="*{name}" th:placeholder="#{Expense Type Name}"/>
+
     <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 </form>
 
@@ -85,14 +104,18 @@
     <input id="name" type="text" class="w3-input" th:field="*{name}" th:placeholder="#{First Name}"/>
     <label for="username" th:text="#{Login username}"></label>
     <input id="username" type="text" class="w3-input" th:field="*{username}" th:placeholder="#{User name}"/>
-    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('username')}"
+         th:errors="*{username}"></div>
     <div th:switch="*{id}">
         <label for="newPassword" th:case="${0}" th:text="#{Password}"></label>
     </div>
     <div th:switch="*{id}">
-        <input id="newPassword" th:case="${0}" type="password" class="w3-input" th:field="*{password}" th:placeholder="#{Password}"/>
+        <input id="newPassword" th:case="${0}" type="password" class="w3-input" th:field="*{password}"
+               th:placeholder="#{Password}"/>
     </div>
-    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('password')}"
+         th:errors="*{password}"></div>
     <label for="role" th:text="#{Select role}"></label>
     <select id="role" class="w3-input" th:field="*{role.id}">
         <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.roleName}"></option>
@@ -109,8 +132,11 @@
     <label for="password" th:text="#{New password}"></label>
     <input id="password" type="password" name="password" class="w3-input" th:placeholder="#{New password}"/>
     <label for="confirmPassword" th:text="#{Confirmed password}"></label>
-    <input id="confirmPassword" type="password" name="confirmPassword" class="w3-input" th:placeholder="#{Confirm password}"/>
-    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <input id="confirmPassword" type="password" name="confirmPassword" class="w3-input"
+           th:placeholder="#{Confirm password}"/>
+
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('password')}"
+         th:errors="*{password}"></div>
 </form>
 
 </body>

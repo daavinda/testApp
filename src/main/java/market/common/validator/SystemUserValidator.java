@@ -18,8 +18,8 @@ public class SystemUserValidator implements Validator {
 
     @Autowired
     private SystemUserRepository systemUserRepository;
-    @Value("${super.user.username}")
-    private String superUserName;
+//    @Value("${super.user.username}")
+//    private String superUserName;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -32,7 +32,7 @@ public class SystemUserValidator implements Validator {
 
         SystemUser user = systemUserRepository.findByUsername(systemUser.getUsername());
 
-        if (user != null && !(user.getId() == systemUser.getId()) || superUserName.equalsIgnoreCase(systemUser.getUsername())) {
+        if (user != null && !(user.getId() == systemUser.getId())) {
             errors.rejectValue("username", "validation.duplicate");
         }
 

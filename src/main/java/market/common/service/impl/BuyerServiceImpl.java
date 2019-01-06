@@ -70,5 +70,11 @@ public class BuyerServiceImpl implements BuyerService {
         return dtoList;
     }
 
+    @Override
+    public BigDecimal getBuyerCredit(Long buyerId) {
+        PendingPayment payment = pendingPaymentService.findByBuyer(getBuyerById(buyerId));
+        return payment.getAmount();
+    }
+
 
 }

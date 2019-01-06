@@ -27,10 +27,10 @@ public class SystemUserDetailService implements UserDetailsService {
     private SystemUserRepository adminUserRepository;
     @Autowired
     private PermissionRepository permissionRepository;
-    @Value("${super.user.username}")
-    private String superUsername;
-    @Value("${super.user.password}")
-    private String superUserPassword;
+//    @Value("${super.user.username}")
+//    private String superUsername;
+//    @Value("${super.user.password}")
+//    private String superUserPassword;
 
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -56,13 +56,15 @@ public class SystemUserDetailService implements UserDetailsService {
                 authorities.add(new SimpleGrantedAuthority(permission.getName()));
             }
             return new User(username, password, true, true, true, true, authorities);
-        } else if (superUsername != null && superUserPassword != null) {
-            authorities.add(new SimpleGrantedAuthority(ROLE_SUPER_ADMIN));
-            for (Permission permission : permissionRepository.findAll()) {
-                authorities.add(new SimpleGrantedAuthority(permission.getName()));
-            }
-            return new User(superUsername, superUserPassword, true, true, true, true, authorities);
-        } else {
+        }
+//        else if (superUsername != null && superUserPassword != null) {
+//            authorities.add(new SimpleGrantedAuthority(ROLE_SUPER_ADMIN));
+//            for (Permission permission : permissionRepository.findAll()) {
+//                authorities.add(new SimpleGrantedAuthority(permission.getName()));
+//            }
+//            return new User(superUsername, superUserPassword, true, true, true, true, authorities);
+//        }
+        else {
             throw new UsernameNotFoundException("User Not Found!!!");
         }
     }
