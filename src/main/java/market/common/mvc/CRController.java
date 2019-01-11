@@ -67,7 +67,7 @@ public class CRController {
     }
 
     private void loadAttributes(Model model) {
-        model.addAttribute("items", itemService.findByType(Item.ItemType.NORMAL));
+        model.addAttribute("items", itemService.findByTypeAndNotInCr(Item.ItemType.NORMAL));
         model.addAttribute("crs", crService.findAll());
         model.addAttribute("crDone", crStatusService.getTodayCRStatus());
     }

@@ -23,4 +23,6 @@ public interface ItemService {
     void updateWithSelling(Item item, BigDecimal quantity);
 
     List<Item> findByType(Item.ItemType type);
+
+    List<Item> findByTypeAndNotInCr(Item.ItemType type);
 }

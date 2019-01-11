@@ -1,12 +1,16 @@
 package market.common.service.impl;
 
+import market.common.orm.model.CR;
 import market.common.orm.model.Item;
 import market.common.orm.repo.ItemRepository;
+import market.common.service.CRService;
 import market.common.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -14,6 +18,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private CRService crService;
 
 
     @Override
@@ -29,7 +35,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void saveItem(Item item) {
-        if(item.getQuantity()==null) {
+        if (item.getQuantity() == null) {
             item.setQuantity(BigDecimal.ZERO);
         }
         itemRepository.saveAndFlush(item);
@@ -55,5 +61,30 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> findByType(Item.ItemType type) {
         return itemRepository.findByType(type);
+    }
+
+    @Override
+    public List<Item> findByTypeAndNotInCr(Item.ItemType type) {
+
+        List<Item> itemList = itemRepository.findByType(type);
+        List<Item> notInCr = new ArrayList<>();
+        List<CR> crList = crService.findByDate(new Date());
+
+        if (itemList != null) {
+            for (Item item : itemList) {
+                boolean found = false;
+                if (crList != null && crList.size() > 0) {
+                    for (CR cr : crList) {
+                        if (item.getId() == cr.getItem().getId()) {
+                            found = true;
+                        }
+                    }
+                }
+                if (!found) {
+                    notInCr.add(item);
+                }
+            }
+        }
+        return notInCr;
     }
 }

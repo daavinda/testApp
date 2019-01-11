@@ -68,14 +68,14 @@ public class CRServiceImpl implements CRService {
 
         List<CR> crList = findByDate(new Date());
         for(CR cr: crList) {
-            if(cr.getStatus()==CR.Status.ACTIVE) {
+//            if(cr.getStatus()==CR.Status.ACTIVE) {
                 Item item = cr.getItem();
                 item.setQuantity(cr.getQuantity());
                 item.setUnitPrice(cr.getUnitPrice());
                 itemService.saveItem(item);
                 cr.setStatus(CR.Status.INACTIVE);
                 crRepository.saveAndFlush(cr);
-            }
+//            }
         }
                 crStatusService.finishCr();
     }
