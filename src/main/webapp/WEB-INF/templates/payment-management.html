@@ -14,9 +14,9 @@
             <div>
                 <div style="float: left; width: 45%">
                     <h3 class="w3-large w3-text-teal"><b><span th:text="#{Payment To}"></span></b></h3>
-                    <label th:for="seller">Seller</label>
+                    <label th:for="seller">ගැණුම්කරු</label>
                     <select style="margin-bottom: 10px" class="form-control w3-select" name="seller" id="seller">
-                        <option disabled selected value>- - SELECT SELLER - -</option>
+                        <option disabled selected value>- - ගැණුම්කරු තෝරන්න - -</option>
                         <option th:each="seller : ${sellers}"
                                 th:value="${seller.getId()}"
                                 th:text="${seller.getName()}">
@@ -42,9 +42,9 @@
                 </div>
                 <div style="float: left; width: 45%; ">
                     <h3 class="w3-large w3-text-teal"><b><span th:text="#{Payment From}"></span></b></h3>
-                    <label th:for="buyer">Buyer</label>
+                    <label th:for="buyer">විකුණුම්කරු</label>
                     <select style="margin-bottom: 10px" class="form-control w3-select" name="buyer" id="buyer">
-                        <option disabled selected value>- - SELECT BUYER - -</option>
+                        <option disabled selected value>- - විකුණුම්කරු තෝරන්න - -</option>
                         <option th:each="buyer : ${buyers}"
                                 th:value="${buyer.getId()}"
                                 th:text="${buyer.getName()}">
