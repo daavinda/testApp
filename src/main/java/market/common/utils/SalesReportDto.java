@@ -2,6 +2,7 @@ package market.common.utils;
 
 import market.common.orm.model.BuyerItem;
 import market.common.orm.model.CR;
+import market.common.orm.model.Expense;
 import market.common.orm.model.SellerItem;
 
 import java.math.BigDecimal;
@@ -20,6 +21,10 @@ public class SalesReportDto {
     private List<CR> crList;
 
     private BigDecimal totalAmountCr;
+
+    private List<Expense> expenseList;
+
+    private BigDecimal totalAmountExpense;
 
     private BigDecimal profitWithCr;
 
@@ -87,5 +92,21 @@ public class SalesReportDto {
 
     public void setProfitWithoutCr(BigDecimal profitWithoutCr) {
         this.profitWithoutCr = profitWithoutCr;
+    }
+
+    public List<Expense> getExpenseList() {
+        return expenseList;
+    }
+
+    public void setExpenseList(List<Expense> expenseList) {
+        this.expenseList = expenseList;
+    }
+
+    public BigDecimal getTotalAmountExpense() {
+        return totalAmountExpense;
+    }
+
+    public void setTotalAmountExpense(BigDecimal totalAmountExpense) {
+        this.totalAmountExpense = totalAmountExpense;
     }
 }

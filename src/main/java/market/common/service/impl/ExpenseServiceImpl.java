@@ -44,4 +44,9 @@ public class ExpenseServiceImpl implements ExpenseService {
     public void removeExpense(Long expenseId) {
         expenseRepository.delete(expenseId);
     }
+
+    @Override
+    public List<Expense> findByDate(Date date) {
+        return expenseRepository.findByDate(date);
+    }
 }

@@ -63,7 +63,7 @@
         </div>
 
         <div th:if="${showDailySales}">
-            <h5>Buyer Payments Report</h5>
+            <h5>Daily Sales Report</h5>
             <h6 th:text="${reportDate}"></h6>
             <hr/>
             <h6>Buyings</h6>
@@ -136,6 +136,23 @@
                 </tbody>
             </table>
 
+            <h6>Expenses</h6>
+            <table style="padding-top: 10px"  class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{expense.management.table.heading.expense}">Expense</th>
+                    <th th:text="#{expense.management.table.heading.amount}">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="expense: ${dto.expenseList}">
+                    <td th:text="${expense.expenseType.name}"></td>
+                    <td th:text="${expense.amount}"></td>
+                </tr>
+                </tbody>
+            </table>
+
             <div style="float: left">
                 <h5>Total Buyings - </h5>
             </div>
@@ -158,6 +175,16 @@
             <div style="float: left; margin-left: 10px">
                 <h5 th:text="${dto.totalAmountCr}"></h5>
             </div>
+
+            <div style="clear: both"></div>
+
+            <div style="float: left">
+                <h5>Total Expenses - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${dto.totalAmountExpense}"></h5>
+            </div>
+
             <div style="clear: both"></div>
 
             <div style="float: left">

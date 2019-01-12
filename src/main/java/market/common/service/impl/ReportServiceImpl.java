@@ -2,11 +2,9 @@ package market.common.service.impl;
 
 import market.common.orm.model.BuyerItem;
 import market.common.orm.model.CR;
+import market.common.orm.model.Expense;
 import market.common.orm.model.SellerItem;
-import market.common.service.BuyerItemService;
-import market.common.service.CRService;
-import market.common.service.ReportService;
-import market.common.service.SellerItemService;
+import market.common.service.*;
 import market.common.utils.SalesReportDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +24,8 @@ public class ReportServiceImpl implements ReportService {
     private SellerItemService sellerItemService;
     @Autowired
     private CRService crService;
+    @Autowired
+    private ExpenseService expenseService;
 
     @Override
     public SalesReportDto getSalesReportDetails(String date) {
@@ -41,10 +41,12 @@ public class ReportServiceImpl implements ReportService {
         List<BuyerItem> buyerItemList = buyerItemService.findByDateAndStatus(reportDate);
         List<SellerItem> sellerItemList = sellerItemService.findByDateAndStatus(reportDate);
         List<CR> crList = crService.findByDate(reportDate);
+        List<Expense> expenseList = expenseService.findByDate(reportDate);
 
         BigDecimal totalAmountSeller = new BigDecimal(0);
         BigDecimal totalAmountBuyer = new BigDecimal(0);
         BigDecimal totalAmountCr = new BigDecimal(0);
+        BigDecimal totalAmountExpense = new BigDecimal(0);
         BigDecimal profitWithCr;
         BigDecimal profitWithoutCr;
 
@@ -57,8 +59,11 @@ public class ReportServiceImpl implements ReportService {
         for (CR cr : crList) {
             totalAmountCr = totalAmountCr.add(cr.getAmount());
         }
-        profitWithCr = totalAmountBuyer.add(totalAmountCr).subtract(totalAmountSeller);
-        profitWithoutCr = totalAmountBuyer.subtract(totalAmountSeller);
+        for (Expense expense : expenseList) {
+            totalAmountExpense = totalAmountExpense.add(expense.getAmount());
+        }
+        profitWithCr = totalAmountBuyer.add(totalAmountCr).subtract(totalAmountSeller).subtract(totalAmountExpense);
+        profitWithoutCr = totalAmountBuyer.subtract(totalAmountSeller).subtract(totalAmountExpense);
 
         dto.setBuyerItems(buyerItemList);
         dto.setSellerItems(sellerItemList);
@@ -66,6 +71,8 @@ public class ReportServiceImpl implements ReportService {
         dto.setTotalAmountBuyer(totalAmountBuyer);
         dto.setTotalAmountSeller(totalAmountSeller);
         dto.setTotalAmountCr(totalAmountCr);
+        dto.setExpenseList(expenseList);
+        dto.setTotalAmountExpense(totalAmountExpense);
         dto.setProfitWithCr(profitWithCr);
         dto.setProfitWithoutCr(profitWithoutCr);
 
