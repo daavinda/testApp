@@ -1,5 +1,6 @@
 package market.common.orm.repo;
 
+import market.common.orm.model.Buyer;
 import market.common.orm.model.BuyerItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,6 @@ public interface BuyerItemRepository extends JpaRepository<BuyerItem, Long> {
     List<BuyerItem> findByStatusAndType(String status, String type);
 
     List<BuyerItem> findByDateAndStatus(Date date, BuyerItem.Status status);
+
+    List<BuyerItem> findByDateAndStatusAndBuyer(Date date, BuyerItem.Status active, Buyer buyer);
 }

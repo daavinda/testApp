@@ -1,9 +1,11 @@
 package market.common.service.impl;
 
+import market.common.orm.model.Buyer;
 import market.common.orm.model.BuyerItem;
 import market.common.orm.model.CRStatus;
 import market.common.orm.repo.BuyerItemRepository;
 import market.common.service.BuyerItemService;
+import market.common.service.BuyerService;
 import market.common.service.CRStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class BuyerItemServiceImpl implements BuyerItemService {
     private BuyerItemRepository buyerItemRepository;
     @Autowired
     private CRStatusService crStatusService;
+    @Autowired
+    private BuyerService buyerService;
 
     @Override
     public List<BuyerItem> getAllBuyerItems() {
@@ -35,6 +39,11 @@ public class BuyerItemServiceImpl implements BuyerItemService {
     @Override
     public List<BuyerItem> findByDateAndStatus(Date date) {
         return buyerItemRepository.findByDateAndStatus(date, BuyerItem.Status.ACTIVE);
+    }
+
+    @Override
+    public List<BuyerItem> findByDateAndStatusAndBuyer(Date date, Long buyerId) {
+        return buyerItemRepository.findByDateAndStatusAndBuyer(date, BuyerItem.Status.ACTIVE, buyerService.getBuyerById(buyerId));
     }
 
     @Override

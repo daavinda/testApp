@@ -5,6 +5,7 @@ import market.common.orm.model.CR;
 import market.common.orm.model.Expense;
 import market.common.orm.model.SellerItem;
 import market.common.service.*;
+import market.common.utils.DailyBuyerReportDto;
 import market.common.utils.SalesReportDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class ReportServiceImpl implements ReportService {
     private CRService crService;
     @Autowired
     private ExpenseService expenseService;
+    @Autowired
+    private PendingPaymentService pendingPaymentService;
+    @Autowired
+    private BuyerService buyerService;
 
     @Override
     public SalesReportDto getSalesReportDetails(String date) {
@@ -75,6 +80,35 @@ public class ReportServiceImpl implements ReportService {
         dto.setTotalAmountExpense(totalAmountExpense);
         dto.setProfitWithCr(profitWithCr);
         dto.setProfitWithoutCr(profitWithoutCr);
+
+        return dto;
+    }
+
+    @Override
+    public DailyBuyerReportDto getDailyBuyerReportDetails(String date, Long buyerId) {
+
+        Date reportDate = new Date();
+        try {
+            reportDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        List<BuyerItem> itemList = buyerItemService.findByDateAndStatusAndBuyer(reportDate, buyerId);
+
+        BigDecimal totalAmount = new BigDecimal(0);
+        if (itemList != null) {
+            for (BuyerItem item : itemList) {
+                totalAmount = totalAmount.add(item.getAmount());
+            }
+        }
+
+        BigDecimal totalCredits = pendingPaymentService.findByBuyer(buyerService.getBuyerById(buyerId)).getAmount();
+
+        DailyBuyerReportDto dto = new DailyBuyerReportDto();
+        dto.setCreditAmount(totalCredits);
+        dto.setTotalAmount(totalAmount);
+        dto.setItemList(itemList);
 
         return dto;
     }

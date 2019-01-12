@@ -13,6 +13,8 @@ public interface BuyerItemService {
 
     List<BuyerItem> findByDateAndStatus(Date date);
 
+    List<BuyerItem> findByDateAndStatusAndBuyer(Date date, Long buyerId);
+
     List<BuyerItem> findByStatusAndType(String string, String type);
 
     void saveBuyerItem(BuyerItem buyerItem);
