@@ -22,4 +22,8 @@ public interface PaymentService {
     void removePayment(Long paymentId);
 
     List<Payment> findByDate(String date);
+
+    List<Payment> getBuyerPaymentsByDate(String date);
+
+    List<Payment> getSellerPaymentsByDate(String date);
 }

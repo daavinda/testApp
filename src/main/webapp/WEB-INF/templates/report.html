@@ -18,7 +18,7 @@
 
         <div th:if="${showReports}">
             <div style="float: left">
-                <button onclick="viewBuyerPayment()" th:text="#{Buyer Payments Report}"
+                <button onclick="viewBuyerPayment()" th:text="#{Daily Payments Report}"
                         class="w3-btn w3-cyan w3-medium"></button>
             </div>
             <div style="float: left; margin-left: 20%">
@@ -37,9 +37,10 @@
         </div>
 
         <div th:if="${showBuyerIncome}">
-            <h5>Buyer Payments Report</h5>
+            <h5>Payments Report</h5>
             <h6 th:text="${reportDate}"></h6>
-            <table style="padding-top: 10px" id="buyerIncomeTable" class="reportTable" cellspacing="0"
+            <h6>Payment From</h6>
+            <table style="padding-top: 10px" class="reportTable" cellspacing="0"
                    width="100%">
                 <thead>
                 <tr>
@@ -51,10 +52,33 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="payment: ${payments}">
+                <tr th:each="payment: ${buyerPayments}">
                     <td th:text="${payment.buyer.code}"></td>
                     <td th:text="${payment.buyer.name}"></td>
                     <td th:text="${payment.buyer.phone}"></td>
+                    <td th:text="${payment.amount}"></td>
+                    <td th:text="${payment.paymentType}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h6>Payment To</h6>
+            <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{Code}">Code</th>
+                    <th th:text="#{Name}">Name</th>
+                    <th th:text="#{Phone}">Phone</th>
+                    <th th:text="#{Payment}">Payment</th>
+                    <th th:text="#{Type}">Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="payment: ${sellerPayments}">
+                    <td th:text="${payment.seller.code}"></td>
+                    <td th:text="${payment.seller.name}"></td>
+                    <td th:text="${payment.seller.phone}"></td>
                     <td th:text="${payment.amount}"></td>
                     <td th:text="${payment.paymentType}"></td>
                 </tr>
@@ -209,7 +233,6 @@
 </div>
 <script>
     $(document).ready(function () {
-        //$('#buyerIncomeTable').DataTable({})
         document.getElementById('datePicker1').valueAsDate = new Date();
         document.getElementById('datePicker2').valueAsDate = new Date();
     });

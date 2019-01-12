@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -81,10 +82,39 @@ public class PaymentServiceImpl implements PaymentService {
     public List<Payment> findByDate(String date) {
         Date reportDate = new Date();
         try {
-            reportDate=new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            reportDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return paymentRepository.findByDate(reportDate);
+    }
+
+    @Override
+    public List<Payment> getBuyerPaymentsByDate(String date) {
+
+        List<Payment> buyerPaymentList = new ArrayList<>();
+        List<Payment> paymentList = findByDate(date);
+        if (paymentList != null) {
+            for (Payment payment : paymentList) {
+                if (payment.getBuyer() != null) {
+                    buyerPaymentList.add(payment);
+                }
+            }
+        }
+        return buyerPaymentList;
+    }
+
+    @Override
+    public List<Payment> getSellerPaymentsByDate(String date) {
+        List<Payment> sellerPaymentList = new ArrayList<>();
+        List<Payment> paymentList = findByDate(date);
+        if (paymentList != null) {
+            for (Payment payment : paymentList) {
+                if (payment.getSeller() != null) {
+                    sellerPaymentList.add(payment);
+                }
+            }
+        }
+        return sellerPaymentList;
     }
 }

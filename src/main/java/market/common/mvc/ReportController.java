@@ -38,9 +38,11 @@ public class ReportController extends MessageResolver {
 
     @RequestMapping(value = "/buyerIncome", method = RequestMethod.GET)
     public String buyerIncome(Model model, @RequestParam("date") String date) {
-        List<Payment> payments = paymentService.findByDate(date);
+        List<Payment> buyerPayments = paymentService.getBuyerPaymentsByDate(date);
+        List<Payment> sellerPayments = paymentService.getSellerPaymentsByDate(date);
         model.addAttribute("reportDate", date);
-        model.addAttribute("payments", payments);
+        model.addAttribute("buyerPayments", buyerPayments);
+        model.addAttribute("sellerPayments", sellerPayments);
         model.addAttribute("showBuyerIncome", true);
         return "report :: resultsList";
     }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/cr")
@@ -68,7 +69,7 @@ public class CRController {
 
     private void loadAttributes(Model model) {
         model.addAttribute("items", itemService.findByTypeAndNotInCr(Item.ItemType.NORMAL));
-        model.addAttribute("crs", crService.findAll());
+        model.addAttribute("crs", crService.findByDate(new Date()));
         model.addAttribute("crDone", crStatusService.getTodayCRStatus());
     }
 }
