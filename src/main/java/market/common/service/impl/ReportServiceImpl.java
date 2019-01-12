@@ -6,6 +6,7 @@ import market.common.orm.model.Expense;
 import market.common.orm.model.SellerItem;
 import market.common.service.*;
 import market.common.utils.DailyBuyerReportDto;
+import market.common.utils.DailySellerReportDto;
 import market.common.utils.SalesReportDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ public class ReportServiceImpl implements ReportService {
     private PendingPaymentService pendingPaymentService;
     @Autowired
     private BuyerService buyerService;
+    @Autowired
+    private SellerService sellerService;
 
     @Override
     public SalesReportDto getSalesReportDetails(String date) {
@@ -106,6 +109,34 @@ public class ReportServiceImpl implements ReportService {
         BigDecimal totalCredits = pendingPaymentService.findByBuyer(buyerService.getBuyerById(buyerId)).getAmount();
 
         DailyBuyerReportDto dto = new DailyBuyerReportDto();
+        dto.setCreditAmount(totalCredits);
+        dto.setTotalAmount(totalAmount);
+        dto.setItemList(itemList);
+
+        return dto;
+    }
+
+    @Override
+    public DailySellerReportDto getDailySellerReportDetails(String date, Long sellerId) {
+        Date reportDate = new Date();
+        try {
+            reportDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        List<SellerItem> itemList = sellerItemService.findByDateAndStatusAndSeller(reportDate, sellerId);
+
+        BigDecimal totalAmount = new BigDecimal(0);
+        if (itemList != null) {
+            for (SellerItem item : itemList) {
+                totalAmount = totalAmount.add(item.getAmount());
+            }
+        }
+
+        BigDecimal totalCredits = pendingPaymentService.findBySeller(sellerService.findById(sellerId)).getAmount();
+
+        DailySellerReportDto dto = new DailySellerReportDto();
         dto.setCreditAmount(totalCredits);
         dto.setTotalAmount(totalAmount);
         dto.setItemList(itemList);

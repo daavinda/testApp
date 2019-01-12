@@ -1,6 +1,7 @@
 package market.common.service;
 
 import market.common.utils.DailyBuyerReportDto;
+import market.common.utils.DailySellerReportDto;
 import market.common.utils.SalesReportDto;
 
 public interface ReportService {
@@ -8,5 +9,7 @@ public interface ReportService {
     SalesReportDto getSalesReportDetails(String date);
 
     DailyBuyerReportDto getDailyBuyerReportDetails(String date, Long buyerId);
+
+    DailySellerReportDto getDailySellerReportDetails(String date, Long sellerId);
 
 }

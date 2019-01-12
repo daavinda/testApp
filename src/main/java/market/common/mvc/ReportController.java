@@ -4,7 +4,9 @@ import market.common.orm.model.Payment;
 import market.common.service.BuyerService;
 import market.common.service.PaymentService;
 import market.common.service.ReportService;
+import market.common.service.SellerService;
 import market.common.utils.DailyBuyerReportDto;
+import market.common.utils.DailySellerReportDto;
 import market.common.utils.MessageResolver;
 import market.common.utils.SalesReportDto;
 import org.slf4j.Logger;
@@ -32,12 +34,15 @@ public class ReportController extends MessageResolver {
     private ReportService reportService;
     @Autowired
     private BuyerService buyerService;
+    @Autowired
+    private SellerService sellerService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model) {
         model.addAttribute("showTitle", true);
         model.addAttribute("showReports", true);
         model.addAttribute("buyers", buyerService.getAllBuyers());
+        model.addAttribute("sellers", sellerService.getAllSellers());
         return "report";
     }
 
@@ -69,6 +74,17 @@ public class ReportController extends MessageResolver {
         model.addAttribute("reportDate", date);
         model.addAttribute("showDailyBuyer", true);
         model.addAttribute("buyer", buyerService.getBuyerById(buyerId).getName());
+        return "report :: resultsList";
+    }
+
+    @RequestMapping(value = "/sellerReport", method = RequestMethod.GET)
+    public String sellerReport(Model model, @RequestParam("date") String date,
+                              @RequestParam("seller") Long sellerId) {
+        DailySellerReportDto dto = reportService.getDailySellerReportDetails(date, sellerId);
+        model.addAttribute("dailySellerDto", dto);
+        model.addAttribute("reportDate", date);
+        model.addAttribute("showDailySeller", true);
+        model.addAttribute("seller", sellerService.findById(sellerId).getName());
         return "report :: resultsList";
     }
 

@@ -4,6 +4,7 @@ import market.common.orm.model.SellerItem;
 import market.common.orm.repo.SellerItemRepository;
 import market.common.service.CRStatusService;
 import market.common.service.SellerItemService;
+import market.common.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ public class SellerItemServiceImpl implements SellerItemService {
     private SellerItemRepository sellerItemRepository;
     @Autowired
     private CRStatusService crStatusService;
+    @Autowired
+    private SellerService sellerService;
 
     @Override
     public List<SellerItem> getAllSellerItems() {
@@ -31,6 +34,11 @@ public class SellerItemServiceImpl implements SellerItemService {
     @Override
     public List<SellerItem> findByDateAndStatus(Date date) {
         return sellerItemRepository.findByDateAndStatus(date, SellerItem.Status.ACTIVE);
+    }
+
+    @Override
+    public List<SellerItem> findByDateAndStatusAndSeller(Date date, Long sellerId) {
+        return sellerItemRepository.findByDateAndStatusAndSeller(date, SellerItem.Status.ACTIVE, sellerService.findById(sellerId));
     }
 
     @Override
