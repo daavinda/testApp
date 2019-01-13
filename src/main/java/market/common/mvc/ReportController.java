@@ -1,10 +1,7 @@
 package market.common.mvc;
 
 import market.common.orm.model.Payment;
-import market.common.service.BuyerService;
-import market.common.service.PaymentService;
-import market.common.service.ReportService;
-import market.common.service.SellerService;
+import market.common.service.*;
 import market.common.utils.DailyBuyerReportDto;
 import market.common.utils.DailySellerReportDto;
 import market.common.utils.MessageResolver;
@@ -36,6 +33,8 @@ public class ReportController extends MessageResolver {
     private BuyerService buyerService;
     @Autowired
     private SellerService sellerService;
+    @Autowired
+    private PendingPaymentService pendingPaymentService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model) {
@@ -85,6 +84,22 @@ public class ReportController extends MessageResolver {
         model.addAttribute("reportDate", date);
         model.addAttribute("showDailySeller", true);
         model.addAttribute("seller", sellerService.findById(sellerId).getName());
+        return "report :: resultsList";
+    }
+
+    @RequestMapping(value = "/debtsAndCreditsReport", method = RequestMethod.GET)
+    public String debtsAndCreditsReport(Model model) {
+        model.addAttribute("buyerPayments", pendingPaymentService.findByAllBuyers());
+        model.addAttribute("sellerPayments", pendingPaymentService.findByAllSellers());
+        model.addAttribute("showDebtsAndCredits", true);
+        return "report :: resultsList";
+    }
+
+
+    @RequestMapping(value = "/chequePaymentsReport", method = RequestMethod.GET)
+    public String chequePaymentsReport(Model model) {
+        model.addAttribute("chequePayments", reportService.getBuyerChequePaymentDetails());
+        model.addAttribute("showChequePaymentsReport", true);
         return "report :: resultsList";
     }
 

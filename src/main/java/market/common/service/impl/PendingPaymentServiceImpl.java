@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PendingPaymentServiceImpl implements PendingPaymentService {
@@ -144,5 +146,37 @@ public class PendingPaymentServiceImpl implements PendingPaymentService {
             payment.setAmount(newAmount);
             savePayment(payment);
         }
+    }
+
+    @Override
+    public List<PendingPayment> findByAllBuyers() {
+        List<PendingPayment> allPayments = pendingPaymentRepository.findAll();
+        List<PendingPayment> buyerPayments = new ArrayList<>();
+
+        if(allPayments!=null) {
+            for(PendingPayment payment: allPayments) {
+                if(payment.getBuyer()!=null) {
+                    buyerPayments.add(payment);
+                }
+            }
+        }
+
+        return buyerPayments;
+    }
+
+    @Override
+    public List<PendingPayment> findByAllSellers() {
+        List<PendingPayment> allPayments = pendingPaymentRepository.findAll();
+        List<PendingPayment> sellerPayments = new ArrayList<>();
+
+        if(allPayments!=null) {
+            for(PendingPayment payment: allPayments) {
+                if(payment.getSeller()!=null) {
+                    sellerPayments.add(payment);
+                }
+            }
+        }
+
+        return sellerPayments;
     }
 }

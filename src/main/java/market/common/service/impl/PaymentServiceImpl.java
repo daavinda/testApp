@@ -117,4 +117,9 @@ public class PaymentServiceImpl implements PaymentService {
         }
         return sellerPaymentList;
     }
+
+    @Override
+    public List<Payment> findByPaymentType(Payment.PaymentType type) {
+        return paymentRepository.findByPaymentType(type);
+    }
 }

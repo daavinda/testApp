@@ -74,8 +74,17 @@
                 <button onclick="viewSellerReport()" th:text="#{Daily Report}"
                         class="w3-btn w3-cyan w3-medium"></button>
             </div>
+            <div style="clear:left; margin-bottom:2%"></div>
+            <div style="float: left; margin-left: 10%">
+                <button onclick="viewDebtsAndCreditsReport()" th:text="#{Debts & Credits Report}"
+                        class="w3-btn w3-cyan w3-medium"></button>
+            </div>
 
-
+            <div style="clear:left; margin-bottom:2%"></div>
+            <div style="float: left; margin-left: 10%">
+                <button onclick="viewChequePaymentsReport()" th:text="#{Cheque Payments Report}"
+                        class="w3-btn w3-cyan w3-medium"></button>
+            </div>
         </div>
 
         <div th:if="${showDailyIncome}">
@@ -323,7 +332,6 @@
     </div>
 
 
-
     <div th:if="${showDailySeller}">
         <h5>Daily Report for</h5>
         <h6 th:text="${seller}"></h6>
@@ -337,12 +345,15 @@
                 <th th:text="#{seller.item.management.table.heading.item}">Item</th>
                 <th th:text="#{seller.item.management.table.heading.quantity}">Quantity</th>
                 <th th:text="#{seller.item.management.table.heading.unit.price}">Unit Price</th>
-                <th th:text="#{seller.item.management.table.heading.amount}">Amount</th>            </tr>
+                <th th:text="#{seller.item.management.table.heading.amount}">Amount</th>
+            </tr>
             </thead>
             <tbody>
             <tr th:each="sellerItem: ${dailySellerDto.itemList}">
-                <td class="normalItem" th:if="${sellerItem.item.type.toString() == 'NORMAL'}" th:text="${sellerItem.item.name+' - NORMAL'}"></td>
-                <td class="freezerItem" th:if="${sellerItem.item.type.toString() == 'FREEZER'}" th:text="${sellerItem.item.name+' - FREEZER'}"></td>
+                <td class="normalItem" th:if="${sellerItem.item.type.toString() == 'NORMAL'}"
+                    th:text="${sellerItem.item.name+' - NORMAL'}"></td>
+                <td class="freezerItem" th:if="${sellerItem.item.type.toString() == 'FREEZER'}"
+                    th:text="${sellerItem.item.name+' - FREEZER'}"></td>
                 <td th:text="${sellerItem.quantity}"></td>
                 <td th:text="${sellerItem.sellerUnitPrice}"></td>
                 <td th:text="${sellerItem.amount}"></td>
@@ -365,6 +376,82 @@
             <h5 th:text="${dailySellerDto.creditAmount}"></h5>
         </div>
 
+    </div>
+
+
+    <div th:if="${showDebtsAndCredits}">
+        <h5>Debts And Credits Report</h5>
+        <hr/>
+        <h6>Credits</h6>
+        <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+               width="100%">
+            <thead>
+            <tr>
+                <th th:text="#{Code}">Code</th>
+                <th th:text="#{Name}">Name</th>
+                <th th:text="#{Phone}">Phone</th>
+                <th th:text="#{Credit}">Credit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="payment: ${buyerPayments}">
+                <td th:text="${payment.buyer.code}"></td>
+                <td th:text="${payment.buyer.name}"></td>
+                <td th:text="${payment.buyer.phone}"></td>
+                <td th:text="${payment.amount}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <h6>Debts</h6>
+        <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+               width="100%">
+            <thead>
+            <tr>
+                <th th:text="#{Code}">Code</th>
+                <th th:text="#{Name}">Name</th>
+                <th th:text="#{Phone}">Phone</th>
+                <th th:text="#{Credit}">Credit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="payment: ${sellerPayments}">
+                <td th:text="${payment.seller.code}"></td>
+                <td th:text="${payment.seller.name}"></td>
+                <td th:text="${payment.seller.phone}"></td>
+                <td th:text="${payment.amount}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+    
+    <div th:if="${showChequePaymentsReport}">
+        <h5>Cheque Payments Report</h5>
+        <hr/>
+        <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+               width="100%">
+            <thead>
+            <tr>
+                <th th:text="#{Code}">Code</th>
+                <th th:text="#{Name}">Name</th>
+                <th th:text="#{Date}">Date</th>
+                <th th:text="#{Amount}">Credit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="payment: ${chequePayments}">
+                <td th:text="${payment.buyer.code}"></td>
+                <td th:text="${payment.buyer.name}"></td>
+                <td th:text="${payment.date}"></td>
+                <td th:text="${payment.amount}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 
@@ -400,6 +487,16 @@
         var selectedDate = document.getElementById('datePicker4').value;
         var seller = document.getElementById("seller").value;
         var url = "report/sellerReport?date=" + selectedDate + "&seller=" + seller;
+        $("#resultBlock").load(url);
+    }
+
+    function viewDebtsAndCreditsReport() {
+        var url = "report/debtsAndCreditsReport";
+        $("#resultBlock").load(url);
+    }
+
+    function viewChequePaymentsReport() {
+        var url = "report/chequePaymentsReport";
         $("#resultBlock").load(url);
     }
 </script>

@@ -5,6 +5,7 @@ import market.common.orm.model.PendingPayment;
 import market.common.orm.model.Seller;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by devinda on 12/12/18.
@@ -32,4 +33,8 @@ public interface PendingPaymentService {
     void updateWithDeleteSellerPayment(Seller seller, BigDecimal amount);
 
     void updateWithDeleteBuyerPayment(Buyer buyer, BigDecimal amount);
+
+    List<PendingPayment> findByAllBuyers();
+
+    List<PendingPayment> findByAllSellers();
 }

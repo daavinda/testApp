@@ -11,4 +11,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     List<Payment> findByDate(Date date);
 
+    List<Payment> findByPaymentType(Payment.PaymentType type);
 }

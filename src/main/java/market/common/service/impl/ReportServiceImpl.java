@@ -1,9 +1,6 @@
 package market.common.service.impl;
 
-import market.common.orm.model.BuyerItem;
-import market.common.orm.model.CR;
-import market.common.orm.model.Expense;
-import market.common.orm.model.SellerItem;
+import market.common.orm.model.*;
 import market.common.service.*;
 import market.common.utils.DailyBuyerReportDto;
 import market.common.utils.DailySellerReportDto;
@@ -14,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +32,8 @@ public class ReportServiceImpl implements ReportService {
     private BuyerService buyerService;
     @Autowired
     private SellerService sellerService;
+    @Autowired
+    private PaymentService paymentService;
 
     @Override
     public SalesReportDto getSalesReportDetails(String date) {
@@ -142,5 +142,23 @@ public class ReportServiceImpl implements ReportService {
         dto.setItemList(itemList);
 
         return dto;
+    }
+
+    @Override
+    public List<Payment> getBuyerChequePaymentDetails() {
+
+        List<Payment> paymentList = paymentService.findByPaymentType(Payment.PaymentType.CHEQUE);
+        List<Payment> buyerPaymentList = new ArrayList<>();
+
+        if (paymentList != null) {
+            for (Payment payment : paymentList) {
+                if (payment.getBuyer() != null) {
+                    buyerPaymentList.add(payment);
+                }
+            }
+        }
+
+
+        return buyerPaymentList;
     }
 }
