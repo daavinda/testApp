@@ -49,4 +49,9 @@ public class ExpenseServiceImpl implements ExpenseService {
     public List<Expense> findByDate(Date date) {
         return expenseRepository.findByDate(date);
     }
+
+    @Override
+    public List<Expense> findByDateRange(Date dateFrom, Date dateTo) {
+        return expenseRepository.findByDateRange(dateFrom, dateTo);
+    }
 }

@@ -20,4 +20,6 @@ public interface ExpenseService {
 
     List<Expense> findByDate(Date date);
 
+    List<Expense> findByDateRange(Date dateFrom, Date dateTo);
+
 }

@@ -1,5 +1,6 @@
 package market.common.mvc;
 
+import market.common.orm.model.Expense;
 import market.common.orm.model.Payment;
 import market.common.service.*;
 import market.common.utils.DailyBuyerReportDto;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -35,6 +35,8 @@ public class ReportController extends MessageResolver {
     private SellerService sellerService;
     @Autowired
     private PendingPaymentService pendingPaymentService;
+    @Autowired
+    private ExpenseService expenseService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model) {
@@ -78,7 +80,7 @@ public class ReportController extends MessageResolver {
 
     @RequestMapping(value = "/sellerReport", method = RequestMethod.GET)
     public String sellerReport(Model model, @RequestParam("date") String date,
-                              @RequestParam("seller") Long sellerId) {
+                               @RequestParam("seller") Long sellerId) {
         DailySellerReportDto dto = reportService.getDailySellerReportDetails(date, sellerId);
         model.addAttribute("dailySellerDto", dto);
         model.addAttribute("reportDate", date);
@@ -100,6 +102,16 @@ public class ReportController extends MessageResolver {
     public String chequePaymentsReport(Model model) {
         model.addAttribute("chequePayments", reportService.getBuyerChequePaymentDetails());
         model.addAttribute("showChequePaymentsReport", true);
+        return "report :: resultsList";
+    }
+
+    @RequestMapping(value = "/expenseReport", method = RequestMethod.GET)
+    public String expenseReport(Model model, @RequestParam("dateFrom") String dateFrom,
+                                @RequestParam("dateTo") String dateTo) {
+        model.addAttribute("expensesDto", reportService.getExpenseReportDetails(dateFrom, dateTo));
+        model.addAttribute("showExpenseReport", true);
+        model.addAttribute("dateFrom", dateFrom);
+        model.addAttribute("dateTo", dateTo);
         return "report :: resultsList";
     }
 

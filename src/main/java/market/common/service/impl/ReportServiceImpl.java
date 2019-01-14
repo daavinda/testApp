@@ -4,6 +4,7 @@ import market.common.orm.model.*;
 import market.common.service.*;
 import market.common.utils.DailyBuyerReportDto;
 import market.common.utils.DailySellerReportDto;
+import market.common.utils.ExpenseReportDto;
 import market.common.utils.SalesReportDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,8 @@ public class ReportServiceImpl implements ReportService {
     private SellerService sellerService;
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private HelperService helperService;
 
     @Override
     public SalesReportDto getSalesReportDetails(String date) {
@@ -160,5 +163,24 @@ public class ReportServiceImpl implements ReportService {
 
 
         return buyerPaymentList;
+    }
+
+    @Override
+    public ExpenseReportDto getExpenseReportDetails(String dateFrom, String dateTo) {
+
+        List<Expense> expenseList = expenseService.findByDateRange(helperService.formatDate(dateFrom),
+                helperService.formatDate(dateTo));
+        BigDecimal totalAmount = new BigDecimal(0);
+
+        if (expenseList != null) {
+            for (Expense expense : expenseList) {
+                totalAmount = totalAmount.add(expense.getAmount());
+            }
+        }
+
+        ExpenseReportDto dto = new ExpenseReportDto();
+        dto.setTotalAmount(totalAmount);
+        dto.setExpenseList(expenseList);
+        return dto;
     }
 }

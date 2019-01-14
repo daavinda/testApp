@@ -17,74 +17,104 @@
 
 
         <div th:if="${showReports}">
-            <div style="float: left">
-                <input style="border: 1px solid silver;" class="w3-input" id="datePicker1" type="date"
-                       name="incomeReportDate">
+            <div class="w3-container report-container">
+                <div style="float: left">
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker1" type="date"
+                           name="incomeReportDate">
+                </div>
+                <div style="float: left; margin-left: 10%">
+                    <button onclick="viewDailyPayment()" th:text="#{Daily Payments Report}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
             </div>
-            <div style="float: left; margin-left: 10%">
-                <button onclick="viewDailyPayment()" th:text="#{Daily Payments Report}"
-                        class="w3-btn w3-cyan w3-medium"></button>
-            </div>
-
+            <!------------------------------------------------------------------------------------>
             <div style="clear:left; margin-bottom:2%"></div>
-            <div style="float: left">
-                <input style="border: 1px solid silver;" class="w3-input" id="datePicker2" type="date"
-                       name="salesReportDate">
+            <div class="w3-container report-container">
+                <div style="float: left">
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker2" type="date"
+                           name="salesReportDate">
+                </div>
+                <div style="float: left; margin-left: 10%">
+                    <button onclick="viewSalesReport()" th:text="#{Daily Sales Report}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
             </div>
-            <div style="float: left; margin-left: 10%">
-                <button onclick="viewSalesReport()" th:text="#{Daily Sales Report}"
-                        class="w3-btn w3-cyan w3-medium"></button>
-            </div>
-
+            <!------------------------------------------------------------------------------------>
             <div style="clear:left; margin-bottom:2%"></div>
-            <div style="float: left">
-                <input style="border: 1px solid silver;" class="w3-input" id="datePicker3" type="date"
-                       name="buyerReportDate">
+            <div class="w3-container report-container">
+                <div style="float: left">
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker3" type="date"
+                           name="buyerReportDate">
+                </div>
+                <div style="float: left; margin-left: 10%">
+                    <select class="form-control w3-select" id="buyer">
+                        <option disabled selected value>- - විකුණුම්කරු තෝරන්න - -</option>
+                        <option th:each="buyer : ${buyers}"
+                                th:value="${buyer.getId()}"
+                                th:text="${buyer.getName()}">
+                        </option>
+                    </select>
+                </div>
+                <div style="float: left; margin-left: 10%">
+                    <button onclick="viewBuyerReport()" th:text="#{Daily Report}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
             </div>
-            <div style="float: left; margin-left: 10%">
-                <select class="form-control w3-select" id="buyer">
-                    <option disabled selected value>- - විකුණුම්කරු තෝරන්න - -</option>
-                    <option th:each="buyer : ${buyers}"
-                            th:value="${buyer.getId()}"
-                            th:text="${buyer.getName()}">
-                    </option>
-                </select>
-            </div>
-            <div style="float: left; margin-left: 10%">
-                <button onclick="viewBuyerReport()" th:text="#{Daily Report}"
-                        class="w3-btn w3-cyan w3-medium"></button>
-            </div>
-
-
+            <!------------------------------------------------------------------------------------>
             <div style="clear:left; margin-bottom:2%"></div>
-            <div style="float: left">
-                <input style="border: 1px solid silver;" class="w3-input" id="datePicker4" type="date"
-                       name="sellerReportDate">
+            <div class="w3-container report-container">
+                <div style="float: left">
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker4" type="date"
+                           name="sellerReportDate">
+                </div>
+                <div style="float: left; margin-left: 10%">
+                    <select class="form-control w3-select" id="seller">
+                        <option disabled selected value>- - ගැණුම්කරු තෝරන්න - -</option>
+                        <option th:each="seller : ${sellers}"
+                                th:value="${seller.getId()}"
+                                th:text="${seller.getName()}">
+                        </option>
+                    </select>
+                </div>
+                <div style="float: left; margin-left: 10%">
+                    <button onclick="viewSellerReport()" th:text="#{Daily Report}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
             </div>
-            <div style="float: left; margin-left: 10%">
-                <select class="form-control w3-select" id="seller">
-                    <option disabled selected value>- - ගැණුම්කරු තෝරන්න - -</option>
-                    <option th:each="seller : ${sellers}"
-                            th:value="${seller.getId()}"
-                            th:text="${seller.getName()}">
-                    </option>
-                </select>
-            </div>
-            <div style="float: left; margin-left: 10%">
-                <button onclick="viewSellerReport()" th:text="#{Daily Report}"
-                        class="w3-btn w3-cyan w3-medium"></button>
-            </div>
+            <!------------------------------------------------------------------------------------>
             <div style="clear:left; margin-bottom:2%"></div>
-            <div style="float: left; margin-left: 10%">
-                <button onclick="viewDebtsAndCreditsReport()" th:text="#{Debts & Credits Report}"
-                        class="w3-btn w3-cyan w3-medium"></button>
+            <div class="w3-container report-container">
+                <div style="float: left;">
+                    <button onclick="viewDebtsAndCreditsReport()" th:text="#{Debts & Credits Report}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
             </div>
+            <!------------------------------------------------------------------------------------>
+            <div style="clear:left; margin-bottom:2%"></div>
+            <div class="w3-container report-container">
+                <div style="float: left;">
+                    <button onclick="viewChequePaymentsReport()" th:text="#{Cheque Payments Report}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------>
+            <div style="clear:left; margin-bottom:2%"></div>
+            <div class="w3-container report-container">
+                <div style="float: left">
+                    From
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker5" type="date">
+                </div>
+                <div style="float: left; margin-left: 10%">
+                    To
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker6" type="date">
+                </div>
+                <div style="float: left; margin-left: 10%; margin-top: 18px">
+                    <button onclick="viewExpenseReport()" th:text="#{Expense Report}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------>
 
-            <div style="clear:left; margin-bottom:2%"></div>
-            <div style="float: left; margin-left: 10%">
-                <button onclick="viewChequePaymentsReport()" th:text="#{Cheque Payments Report}"
-                        class="w3-btn w3-cyan w3-medium"></button>
-            </div>
         </div>
 
         <div th:if="${showDailyIncome}">
@@ -429,7 +459,6 @@
     </div>
 
 
-    
     <div th:if="${showChequePaymentsReport}">
         <h5>Cheque Payments Report</h5>
         <hr/>
@@ -455,6 +484,39 @@
     </div>
 
 
+    <div th:if="${showExpenseReport}">
+        <h5>Expenses Report</h5>
+        <hr/>
+        From
+        <h6 th:text="${dateFrom}"></h6>
+        To
+        <h6 th:text="${dateTo}"></h6>
+        <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+               width="100%">
+            <thead>
+            <tr>
+                <th th:text="#{expense.management.table.heading.expense}">Expense</th>
+                <th th:text="#{expense.management.table.heading.amount}">Amount</th>
+                <th th:text="#{expense.management.table.heading.date}">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="expense: ${expensesDto.expenseList}">
+                <td th:text="${expense.expenseType.name}"></td>
+                <td th:text="${expense.amount}"></td>
+                <td th:text="${expense.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="float: left">
+            <h5>Total Expenses - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${expensesDto.totalAmount}"></h5>
+        </div>
+    </div>
+
+
 </div>
 <script>
     $(document).ready(function () {
@@ -462,6 +524,8 @@
         document.getElementById('datePicker2').valueAsDate = new Date();
         document.getElementById('datePicker3').valueAsDate = new Date();
         document.getElementById('datePicker4').valueAsDate = new Date();
+        document.getElementById('datePicker5').valueAsDate = new Date();
+        document.getElementById('datePicker6').valueAsDate = new Date();
     });
 
     function viewDailyPayment() {
@@ -497,6 +561,13 @@
 
     function viewChequePaymentsReport() {
         var url = "report/chequePaymentsReport";
+        $("#resultBlock").load(url);
+    }
+
+    function viewExpenseReport() {
+        var dateFrom = document.getElementById('datePicker5').value;
+        var dateTo = document.getElementById('datePicker6').value;
+        var url = "report/expenseReport?dateFrom=" + dateFrom + "&dateTo=" + dateTo;
         $("#resultBlock").load(url);
     }
 </script>

@@ -161,3 +161,9 @@ hr {
     background-color: rgba(199, 65, 84, 0.93);
     color: white;
 }
+
+.report-container {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: rgba(190, 164, 132, 0.56);
+}
