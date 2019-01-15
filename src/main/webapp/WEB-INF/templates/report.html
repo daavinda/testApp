@@ -114,6 +114,22 @@
                 </div>
             </div>
             <!------------------------------------------------------------------------------------>
+            <div style="clear:left; margin-bottom:2%"></div>
+            <div class="w3-container report-container">
+                <div style="float: left">
+                    From
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker7" type="date">
+                </div>
+                <div style="float: left; margin-left: 10%">
+                    To
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker8" type="date">
+                </div>
+                <div style="float: left; margin-left: 10%; margin-top: 18px">
+                    <button onclick="viewProfitReport()" th:text="#{Profit Report}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------>
 
         </div>
 
@@ -517,6 +533,46 @@
     </div>
 
 
+    <div th:if="${showProfitReport}">
+        <h5>Profit Report</h5>
+        <hr/>
+        From
+        <h6 th:text="${dateFrom}"></h6>
+        To
+        <h6 th:text="${dateTo}"></h6>
+        <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+               width="100%">
+            <thead>
+            <tr>
+                <th th:text="#{Date}">Expense</th>
+                <th th:text="#{Profit With CR}">CR</th>
+                <th th:text="#{Profit Without CR}">WOCR</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="profit: ${profitDetails.profitList}">
+                <td th:text="${profit.date}"></td>
+                <td th:text="${profit.profitWithCr}"></td>
+                <td th:text="${profit.profitWithoutCr}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="float: left">
+            <h5>Total Profit with CR - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${profitDetails.totalProfitWithCr}"></h5>
+        </div>
+        <div style="clear: both"></div>
+        <div style="float: left">
+            <h5>Total Profit without CR - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${profitDetails.totalProfitWithoutCr}"></h5>
+        </div>
+    </div>
+
+
 </div>
 <script>
     $(document).ready(function () {
@@ -526,6 +582,8 @@
         document.getElementById('datePicker4').valueAsDate = new Date();
         document.getElementById('datePicker5').valueAsDate = new Date();
         document.getElementById('datePicker6').valueAsDate = new Date();
+        document.getElementById('datePicker7').valueAsDate = new Date();
+        document.getElementById('datePicker8').valueAsDate = new Date();
     });
 
     function viewDailyPayment() {
@@ -568,6 +626,13 @@
         var dateFrom = document.getElementById('datePicker5').value;
         var dateTo = document.getElementById('datePicker6').value;
         var url = "report/expenseReport?dateFrom=" + dateFrom + "&dateTo=" + dateTo;
+        $("#resultBlock").load(url);
+    }
+
+    function viewProfitReport() {
+        var dateFrom = document.getElementById('datePicker7').value;
+        var dateTo = document.getElementById('datePicker8').value;
+        var url = "report/profitReport?dateFrom=" + dateFrom + "&dateTo=" + dateTo;
         $("#resultBlock").load(url);
     }
 </script>

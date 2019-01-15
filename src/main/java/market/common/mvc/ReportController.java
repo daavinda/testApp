@@ -35,8 +35,6 @@ public class ReportController extends MessageResolver {
     private SellerService sellerService;
     @Autowired
     private PendingPaymentService pendingPaymentService;
-    @Autowired
-    private ExpenseService expenseService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model) {
@@ -110,6 +108,16 @@ public class ReportController extends MessageResolver {
                                 @RequestParam("dateTo") String dateTo) {
         model.addAttribute("expensesDto", reportService.getExpenseReportDetails(dateFrom, dateTo));
         model.addAttribute("showExpenseReport", true);
+        model.addAttribute("dateFrom", dateFrom);
+        model.addAttribute("dateTo", dateTo);
+        return "report :: resultsList";
+    }
+
+    @RequestMapping(value = "/profitReport", method = RequestMethod.GET)
+    public String profitReport(Model model, @RequestParam("dateFrom") String dateFrom,
+                                @RequestParam("dateTo") String dateTo) {
+        model.addAttribute("profitDetails", reportService.getMonthlyProfitDetails(dateFrom, dateTo));
+        model.addAttribute("showProfitReport", true);
         model.addAttribute("dateFrom", dateFrom);
         model.addAttribute("dateTo", dateTo);
         return "report :: resultsList";

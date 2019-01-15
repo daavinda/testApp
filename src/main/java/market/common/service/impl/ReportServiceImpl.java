@@ -2,10 +2,7 @@ package market.common.service.impl;
 
 import market.common.orm.model.*;
 import market.common.service.*;
-import market.common.utils.DailyBuyerReportDto;
-import market.common.utils.DailySellerReportDto;
-import market.common.utils.ExpenseReportDto;
-import market.common.utils.SalesReportDto;
+import market.common.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +10,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -181,6 +179,46 @@ public class ReportServiceImpl implements ReportService {
         ExpenseReportDto dto = new ExpenseReportDto();
         dto.setTotalAmount(totalAmount);
         dto.setExpenseList(expenseList);
+        return dto;
+    }
+
+    @Override
+    public MonthlyProfitDto getMonthlyProfitDetails(String dateFrom, String dateTo) {
+
+        Date fromDate = helperService.formatDate(dateFrom);
+        Date toDate = helperService.formatDate(dateTo);
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fromDate);
+
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(toDate);
+        c2.add(Calendar.DATE, 1);
+
+        MonthlyProfitDto dto = new MonthlyProfitDto();
+        BigDecimal totalProfitWithCr = new BigDecimal(0);
+        BigDecimal totalProfitWithoutCr = new BigDecimal(0);
+        List<MonthlyProfit> profitList = new ArrayList<>();
+
+        do {
+            MonthlyProfit monthlyProfit = new MonthlyProfit();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SalesReportDto salesReportDto = getSalesReportDetails(simpleDateFormat.format(c.getTime()));
+
+            monthlyProfit.setDate(simpleDateFormat.format(c.getTime()));
+            monthlyProfit.setProfitWithCr(salesReportDto.getProfitWithCr());
+            monthlyProfit.setProfitWithoutCr(salesReportDto.getProfitWithoutCr());
+            totalProfitWithCr = totalProfitWithCr.add(salesReportDto.getProfitWithCr());
+            totalProfitWithoutCr = totalProfitWithoutCr.add(salesReportDto.getProfitWithoutCr());
+
+            profitList.add(monthlyProfit);
+            c.add(Calendar.DATE, 1);
+        }
+        while (c.getTime().before(c2.getTime()));
+
+        dto.setProfitList(profitList);
+        dto.setTotalProfitWithCr(totalProfitWithCr);
+        dto.setTotalProfitWithoutCr(totalProfitWithoutCr);
         return dto;
     }
 }
