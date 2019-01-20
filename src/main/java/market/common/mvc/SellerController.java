@@ -1,8 +1,10 @@
 package market.common.mvc;
 
 import market.common.orm.model.Buyer;
+import market.common.orm.model.PendingPayment;
 import market.common.orm.model.Seller;
 import market.common.service.BuyerService;
+import market.common.service.PendingPaymentService;
 import market.common.service.SellerService;
 import market.common.utils.MessageResolver;
 import org.slf4j.Logger;
@@ -29,11 +31,13 @@ public class SellerController extends MessageResolver {
     @Autowired
     @Qualifier("sellerValidator")
     private Validator validator;
+    @Autowired
+    private PendingPaymentService pendingPaymentService;
 
-    @InitBinder
-    private void initBinder(WebDataBinder binder) {
-        binder.setValidator(validator);
-    }
+//    @InitBinder
+//    private void initBinder(WebDataBinder binder) {
+//        binder.setValidator(validator);
+//    }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model, @ModelAttribute("seller") Seller seller, BindingResult result) {
@@ -55,6 +59,22 @@ public class SellerController extends MessageResolver {
             return "common-forms :: #sellerForm";
         }
         sellerService.saveSeller(seller);
+        model.addAttribute("sellerDetails", sellerService.getAllSellerDetails());
+        model.addAttribute("success", getMessage("alert.save.success"));
+        return "seller-management :: body";
+    }
+
+    @RequestMapping(value = "/debt", method = RequestMethod.GET)
+    public String addDebt(Model model, @RequestParam("id") Long sellerId) {
+        PendingPayment pendingPayment = pendingPaymentService.findBySeller(sellerService.findById(sellerId));
+        model.addAttribute("pendingPayment", pendingPayment);
+        return "common-forms :: #debtForm";
+    }
+
+    @RequestMapping(value = "/saveDebt", method = RequestMethod.POST)
+    public String saveDebt(Model model, @ModelAttribute("pendingPayment") PendingPayment pendingPayment) {
+        logger.info("Debt save/update request received [{}]", pendingPayment.toString());
+        pendingPaymentService.savePayment(pendingPayment);
         model.addAttribute("sellerDetails", sellerService.getAllSellerDetails());
         model.addAttribute("success", getMessage("alert.save.success"));
         return "seller-management :: body";

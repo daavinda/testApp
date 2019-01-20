@@ -46,6 +46,17 @@
          th:errors="*{amount}"></div>
 </form>
 
+<!--BUYER DEBTS FORM-->
+<form id="debtForm" class="w3-margin" th:action="@{/seller/saveDebt}" th:object="${pendingPayment}">
+    <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
+    <input readonly="true" hidden="hidden" type="number" th:field="*{seller.id}" id="seller"/>
+    <label for="amount" th:text="#{Amount}"></label>
+    <input id="amount" type="text" class="w3-input" th:field="*{amount}" th:placeholder="#{Debt Amount}"/>
+
+    <div class="w3-alert w3-red w3-small w3-container" th:if="${#fields.hasErrors('amount')}"
+         th:errors="*{amount}"></div>
+</form>
+
 <!--SELLER CREATION FORM-->
 <form id="sellerForm" class="w3-margin" th:action="@{/seller/save}" th:object="${seller}">
     <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>

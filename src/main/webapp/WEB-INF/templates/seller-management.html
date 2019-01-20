@@ -36,6 +36,8 @@
             <td>
                 <a href="#" th:text="#{label.edit.link}"
                    th:onclick="'loadForm(\'seller/new?id=' + ${sellerDetail.seller.id} + '\');'"></a>
+                <a th:if="${sellerDetail.debtAmount==0}" href="#" th:text="#{Add Debt}"
+                   th:onclick="'loadForm(\'seller/debt?id=' + ${sellerDetail.seller.id} + '\');'"></a>
             </td>
         </tr>
         </tbody>
