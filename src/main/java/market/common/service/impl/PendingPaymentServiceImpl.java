@@ -32,7 +32,15 @@ public class PendingPaymentServiceImpl implements PendingPaymentService {
 
     @Override
     public PendingPayment findBySeller(Seller seller) {
-        return pendingPaymentRepository.findBySeller(seller);
+
+        PendingPayment payment = pendingPaymentRepository.findBySeller(seller);
+        if (payment == null) {
+            PendingPayment newPayment = new PendingPayment();
+            newPayment.setSeller(seller);
+            newPayment.setAmount(BigDecimal.ZERO);
+            return newPayment;
+        }
+        return payment;
     }
 
     @Override
@@ -153,9 +161,9 @@ public class PendingPaymentServiceImpl implements PendingPaymentService {
         List<PendingPayment> allPayments = pendingPaymentRepository.findAll();
         List<PendingPayment> buyerPayments = new ArrayList<>();
 
-        if(allPayments!=null) {
-            for(PendingPayment payment: allPayments) {
-                if(payment.getBuyer()!=null) {
+        if (allPayments != null) {
+            for (PendingPayment payment : allPayments) {
+                if (payment.getBuyer() != null) {
                     buyerPayments.add(payment);
                 }
             }
@@ -169,9 +177,9 @@ public class PendingPaymentServiceImpl implements PendingPaymentService {
         List<PendingPayment> allPayments = pendingPaymentRepository.findAll();
         List<PendingPayment> sellerPayments = new ArrayList<>();
 
-        if(allPayments!=null) {
-            for(PendingPayment payment: allPayments) {
-                if(payment.getSeller()!=null) {
+        if (allPayments != null) {
+            for (PendingPayment payment : allPayments) {
+                if (payment.getSeller() != null) {
                     sellerPayments.add(payment);
                 }
             }
