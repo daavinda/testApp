@@ -440,7 +440,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="payment: ${buyerPayments}">
+            <tr th:each="payment: ${reportDetails.buyerPayments}">
                 <td th:text="${payment.buyer.code}"></td>
                 <td th:text="${payment.buyer.name}"></td>
                 <td th:text="${payment.buyer.phone}"></td>
@@ -448,7 +448,13 @@
             </tr>
             </tbody>
         </table>
-
+        <div style="float: left">
+            <h5>Total Credits - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${reportDetails.totalBuyerPayments}"></h5>
+        </div>
+        <div style="clear: both"></div>
 
         <h6>Debts</h6>
         <table style="padding-top: 10px" class="reportTable" cellspacing="0"
@@ -462,7 +468,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="payment: ${sellerPayments}">
+            <tr th:each="payment: ${reportDetails.sellerPayments}">
                 <td th:text="${payment.seller.code}"></td>
                 <td th:text="${payment.seller.name}"></td>
                 <td th:text="${payment.seller.phone}"></td>
@@ -470,7 +476,12 @@
             </tr>
             </tbody>
         </table>
-
+        <div style="float: left">
+            <h5>Total Debts - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${reportDetails.totalSellerPayments}"></h5>
+        </div>
 
     </div>
 

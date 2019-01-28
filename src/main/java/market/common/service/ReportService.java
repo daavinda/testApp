@@ -19,4 +19,6 @@ public interface ReportService {
 
     MonthlyProfitDto getMonthlyProfitDetails(String dateFrom, String dateTo);
 
+    DebtsAndCreditsReportDto getDebtsAndCreditsReport();
+
 }

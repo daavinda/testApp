@@ -221,4 +221,31 @@ public class ReportServiceImpl implements ReportService {
         dto.setTotalProfitWithoutCr(totalProfitWithoutCr);
         return dto;
     }
+
+    @Override
+    public DebtsAndCreditsReportDto getDebtsAndCreditsReport() {
+        DebtsAndCreditsReportDto dto = new DebtsAndCreditsReportDto();
+        List<PendingPayment> buyerPayments = pendingPaymentService.findByAllBuyers();
+        List<PendingPayment> sellerPayments = pendingPaymentService.findByAllSellers();
+        BigDecimal totalBuyerAmount = new BigDecimal(0);
+        BigDecimal totalSellerAmount = new BigDecimal(0);
+
+        if (buyerPayments != null) {
+            for (PendingPayment pendingPayment : buyerPayments) {
+                totalBuyerAmount = totalBuyerAmount.add(pendingPayment.getAmount());
+            }
+        }
+        if (buyerPayments != null) {
+            for (PendingPayment pendingPayment : sellerPayments) {
+                totalSellerAmount = totalSellerAmount.add(pendingPayment.getAmount());
+            }
+        }
+
+        dto.setBuyerPayments(buyerPayments);
+        dto.setSellerPayments(sellerPayments);
+        dto.setTotalBuyerPayments(totalBuyerAmount);
+        dto.setTotalSellerPayments(totalSellerAmount);
+
+        return dto;
+    }
 }
