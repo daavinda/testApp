@@ -55,9 +55,10 @@ public class ReportController extends MessageResolver {
     }
 
     @RequestMapping(value = "/salesReport", method = RequestMethod.GET)
-    public String salesReport(Model model, @RequestParam("date") String date) {
-        SalesReportDto dto = reportService.getSalesReportDetails(date);
-        model.addAttribute("reportDate", date);
+    public String salesReport(Model model, @RequestParam("from") String from, @RequestParam("to") String to) {
+        SalesReportDto dto = reportService.getSalesReportDetails(from, to);
+        model.addAttribute("from", from);
+        model.addAttribute("to", to);
         model.addAttribute("showDailySales", true);
         model.addAttribute("dto", dto);
         return "report :: resultsList";

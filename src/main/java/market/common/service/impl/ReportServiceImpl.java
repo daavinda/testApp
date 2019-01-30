@@ -37,20 +37,16 @@ public class ReportServiceImpl implements ReportService {
     private HelperService helperService;
 
     @Override
-    public SalesReportDto getSalesReportDetails(String date) {
+    public SalesReportDto getSalesReportDetails(String from, String to) {
 
         SalesReportDto dto = new SalesReportDto();
-        Date reportDate = new Date();
-        try {
-            reportDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date fromDate = helperService.formatDate(from);
+        Date toDate = helperService.formatDate(to);
 
-        List<BuyerItem> buyerItemList = buyerItemService.findByDateAndStatus(reportDate);
-        List<SellerItem> sellerItemList = sellerItemService.findByDateAndStatus(reportDate);
-        List<CR> crList = crService.findByDate(reportDate);
-        List<Expense> expenseList = expenseService.findByDate(reportDate);
+        List<BuyerItem> buyerItemList = buyerItemService.findByStatusAndDateBetween(BuyerItem.Status.ACTIVE, fromDate, toDate);
+        List<SellerItem> sellerItemList = sellerItemService.findByStatusAndDateBetween(SellerItem.Status.ACTIVE, fromDate, toDate);
+        List<CR> crList = crService.findByDateBetween(fromDate, toDate);
+        List<Expense> expenseList = expenseService.findByDateRange(fromDate, toDate);
 
         BigDecimal totalAmountSeller = new BigDecimal(0);
         BigDecimal totalAmountBuyer = new BigDecimal(0);
@@ -203,7 +199,7 @@ public class ReportServiceImpl implements ReportService {
         do {
             MonthlyProfit monthlyProfit = new MonthlyProfit();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            SalesReportDto salesReportDto = getSalesReportDetails(simpleDateFormat.format(c.getTime()));
+            SalesReportDto salesReportDto = getSalesReportDetails(simpleDateFormat.format(c.getTime()), simpleDateFormat.format(c.getTime()));
 
             monthlyProfit.setDate(simpleDateFormat.format(c.getTime()));
             monthlyProfit.setProfitWithCr(salesReportDto.getProfitWithCr());

@@ -19,4 +19,6 @@ public interface SellerItemRepository extends JpaRepository<SellerItem, Long> {
     List<SellerItem> findByDateAndStatus(Date date, SellerItem.Status status);
 
     List<SellerItem> findByDateAndStatusAndSeller(Date date, SellerItem.Status status, Seller seller);
+
+    List<SellerItem> findByStatusAndDateBetween(SellerItem.Status status, Date from, Date to);
 }

@@ -61,4 +61,9 @@ public class SellerItemServiceImpl implements SellerItemService {
     public void removeItem(SellerItem item) {
         sellerItemRepository.delete(item);
     }
+
+    @Override
+    public List<SellerItem> findByStatusAndDateBetween(SellerItem.Status status, Date from, Date to) {
+        return sellerItemRepository.findByStatusAndDateBetween(status, from, to);
+    }
 }

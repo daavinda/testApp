@@ -20,4 +20,6 @@ public interface CRService {
     void finishCr();
 
     List<CR> findByDate(Date date);
+
+    List<CR> findByDateBetween(Date from, Date to);
 }

@@ -11,4 +11,5 @@ public interface CRRepository extends JpaRepository<CR, Long> {
 
     List<CR> findByDate(Date date);
 
+    List<CR> findByDateBetween(Date from, Date to);
 }

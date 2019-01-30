@@ -31,11 +31,15 @@
             <div style="clear:left; margin-bottom:2%"></div>
             <div class="w3-container report-container">
                 <div style="float: left">
-                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker2" type="date"
-                           name="salesReportDate">
+                    From
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker2" type="date">
                 </div>
                 <div style="float: left; margin-left: 10%">
-                    <button onclick="viewSalesReport()" th:text="#{Daily Sales Report}"
+                    To
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker9" type="date">
+                </div>
+                <div style="float: left; margin-left: 10%; margin-top: 18px">
+                    <button onclick="viewSalesReport()" th:text="#{Sales Report}"
                             class="w3-btn w3-cyan w3-medium"></button>
                 </div>
             </div>
@@ -185,7 +189,11 @@
 
         <div th:if="${showDailySales}">
             <h5>Sales Report</h5>
-            <h6 th:text="${reportDate}"></h6>
+            <hr/>
+            From
+            <h6 th:text="${from}"></h6>
+            To
+            <h6 th:text="${to}"></h6>
             <hr/>
             <h6>Buyings</h6>
             <table style="padding-top: 10px" class="reportTable" cellspacing="0"
@@ -196,6 +204,7 @@
                     <th th:text="#{seller.item.management.table.heading.item}">Item</th>
                     <th th:text="#{seller.item.management.table.heading.quantity}">Quantity</th>
                     <th th:text="#{seller.item.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{seller.item.management.table.heading.date}">Date</th>
                     <th th:text="#{seller.item.management.table.heading.amount}">Amount</th>
                 </tr>
                 </thead>
@@ -208,6 +217,7 @@
                         th:text="${sellerItem.item.name+' - FREEZER'}"></td>
                     <td th:text="${sellerItem.quantity}"></td>
                     <td th:text="${sellerItem.sellerUnitPrice}"></td>
+                    <td th:text="${sellerItem.date}"></td>
                     <td th:text="${sellerItem.amount}"></td>
                 </tr>
                 </tbody>
@@ -222,6 +232,7 @@
                     <th th:text="#{buyer.item.management.table.heading.item}">Item</th>
                     <th th:text="#{buyer.item.management.table.heading.quantity}">Quantity</th>
                     <th th:text="#{buyer.item.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{buyer.item.management.table.heading.date}">Date</th>
                     <th th:text="#{buyer.item.management.table.heading.amount}">Amount</th>
                 </tr>
                 </thead>
@@ -234,6 +245,7 @@
                         th:text="${buyerItem.item.name+' - FREEZER'}"></td>
                     <td th:text="${buyerItem.quantity}"></td>
                     <td th:text="${buyerItem.buyerUnitPrice}"></td>
+                    <td th:text="${buyerItem.date}"></td>
                     <td th:text="${buyerItem.amount}"></td>
 
                 </tr>
@@ -248,6 +260,7 @@
                     <th th:text="#{cr.management.table.heading.item}">Item</th>
                     <th th:text="#{cr.management.table.heading.quantity}">Quantity</th>
                     <th th:text="#{cr.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{cr.management.table.heading.date}">Date</th>
                     <th th:text="#{cr.management.table.heading.amount}">Amount</th>
                 </tr>
                 </thead>
@@ -256,6 +269,7 @@
                     <td th:text="${cr.item.name}"></td>
                     <td th:text="${cr.quantity}"></td>
                     <td th:text="${cr.unitPrice}"></td>
+                    <td th:text="${cr.date}"></td>
                     <td th:text="${cr.amount}"></td>
                 </tr>
                 </tbody>
@@ -267,12 +281,14 @@
                 <thead>
                 <tr>
                     <th th:text="#{expense.management.table.heading.expense}">Expense</th>
+                    <th th:text="#{expense.management.table.heading.date}">Expense</th>
                     <th th:text="#{expense.management.table.heading.amount}">Amount</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="expense: ${dto.expenseList}">
                     <td th:text="${expense.expenseType.name}"></td>
+                    <td th:text="${expense.date}"></td>
                     <td th:text="${expense.amount}"></td>
                 </tr>
                 </tbody>
@@ -589,6 +605,7 @@
     $(document).ready(function () {
         document.getElementById('datePicker1').valueAsDate = new Date();
         document.getElementById('datePicker2').valueAsDate = new Date();
+        document.getElementById('datePicker9').valueAsDate = new Date();
         document.getElementById('datePicker3').valueAsDate = new Date();
         document.getElementById('datePicker4').valueAsDate = new Date();
         document.getElementById('datePicker5').valueAsDate = new Date();
@@ -604,8 +621,9 @@
     }
 
     function viewSalesReport() {
-        var selectedDate = document.getElementById('datePicker2').value;
-        var url = "report/salesReport?date=" + selectedDate;
+        var fromDate = document.getElementById('datePicker2').value;
+        var toDate = document.getElementById('datePicker9').value;
+        var url = "report/salesReport?from=" + fromDate + "&to=" + toDate;
         $("#resultBlock").load(url);
     }
 

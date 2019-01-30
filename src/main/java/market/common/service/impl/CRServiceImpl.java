@@ -58,6 +58,11 @@ public class CRServiceImpl implements CRService {
     }
 
     @Override
+    public List<CR> findByDateBetween(Date from, Date to) {
+        return crRepository.findByDateBetween(from, to);
+    }
+
+    @Override
     public void finishCr() {
 
         List<Item> allItems = itemService.findByType(Item.ItemType.NORMAL);
@@ -67,16 +72,16 @@ public class CRServiceImpl implements CRService {
         }
 
         List<CR> crList = findByDate(new Date());
-        for(CR cr: crList) {
+        for (CR cr : crList) {
 //            if(cr.getStatus()==CR.Status.ACTIVE) {
-                Item item = cr.getItem();
-                item.setQuantity(cr.getQuantity());
-                item.setUnitPrice(cr.getUnitPrice());
-                itemService.saveItem(item);
-                cr.setStatus(CR.Status.INACTIVE);
-                crRepository.saveAndFlush(cr);
+            Item item = cr.getItem();
+            item.setQuantity(cr.getQuantity());
+            item.setUnitPrice(cr.getUnitPrice());
+            itemService.saveItem(item);
+            cr.setStatus(CR.Status.INACTIVE);
+            crRepository.saveAndFlush(cr);
 //            }
         }
-                crStatusService.finishCr();
+        crStatusService.finishCr();
     }
 }
