@@ -47,10 +47,14 @@
             <div style="clear:left; margin-bottom:2%"></div>
             <div class="w3-container report-container">
                 <div style="float: left">
-                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker3" type="date"
-                           name="buyerReportDate">
+                    From
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker3" type="date">
                 </div>
-                <div style="float: left; margin-left: 10%">
+                <div style="float: left; margin-left: 2%">
+                    To
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker10" type="date">
+                </div>
+                <div style="float: left; margin-left: 2%; margin-top: 18px">
                     <select class="form-control w3-select" id="buyer">
                         <option disabled selected value>- - විකුණුම්කරු තෝරන්න - -</option>
                         <option th:each="buyer : ${buyers}"
@@ -59,7 +63,7 @@
                         </option>
                     </select>
                 </div>
-                <div style="float: left; margin-left: 10%">
+                <div style="float: left; margin-left: 2%; margin-top: 18px">
                     <button onclick="viewBuyerReport()" th:text="#{Daily Report}"
                             class="w3-btn w3-cyan w3-medium"></button>
                 </div>
@@ -68,10 +72,14 @@
             <div style="clear:left; margin-bottom:2%"></div>
             <div class="w3-container report-container">
                 <div style="float: left">
-                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker4" type="date"
-                           name="sellerReportDate">
+                    From
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker4" type="date">
                 </div>
-                <div style="float: left; margin-left: 10%">
+                <div style="float: left; margin-left: 2%">
+                    To
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker11" type="date">
+                </div>
+                <div style="float: left; margin-left: 2%; margin-top: 18px">
                     <select class="form-control w3-select" id="seller">
                         <option disabled selected value>- - ගැණුම්කරු තෝරන්න - -</option>
                         <option th:each="seller : ${sellers}"
@@ -80,7 +88,7 @@
                         </option>
                     </select>
                 </div>
-                <div style="float: left; margin-left: 10%">
+                <div style="float: left; margin-left: 2%; margin-top: 18px">
                     <button onclick="viewSellerReport()" th:text="#{Daily Report}"
                             class="w3-btn w3-cyan w3-medium"></button>
                 </div>
@@ -351,7 +359,10 @@
         <h5>Daily Report for</h5>
         <h6 th:text="${buyer}"></h6>
         <hr/>
-        <h6 th:text="${reportDate}"></h6>
+        From
+        <h6 th:text="${from}"></h6>
+        To
+        <h6 th:text="${to}"></h6>
 
         <table style="padding-top: 10px" class="reportTable" cellspacing="0"
                width="100%">
@@ -360,6 +371,7 @@
                 <th th:text="#{buyer.item.management.table.heading.item}">Item</th>
                 <th th:text="#{buyer.item.management.table.heading.quantity}">Quantity</th>
                 <th th:text="#{buyer.item.management.table.heading.unit.price}">Unit Price</th>
+                <th th:text="#{buyer.item.management.table.heading.date}">Date</th>
                 <th th:text="#{buyer.item.management.table.heading.amount}">Amount</th>
             </tr>
             </thead>
@@ -371,13 +383,14 @@
                     th:text="${buyerItem.item.name+' - FREEZER'}"></td>
                 <td th:text="${buyerItem.quantity}"></td>
                 <td th:text="${buyerItem.buyerUnitPrice}"></td>
+                <td th:text="${buyerItem.date}"></td>
                 <td th:text="${buyerItem.amount}"></td>
             </tr>
             </tbody>
         </table>
 
         <div style="float: left">
-            <h5>Total Daily Amount - </h5>
+            <h5>Total Amount - </h5>
         </div>
         <div style="float: left; margin-left: 10px">
             <h5 th:text="${dailyBuyerDto.totalAmount}"></h5>
@@ -398,7 +411,10 @@
         <h5>Daily Report for</h5>
         <h6 th:text="${seller}"></h6>
         <hr/>
-        <h6 th:text="${reportDate}"></h6>
+        From
+        <h6 th:text="${from}"></h6>
+        To
+        <h6 th:text="${to}"></h6>
 
         <table style="padding-top: 10px" class="reportTable" cellspacing="0"
                width="100%">
@@ -407,6 +423,7 @@
                 <th th:text="#{seller.item.management.table.heading.item}">Item</th>
                 <th th:text="#{seller.item.management.table.heading.quantity}">Quantity</th>
                 <th th:text="#{seller.item.management.table.heading.unit.price}">Unit Price</th>
+                <th th:text="#{seller.item.management.table.heading.date}">Unit Price</th>
                 <th th:text="#{seller.item.management.table.heading.amount}">Amount</th>
             </tr>
             </thead>
@@ -418,13 +435,14 @@
                     th:text="${sellerItem.item.name+' - FREEZER'}"></td>
                 <td th:text="${sellerItem.quantity}"></td>
                 <td th:text="${sellerItem.sellerUnitPrice}"></td>
+                <td th:text="${sellerItem.date}"></td>
                 <td th:text="${sellerItem.amount}"></td>
             </tr>
             </tbody>
         </table>
 
         <div style="float: left">
-            <h5>Total Daily Amount - </h5>
+            <h5>Total Amount - </h5>
         </div>
         <div style="float: left; margin-left: 10px">
             <h5 th:text="${dailySellerDto.totalAmount}"></h5>
@@ -612,6 +630,8 @@
         document.getElementById('datePicker6').valueAsDate = new Date();
         document.getElementById('datePicker7').valueAsDate = new Date();
         document.getElementById('datePicker8').valueAsDate = new Date();
+        document.getElementById('datePicker10').valueAsDate = new Date();
+        document.getElementById('datePicker11').valueAsDate = new Date();
     });
 
     function viewDailyPayment() {
@@ -628,16 +648,18 @@
     }
 
     function viewBuyerReport() {
-        var selectedDate = document.getElementById('datePicker3').value;
+        var fromDate = document.getElementById('datePicker3').value;
+        var toDate = document.getElementById('datePicker10').value;
         var buyer = document.getElementById("buyer").value;
-        var url = "report/buyerReport?date=" + selectedDate + "&buyer=" + buyer;
+        var url = "report/buyerReport?from=" + fromDate + "&to=" + toDate + "&buyer=" + buyer;
         $("#resultBlock").load(url);
     }
 
     function viewSellerReport() {
-        var selectedDate = document.getElementById('datePicker4').value;
+        var fromDate = document.getElementById('datePicker4').value;
+        var toDate = document.getElementById('datePicker11').value;
         var seller = document.getElementById("seller").value;
-        var url = "report/sellerReport?date=" + selectedDate + "&seller=" + seller;
+        var url = "report/sellerReport?from=" + fromDate + "&to=" + toDate + "&seller=" + seller;
         $("#resultBlock").load(url);
     }
 

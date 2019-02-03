@@ -9,9 +9,9 @@ public interface ReportService {
 
     SalesReportDto getSalesReportDetails(String from, String to);
 
-    DailyBuyerReportDto getDailyBuyerReportDetails(String date, Long buyerId);
+    DailyBuyerReportDto getDailyBuyerReportDetails(String from, String to, Long buyerId);
 
-    DailySellerReportDto getDailySellerReportDetails(String date, Long sellerId);
+    DailySellerReportDto getDailySellerReportDetails(String from, String to, Long sellerId);
 
     List<Payment> getBuyerChequePaymentDetails();
 

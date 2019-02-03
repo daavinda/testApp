@@ -23,5 +23,7 @@ public interface BuyerItemRepository extends JpaRepository<BuyerItem, Long> {
 
     List<BuyerItem> findByDateAndStatusAndBuyer(Date date, BuyerItem.Status active, Buyer buyer);
 
+    List<BuyerItem> findByStatusAndBuyerAndDateBetween(BuyerItem.Status active, Buyer buyer, Date from, Date to);
+
     List<BuyerItem> findByStatusAndDateBetween(BuyerItem.Status status, Date from, Date to);
 }

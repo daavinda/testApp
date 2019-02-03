@@ -65,22 +65,26 @@ public class ReportController extends MessageResolver {
     }
 
     @RequestMapping(value = "/buyerReport", method = RequestMethod.GET)
-    public String buyerReport(Model model, @RequestParam("date") String date,
+    public String buyerReport(Model model, @RequestParam("from") String from,
+                              @RequestParam("to") String to,
                               @RequestParam("buyer") Long buyerId) {
-        DailyBuyerReportDto dto = reportService.getDailyBuyerReportDetails(date, buyerId);
+        DailyBuyerReportDto dto = reportService.getDailyBuyerReportDetails(from, to, buyerId);
         model.addAttribute("dailyBuyerDto", dto);
-        model.addAttribute("reportDate", date);
+        model.addAttribute("from", from);
+        model.addAttribute("to", to);
         model.addAttribute("showDailyBuyer", true);
         model.addAttribute("buyer", buyerService.getBuyerById(buyerId).getName());
         return "report :: resultsList";
     }
 
     @RequestMapping(value = "/sellerReport", method = RequestMethod.GET)
-    public String sellerReport(Model model, @RequestParam("date") String date,
+    public String sellerReport(Model model, @RequestParam("from") String from,
+                               @RequestParam("to") String to,
                                @RequestParam("seller") Long sellerId) {
-        DailySellerReportDto dto = reportService.getDailySellerReportDetails(date, sellerId);
+        DailySellerReportDto dto = reportService.getDailySellerReportDetails(from, to, sellerId);
         model.addAttribute("dailySellerDto", dto);
-        model.addAttribute("reportDate", date);
+        model.addAttribute("from", from);
+        model.addAttribute("to", to);
         model.addAttribute("showDailySeller", true);
         model.addAttribute("seller", sellerService.findById(sellerId).getName());
         return "report :: resultsList";

@@ -16,6 +16,8 @@ public interface SellerItemService {
 
     List<SellerItem> findByDateAndStatusAndSeller(Date date, Long sellerId);
 
+    List<SellerItem> findByStatusAndSellerAndDateBetween(Date from, Date to, Long sellerId);
+
     List<SellerItem> findByStatusAndType(String status, String type);
 
     void saveSellerItem(SellerItem sellerItem);

@@ -47,6 +47,12 @@ public class BuyerItemServiceImpl implements BuyerItemService {
     }
 
     @Override
+    public List<BuyerItem> findByStatusAndBuyerAndDateBetween(Date from, Date to, Long buyerId) {
+        return buyerItemRepository.findByStatusAndBuyerAndDateBetween(BuyerItem.Status.ACTIVE, buyerService.getBuyerById(buyerId), from, to);
+    }
+
+
+    @Override
     public List<BuyerItem> findByStatusAndType(String status, String type) {
         return buyerItemRepository.findByStatusAndType(status, type);
     }

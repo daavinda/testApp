@@ -85,16 +85,11 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public DailyBuyerReportDto getDailyBuyerReportDetails(String date, Long buyerId) {
+    public DailyBuyerReportDto getDailyBuyerReportDetails(String from, String to, Long buyerId) {
+        Date fromDate = helperService.formatDate(from);
+        Date toDate = helperService.formatDate(to);
 
-        Date reportDate = new Date();
-        try {
-            reportDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        List<BuyerItem> itemList = buyerItemService.findByDateAndStatusAndBuyer(reportDate, buyerId);
+        List<BuyerItem> itemList = buyerItemService.findByStatusAndBuyerAndDateBetween(fromDate, toDate, buyerId);
 
         BigDecimal totalAmount = new BigDecimal(0);
         if (itemList != null) {
@@ -114,15 +109,11 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public DailySellerReportDto getDailySellerReportDetails(String date, Long sellerId) {
-        Date reportDate = new Date();
-        try {
-            reportDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public DailySellerReportDto getDailySellerReportDetails(String from, String to, Long sellerId) {
+        Date fromDate = helperService.formatDate(from);
+        Date toDate = helperService.formatDate(to);
 
-        List<SellerItem> itemList = sellerItemService.findByDateAndStatusAndSeller(reportDate, sellerId);
+        List<SellerItem> itemList = sellerItemService.findByStatusAndSellerAndDateBetween(fromDate, toDate, sellerId);
 
         BigDecimal totalAmount = new BigDecimal(0);
         if (itemList != null) {
