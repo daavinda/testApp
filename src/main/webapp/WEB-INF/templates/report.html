@@ -323,6 +323,25 @@
                 </tbody>
             </table>
 
+            <h6>Freezer</h6>
+            <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{item.management.table.heading.name}">Name</th>
+                    <th th:text="#{item.management.table.heading.price}">Unit Price</th>
+                    <th th:text="#{item.management.table.heading.quantity}">Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${dto.freezerItems}">
+                    <td th:text="${item.name}"></td>
+                    <td th:text="${item.unitPrice}"></td>
+                    <td th:text="${item.quantity}"></td>
+                </tr>
+                </tbody>
+            </table>
+
             <div style="float: left">
                 <h5>Total Buyings - </h5>
             </div>
@@ -358,20 +377,35 @@
             <div style="clear: both"></div>
 
             <div style="float: left">
+                <h5>Total Freezer - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${dto.totalAmountFreezer}"></h5>
+            </div>
+
+            <div style="clear: both"></div>
+            <div style="float: left">
                 <h5>Profit With CR - </h5>
             </div>
             <div style="float: left; margin-left: 10px">
                 <h5 th:text="${dto.profitWithCr}"></h5>
             </div>
-            <div style="clear: both"></div>
 
+            <div style="clear: both"></div>
+            <div style="float: left">
+                <h5>Profit With CR And Freezer - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px;">
+                <h5 th:text="${dto.profitWithCrAndFreezer}"></h5>
+            </div>
+
+            <div style="clear: both"></div>
             <div style="float: left">
                 <h5>Profit Without CR - </h5>
             </div>
             <div style="float: left; margin-left: 10px; margin-bottom: 50px">
                 <h5 th:text="${dto.profitWithoutCr}"></h5>
             </div>
-
         </div>
     </div>
 
@@ -585,8 +619,10 @@
             <tbody>
             <tr th:each="buyerItem: ${buyerItems}">
                 <td th:text="${buyerItem.buyer.name}"></td>
-                <td class="normalItem" th:if="${buyerItem.item.type.toString() == 'NORMAL'}" th:text="${buyerItem.item.name+' - NORMAL'}"></td>
-                <td class="freezerItem" th:if="${buyerItem.item.type.toString() == 'FREEZER'}" th:text="${buyerItem.item.name+' - FREEZER'}"></td>
+                <td class="normalItem" th:if="${buyerItem.item.type.toString() == 'NORMAL'}"
+                    th:text="${buyerItem.item.name+' - NORMAL'}"></td>
+                <td class="freezerItem" th:if="${buyerItem.item.type.toString() == 'FREEZER'}"
+                    th:text="${buyerItem.item.name+' - FREEZER'}"></td>
                 <td th:text="${buyerItem.quantity}"></td>
                 <td th:text="${buyerItem.buyerUnitPrice}"></td>
                 <td th:text="${buyerItem.amount}"></td>

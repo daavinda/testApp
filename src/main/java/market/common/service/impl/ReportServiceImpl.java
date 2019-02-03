@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,6 +34,8 @@ public class ReportServiceImpl implements ReportService {
     private PaymentService paymentService;
     @Autowired
     private HelperService helperService;
+    @Autowired
+    private ItemService itemService;
 
     @Override
     public SalesReportDto getSalesReportDetails(String from, String to) {
@@ -47,13 +48,16 @@ public class ReportServiceImpl implements ReportService {
         List<SellerItem> sellerItemList = sellerItemService.findByStatusAndDateBetween(SellerItem.Status.ACTIVE, fromDate, toDate);
         List<CR> crList = crService.findByDateBetween(fromDate, toDate);
         List<Expense> expenseList = expenseService.findByDateRange(fromDate, toDate);
+        List<Item> freezerList = itemService.findByType(Item.ItemType.FREEZER);
 
         BigDecimal totalAmountSeller = new BigDecimal(0);
         BigDecimal totalAmountBuyer = new BigDecimal(0);
         BigDecimal totalAmountCr = new BigDecimal(0);
         BigDecimal totalAmountExpense = new BigDecimal(0);
+        BigDecimal totalAmountFreezer = new BigDecimal(0);
         BigDecimal profitWithCr;
         BigDecimal profitWithoutCr;
+        BigDecimal profitWithCrAndFreezer;
 
         for (BuyerItem item : buyerItemList) {
             totalAmountBuyer = totalAmountBuyer.add(item.getAmount());
@@ -67,7 +71,14 @@ public class ReportServiceImpl implements ReportService {
         for (Expense expense : expenseList) {
             totalAmountExpense = totalAmountExpense.add(expense.getAmount());
         }
+        for (Item item : freezerList) {
+            //if (item.getQuantity().compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal amount = item.getQuantity().multiply(item.getUnitPrice());
+            totalAmountFreezer = totalAmountFreezer.add(amount);
+            //}
+        }
         profitWithCr = totalAmountBuyer.add(totalAmountCr).subtract(totalAmountSeller).subtract(totalAmountExpense);
+        profitWithCrAndFreezer = totalAmountBuyer.add(totalAmountCr).add(totalAmountFreezer).subtract(totalAmountSeller).subtract(totalAmountExpense);
         profitWithoutCr = totalAmountBuyer.subtract(totalAmountSeller).subtract(totalAmountExpense);
 
         dto.setBuyerItems(buyerItemList);
@@ -80,6 +91,9 @@ public class ReportServiceImpl implements ReportService {
         dto.setTotalAmountExpense(totalAmountExpense);
         dto.setProfitWithCr(profitWithCr);
         dto.setProfitWithoutCr(profitWithoutCr);
+        dto.setProfitWithCrAndFreezer(profitWithCrAndFreezer);
+        dto.setFreezerItems(freezerList);
+        dto.setTotalAmountFreezer(totalAmountFreezer);
 
         return dto;
     }

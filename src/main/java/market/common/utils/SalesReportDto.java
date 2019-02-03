@@ -1,9 +1,6 @@
 package market.common.utils;
 
-import market.common.orm.model.BuyerItem;
-import market.common.orm.model.CR;
-import market.common.orm.model.Expense;
-import market.common.orm.model.SellerItem;
+import market.common.orm.model.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,6 +22,12 @@ public class SalesReportDto {
     private List<Expense> expenseList;
 
     private BigDecimal totalAmountExpense;
+
+    private List<Item> freezerItems;
+
+    private BigDecimal totalAmountFreezer;
+
+    private BigDecimal profitWithCrAndFreezer;
 
     private BigDecimal profitWithCr;
 
@@ -108,5 +111,29 @@ public class SalesReportDto {
 
     public void setTotalAmountExpense(BigDecimal totalAmountExpense) {
         this.totalAmountExpense = totalAmountExpense;
+    }
+
+    public List<Item> getFreezerItems() {
+        return freezerItems;
+    }
+
+    public void setFreezerItems(List<Item> freezerItems) {
+        this.freezerItems = freezerItems;
+    }
+
+    public BigDecimal getTotalAmountFreezer() {
+        return totalAmountFreezer;
+    }
+
+    public void setTotalAmountFreezer(BigDecimal totalAmountFreezer) {
+        this.totalAmountFreezer = totalAmountFreezer;
+    }
+
+    public BigDecimal getProfitWithCrAndFreezer() {
+        return profitWithCrAndFreezer;
+    }
+
+    public void setProfitWithCrAndFreezer(BigDecimal profitWithCrAndFreezer) {
+        this.profitWithCrAndFreezer = profitWithCrAndFreezer;
     }
 }
