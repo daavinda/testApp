@@ -26,4 +26,6 @@ public interface BuyerItemService {
     void removeItem(BuyerItem item);
 
     List<BuyerItem> findByStatusAndDateBetween(BuyerItem.Status status, Date from, Date to);
+
+    List<BuyerItem> findByStatusAndDateAndItem(BuyerItem.Status status, Date date, Long itemId);
 }

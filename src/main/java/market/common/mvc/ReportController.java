@@ -1,5 +1,6 @@
 package market.common.mvc;
 
+import market.common.orm.model.BuyerItem;
 import market.common.orm.model.Expense;
 import market.common.orm.model.Payment;
 import market.common.service.*;
@@ -33,6 +34,12 @@ public class ReportController extends MessageResolver {
     private BuyerService buyerService;
     @Autowired
     private SellerService sellerService;
+    @Autowired
+    private ItemService itemService;
+    @Autowired
+    private BuyerItemService buyerItemService;
+    @Autowired
+    private HelperService helperService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model) {
@@ -40,6 +47,7 @@ public class ReportController extends MessageResolver {
         model.addAttribute("showReports", true);
         model.addAttribute("buyers", buyerService.getAllBuyers());
         model.addAttribute("sellers", sellerService.getAllSellers());
+        model.addAttribute("items", itemService.findAllItems());
         return "report";
     }
 
@@ -74,6 +82,18 @@ public class ReportController extends MessageResolver {
         model.addAttribute("to", to);
         model.addAttribute("showDailyBuyer", true);
         model.addAttribute("buyer", buyerService.getBuyerById(buyerId).getName());
+        return "report :: resultsList";
+    }
+
+    @RequestMapping(value = "/itemReport", method = RequestMethod.GET)
+    public String itemReport(Model model, @RequestParam("date") String date,
+                             @RequestParam("item") Long itemId) {
+        List<BuyerItem> list = buyerItemService.findByStatusAndDateAndItem(BuyerItem.Status.ACTIVE,
+                helperService.formatDate(date), itemId);
+        model.addAttribute("buyerItems", list);
+        model.addAttribute("date", date);
+        model.addAttribute("showDailyItem", true);
+        model.addAttribute("item", itemService.findById(itemId).getName());
         return "report :: resultsList";
     }
 

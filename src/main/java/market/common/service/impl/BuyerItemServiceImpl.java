@@ -7,6 +7,7 @@ import market.common.orm.repo.BuyerItemRepository;
 import market.common.service.BuyerItemService;
 import market.common.service.BuyerService;
 import market.common.service.CRStatusService;
+import market.common.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ public class BuyerItemServiceImpl implements BuyerItemService {
     private CRStatusService crStatusService;
     @Autowired
     private BuyerService buyerService;
+    @Autowired
+    private ItemService itemService;
 
     @Override
     public List<BuyerItem> getAllBuyerItems() {
@@ -76,5 +79,10 @@ public class BuyerItemServiceImpl implements BuyerItemService {
     @Override
     public List<BuyerItem> findByStatusAndDateBetween(BuyerItem.Status status, Date from, Date to) {
         return buyerItemRepository.findByStatusAndDateBetween(status, from, to);
+    }
+
+    @Override
+    public List<BuyerItem> findByStatusAndDateAndItem(BuyerItem.Status status, Date date, Long itemId) {
+        return buyerItemRepository.findByStatusAndDateAndItem(status, date, itemService.findById(itemId));
     }
 }

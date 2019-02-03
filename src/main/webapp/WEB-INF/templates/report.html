@@ -143,6 +143,27 @@
             </div>
             <!------------------------------------------------------------------------------------>
 
+            <div style="clear:left; margin-bottom:2%"></div>
+            <div class="w3-container report-container">
+                <div style="float: left">
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker12" type="date">
+                </div>
+                <div style="float: left; margin-left: 10%">
+                    <select class="form-control w3-select" id="item">
+                        <option disabled selected value>- - SELECT ITEM - -</option>
+                        <option th:each="item : ${items}"
+                                th:value="${item.getId()}"
+                                th:text="${item.getName()}">
+                        </option>
+                    </select>
+                </div>
+                <div style="float: left; margin-left: 10%;">
+                    <button onclick="viewItemReport()" th:text="#{Item Report}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------>
+
         </div>
 
         <div th:if="${showDailyIncome}">
@@ -545,6 +566,36 @@
     </div>
 
 
+    <div th:if="${showDailyItem}">
+        <h5>Daily Item Report</h5>
+        <h6 th:text="${item}"></h6>
+        <h6 th:text="${date}"></h6>
+        <hr/>
+        <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+               width="100%">
+            <thead>
+            <tr>
+                <th th:text="#{buyer.item.management.table.heading.buyer}">Buyer</th>
+                <th th:text="#{buyer.item.management.table.heading.item}">Item</th>
+                <th th:text="#{buyer.item.management.table.heading.quantity}">Quantity</th>
+                <th th:text="#{buyer.item.management.table.heading.unit.price}">Unit Price</th>
+                <th th:text="#{buyer.item.management.table.heading.amount}">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="buyerItem: ${buyerItems}">
+                <td th:text="${buyerItem.buyer.name}"></td>
+                <td class="normalItem" th:if="${buyerItem.item.type.toString() == 'NORMAL'}" th:text="${buyerItem.item.name+' - NORMAL'}"></td>
+                <td class="freezerItem" th:if="${buyerItem.item.type.toString() == 'FREEZER'}" th:text="${buyerItem.item.name+' - FREEZER'}"></td>
+                <td th:text="${buyerItem.quantity}"></td>
+                <td th:text="${buyerItem.buyerUnitPrice}"></td>
+                <td th:text="${buyerItem.amount}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
     <div th:if="${showExpenseReport}">
         <h5>Expenses Report</h5>
         <hr/>
@@ -632,6 +683,7 @@
         document.getElementById('datePicker8').valueAsDate = new Date();
         document.getElementById('datePicker10').valueAsDate = new Date();
         document.getElementById('datePicker11').valueAsDate = new Date();
+        document.getElementById('datePicker12').valueAsDate = new Date();
     });
 
     function viewDailyPayment() {
@@ -660,6 +712,13 @@
         var toDate = document.getElementById('datePicker11').value;
         var seller = document.getElementById("seller").value;
         var url = "report/sellerReport?from=" + fromDate + "&to=" + toDate + "&seller=" + seller;
+        $("#resultBlock").load(url);
+    }
+
+    function viewItemReport() {
+        var date = document.getElementById('datePicker12').value;
+        var item = document.getElementById("item").value;
+        var url = "report/itemReport?date=" + date + "&item=" + item;
         $("#resultBlock").load(url);
     }
 
