@@ -38,9 +38,10 @@ public class PaymentController {
     @RequestMapping(value = "/saveSellerPayment", method = RequestMethod.GET)
     public String saveSellerPayment(Model model, @RequestParam("seller") Long seller,
                                     @RequestParam("paymentType") Long paymentType,
-                                    @RequestParam("amount") BigDecimal amount) {
+                                    @RequestParam("amount") BigDecimal amount,
+                                    @RequestParam("chequeDate") String chequeDate) {
 
-        paymentService.saveSellerPayment(seller, paymentType, amount);
+        paymentService.saveSellerPayment(seller, paymentType, amount, chequeDate);
         model.addAttribute("payments", paymentService.findAllPayments());
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("buyers", buyerService.getAllBuyers());
@@ -50,9 +51,10 @@ public class PaymentController {
     @RequestMapping(value = "/saveBuyerPayment", method = RequestMethod.GET)
     public String saveBuyerPayment(Model model, @RequestParam("buyer") Long buyer,
                                    @RequestParam("paymentType") Long paymentType,
-                                   @RequestParam("amount") BigDecimal amount) {
+                                   @RequestParam("amount") BigDecimal amount,
+                                   @RequestParam("chequeDate") String chequeDate) {
 
-        paymentService.saveBuyerPayment(buyer, paymentType, amount);
+        paymentService.saveBuyerPayment(buyer, paymentType, amount, chequeDate);
         model.addAttribute("payments", paymentService.findAllPayments());
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("buyers", buyerService.getAllBuyers());

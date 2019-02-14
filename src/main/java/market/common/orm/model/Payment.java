@@ -28,6 +28,11 @@ public class Payment implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
+    @Column(name = "cheque_date")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date chequeDate;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "buyer_id")
     private Buyer buyer;
@@ -85,5 +90,13 @@ public class Payment implements Serializable {
 
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public Date getChequeDate() {
+        return chequeDate;
+    }
+
+    public void setChequeDate(Date chequeDate) {
+        this.chequeDate = chequeDate;
     }
 }

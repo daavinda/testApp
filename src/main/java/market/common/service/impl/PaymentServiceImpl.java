@@ -26,10 +26,12 @@ public class PaymentServiceImpl implements PaymentService {
     private SellerService sellerService;
     @Autowired
     private BuyerService buyerService;
+    @Autowired
+    private HelperService helperService;
 
 
     @Override
-    public void saveSellerPayment(Long sellerId, Long paymentType, BigDecimal amount) {
+    public void saveSellerPayment(Long sellerId, Long paymentType, BigDecimal amount, String chequeDate) {
 
         Seller seller = sellerService.findById(sellerId);
         pendingPaymentService.updateWithSellerPayment(seller, amount);
@@ -38,6 +40,7 @@ public class PaymentServiceImpl implements PaymentService {
             payment.setPaymentType(Payment.PaymentType.CASH);
         } else {
             payment.setPaymentType(Payment.PaymentType.CHEQUE);
+            payment.setChequeDate(helperService.formatDate(chequeDate));
         }
         payment.setSeller(seller);
         payment.setAmount(amount);
@@ -46,7 +49,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void saveBuyerPayment(Long buyerId, Long paymentType, BigDecimal amount) {
+    public void saveBuyerPayment(Long buyerId, Long paymentType, BigDecimal amount, String chequeDate) {
 
         Buyer buyer = buyerService.getBuyerById(buyerId);
         pendingPaymentService.updateWithBuyerPayment(buyer, amount);
@@ -56,6 +59,7 @@ public class PaymentServiceImpl implements PaymentService {
             payment.setPaymentType(Payment.PaymentType.CASH);
         } else {
             payment.setPaymentType(Payment.PaymentType.CHEQUE);
+            payment.setChequeDate(helperService.formatDate(chequeDate));
         }
         payment.setAmount(amount);
         payment.setDate(new Date());

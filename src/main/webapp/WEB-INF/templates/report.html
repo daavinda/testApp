@@ -586,6 +586,7 @@
                 <th th:text="#{Name}">Name</th>
                 <th th:text="#{Date}">Date</th>
                 <th th:text="#{Amount}">Credit</th>
+                <th th:text="#{Cheque Date}">Cheque Date</th>
             </tr>
             </thead>
             <tbody>
@@ -594,6 +595,7 @@
                 <td th:text="${payment.buyer.name}"></td>
                 <td th:text="${payment.date}"></td>
                 <td th:text="${payment.amount}"></td>
+                <td th:text="${payment.chequeDate}"></td>
             </tr>
             </tbody>
         </table>

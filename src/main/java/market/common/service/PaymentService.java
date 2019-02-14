@@ -13,9 +13,9 @@ import java.util.List;
  */
 public interface PaymentService {
 
-    void saveSellerPayment(Long sellerId, Long paymentType, BigDecimal amount);
+    void saveSellerPayment(Long sellerId, Long paymentType, BigDecimal amount, String chequeDate);
 
-    void saveBuyerPayment(Long buyerId, Long paymentType, BigDecimal amount);
+    void saveBuyerPayment(Long buyerId, Long paymentType, BigDecimal amount, String chequeDate);
 
     List<Payment> findAllPayments();
 

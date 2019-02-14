@@ -24,17 +24,21 @@
                     </select>
                     <label th:for="paymentType">Payment Type</label>
                     <select style="margin-bottom: 10px" class="form-control w3-select" name="paymentType"
-                            id="paymentType">
+                            id="paymentType" onchange="showDatePicker1()">
                         <option th:value="1" th:text="CASH">
                         <option th:value="2" th:text="CHEQUE">
                         </option>
                     </select>
 
+                    <div id="chequeDate1" style="margin-bottom: 10px">
+                        <label th:for="date">Cheque Date</label>
+                        <input style="border: 1px solid silver;" class="w3-input" id="datePicker1" type="date">
+                    </div>
                     <div style="float: left;">
                         <label th:for="amount">Amount</label>
                         <input class="w3-input w3-border" name="amount" id="amount" type="number" step="0.01">
                     </div>
-                    <div style="float: left; padding-left: 100px; padding-top: 18px;">
+                    <div style="float: left; padding-left: 100px; padding-top: 18px; padding-bottom: 20px">
                         <input type="submit" value="SAVE" onclick="saveSellerPayment()" class="w3-button w3-teal"/>
                     </div>
                 </div>
@@ -52,12 +56,16 @@
                     </select>
                     <label th:for="paymentType2">Payment Type</label>
                     <select style="margin-bottom: 10px" class="form-control w3-select" name="paymentType2"
-                            id="paymentType2">
+                            id="paymentType2" onchange="showDatePicker2()">
                         <option th:value="1" th:text="CASH">
                         <option th:value="2" th:text="CHEQUE">
                         </option>
                     </select>
 
+                    <div id="chequeDate2" style="margin-bottom: 10px">
+                        <label th:for="date">Cheque Date</label>
+                        <input style="border: 1px solid silver;" class="w3-input" id="datePicker2" type="date">
+                    </div>
                     <div style="float: left;">
                         <label th:for="amount2">Amount</label>
                         <input class="w3-input w3-border" name="amount2" id="amount2" type="number" step="0.01">
@@ -83,9 +91,9 @@
                 <tbody>
                 <tr th:each="payment: ${payments}">
                     <td th:if="${payment.seller != null}" th:text="${payment.seller.name}"></td>
-                    <td th:if="${payment.seller == null}" >T H S</td>
+                    <td th:if="${payment.seller == null}">T H S</td>
                     <td th:if="${payment.buyer != null}" th:text="${payment.buyer.name}"></td>
-                    <td th:if="${payment.buyer == null}" >T H S</td>
+                    <td th:if="${payment.buyer == null}">T H S</td>
                     <td th:text="${payment.amount}"></td>
                     <td th:text="${payment.paymentType}"></td>
                     <td th:text="${payment.date}"></td>
@@ -102,7 +110,29 @@
         <script>
             $(document).ready(function () {
                 $('#paymentTable').DataTable({})
+                document.getElementById('datePicker1').valueAsDate = new Date();
+                document.getElementById('datePicker2').valueAsDate = new Date();
+                document.getElementById("chequeDate1").style.display = 'none';
+                document.getElementById("chequeDate2").style.display = 'none';
             });
+
+            function showDatePicker1() {
+                var type = document.getElementById("paymentType").value;
+                if (type == 2) {
+                    document.getElementById("chequeDate1").style.display = 'block';
+                } else {
+                    document.getElementById("chequeDate1").style.display = 'none';
+                }
+            }
+
+            function showDatePicker2() {
+                var type = document.getElementById("paymentType2").value;
+                if (type == 2) {
+                    document.getElementById("chequeDate2").style.display = 'block';
+                } else {
+                    document.getElementById("chequeDate2").style.display = 'none';
+                }
+            }
 
             function removePayment(paymentId) {
                 if (confirm("Are you sure you need to remove this entry ?") == true) {
@@ -116,7 +146,8 @@
                 var seller = document.getElementById("seller").value;
                 var paymentType = document.getElementById("paymentType").value;
                 var amount = document.getElementById("amount").value;
-                var url = "payment/saveSellerPayment?seller=" + seller + "&paymentType=" + paymentType + "&amount=" + amount;
+                var chequeDate = document.getElementById("datePicker1").value;
+                var url = "payment/saveSellerPayment?seller=" + seller + "&paymentType=" + paymentType + "&amount=" + amount + "&chequeDate=" + chequeDate;
                 $("#resultBlock").load(url);
             }
 
@@ -124,7 +155,8 @@
                 var buyer = document.getElementById("buyer").value;
                 var paymentType = document.getElementById("paymentType2").value;
                 var amount = document.getElementById("amount2").value;
-                var url = "payment/saveBuyerPayment?buyer=" + buyer + "&paymentType=" + paymentType + "&amount=" + amount;
+                var chequeDate = document.getElementById("datePicker2").value;
+                var url = "payment/saveBuyerPayment?buyer=" + buyer + "&paymentType=" + paymentType + "&amount=" + amount + "&chequeDate=" + chequeDate;
                 $("#resultBlock").load(url);
             }
 
