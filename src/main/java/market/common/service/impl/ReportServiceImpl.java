@@ -48,7 +48,7 @@ public class ReportServiceImpl implements ReportService {
 
         List<BuyerItem> buyerItemList = buyerItemService.findByStatusAndDateBetween(BuyerItem.Status.ACTIVE, fromDate, toDate);
         List<SellerItem> sellerItemList = sellerItemService.findByStatusAndDateBetween(SellerItem.Status.ACTIVE, fromDate, toDate);
-        List<CR> crList = crService.findByDateBetween(fromDate, toDate);
+        List<CR> crList = crService.findByDate(toDate);
         List<Expense> expenseList = expenseService.findByDateRange(fromDate, toDate);
         List<Item> freezerList = itemService.findByType(Item.ItemType.FREEZER);
 
