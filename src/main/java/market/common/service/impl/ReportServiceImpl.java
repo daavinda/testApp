@@ -105,6 +105,15 @@ public class ReportServiceImpl implements ReportService {
         Date fromDate = helperService.formatDate(from);
         Date toDate = helperService.formatDate(to);
 
+        List<Payment> paymentList = paymentService.findByDateBetweenAndBuyer(fromDate, toDate, buyerService.getBuyerById(buyerId));
+
+        BigDecimal totalPayments = new BigDecimal(0);
+        if (paymentList != null) {
+            for (Payment payment : paymentList) {
+                totalPayments = totalPayments.add(payment.getAmount());
+            }
+        }
+
         List<BuyerItem> itemList = buyerItemService.findByStatusAndBuyerAndDateBetween(fromDate, toDate, buyerId);
 
         BigDecimal totalAmount = new BigDecimal(0);
@@ -120,6 +129,8 @@ public class ReportServiceImpl implements ReportService {
         dto.setCreditAmount(totalCredits);
         dto.setTotalAmount(totalAmount);
         dto.setItemList(itemList);
+        dto.setBuyerPayments(paymentList);
+        dto.setTotalPayments(totalPayments);
 
         return dto;
     }

@@ -109,6 +109,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public List<Payment> findByDateBetweenAndBuyer(Date fromDate, Date toDate, Buyer buyer) {
+        return paymentRepository.findByDateBetweenAndBuyer(fromDate, toDate, buyer);
+    }
+
+    @Override
     public List<Payment> getSellerPaymentsByDate(String date) {
         List<Payment> sellerPaymentList = new ArrayList<>();
         List<Payment> paymentList = findByDate(date);

@@ -25,6 +25,8 @@ public interface PaymentService {
 
     List<Payment> getBuyerPaymentsByDate(String date);
 
+    List<Payment> findByDateBetweenAndBuyer(Date fromDate, Date toDate, Buyer buyer);
+
     List<Payment> getSellerPaymentsByDate(String date);
 
     List<Payment> findByPaymentType(Payment.PaymentType type);

@@ -616,6 +616,37 @@
             <h5 th:text="${dailyBuyerDto.creditAmount}"></h5>
         </div>
 
+        <div style="clear: both"></div>
+        <h6>Payment From</h6>
+        <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+               width="100%">
+            <thead>
+            <tr>
+                <th th:text="#{Code}">Code</th>
+                <th th:text="#{Date}">Date</th>
+                <th th:text="#{Phone}">Phone</th>
+                <th th:text="#{Payment}">Payment</th>
+                <th th:text="#{Type}">Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="payment: ${dailyBuyerDto.buyerPayments}">
+                <td th:text="${payment.buyer.code}"></td>
+                <td th:text="${payment.date}"></td>
+                <td th:text="${payment.buyer.phone}"></td>
+                <td th:text="${payment.amount}"></td>
+                <td th:text="${payment.paymentType}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div style="float: left">
+            <h5>Total Payments - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${dailyBuyerDto.totalPayments}"></h5>
+        </div>
+
     </div>
 
 
