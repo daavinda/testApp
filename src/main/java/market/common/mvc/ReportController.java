@@ -4,10 +4,7 @@ import market.common.orm.model.BuyerItem;
 import market.common.orm.model.Expense;
 import market.common.orm.model.Payment;
 import market.common.service.*;
-import market.common.utils.DailyBuyerReportDto;
-import market.common.utils.DailySellerReportDto;
-import market.common.utils.MessageResolver;
-import market.common.utils.SalesReportDto;
+import market.common.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +56,16 @@ public class ReportController extends MessageResolver {
         model.addAttribute("buyerPayments", buyerPayments);
         model.addAttribute("sellerPayments", sellerPayments);
         model.addAttribute("showDailyIncome", true);
+        return "report :: resultsList";
+    }
+
+    @RequestMapping(value = "/dailyWallet", method = RequestMethod.GET)
+    public String dailyWallet(Model model, @RequestParam("date") String date) {
+
+        DailyWalletReportDto dto = reportService.getDailyWalletReportDetails(date);
+        model.addAttribute("reportDate", date);
+        model.addAttribute("reportDetails", dto);
+        model.addAttribute("showDailyWallet", true);
         return "report :: resultsList";
     }
 

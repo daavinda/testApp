@@ -31,6 +31,17 @@
             <div style="clear:left; margin-bottom:2%"></div>
             <div class="w3-container report-container">
                 <div style="float: left">
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker13" type="date">
+                </div>
+                <div style="float: left; margin-left: 10%">
+                    <button onclick="viewDailyCash()" th:text="#{Daily Cash Report}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------>
+            <div style="clear:left; margin-bottom:2%"></div>
+            <div class="w3-container report-container">
+                <div style="float: left">
                     From
                     <input style="border: 1px solid silver;" class="w3-input" id="datePicker2" type="date">
                 </div>
@@ -215,6 +226,143 @@
                 </tbody>
             </table>
         </div>
+
+
+        <div th:if="${showDailyWallet}">
+            <h5>Daily Cash Report</h5>
+            <h6 th:text="${reportDate}"></h6>
+            <h6>Payment From</h6>
+            <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{Code}">Code</th>
+                    <th th:text="#{Name}">Name</th>
+                    <th th:text="#{Phone}">Phone</th>
+                    <th th:text="#{Payment}">Payment</th>
+                    <th th:text="#{Type}">Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="payment: ${reportDetails.buyerPayments}">
+                    <td th:text="${payment.buyer.code}"></td>
+                    <td th:text="${payment.buyer.name}"></td>
+                    <td th:text="${payment.buyer.phone}"></td>
+                    <td th:text="${payment.amount}"></td>
+                    <td th:text="${payment.paymentType}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h6>Payment To</h6>
+            <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{Code}">Code</th>
+                    <th th:text="#{Name}">Name</th>
+                    <th th:text="#{Phone}">Phone</th>
+                    <th th:text="#{Payment}">Payment</th>
+                    <th th:text="#{Type}">Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="payment: ${reportDetails.sellerPayments}">
+                    <td th:text="${payment.seller.code}"></td>
+                    <td th:text="${payment.seller.name}"></td>
+                    <td th:text="${payment.seller.phone}"></td>
+                    <td th:text="${payment.amount}"></td>
+                    <td th:text="${payment.paymentType}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h6>Expenses</h6>
+            <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{expense.management.table.heading.expense}">Expense</th>
+                    <th th:text="#{expense.management.table.heading.date}">Expense</th>
+                    <th th:text="#{expense.management.table.heading.amount}">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="expense: ${reportDetails.expenses}">
+                    <td th:text="${expense.expenseType.name}"></td>
+                    <td th:text="${expense.date}"></td>
+                    <td th:text="${expense.amount}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h6>Atha Mita</h6>
+            <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{buyer.item.management.table.heading.item}">Item</th>
+                    <th th:text="#{buyer.item.management.table.heading.quantity}">Quantity</th>
+                    <th th:text="#{buyer.item.management.table.heading.unit.price}">Unit Price</th>
+                    <th th:text="#{buyer.item.management.table.heading.amount}">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="buyerItem: ${reportDetails.athaMitaList}">
+                    <td class="normalItem" th:if="${buyerItem.item.type.toString() == 'NORMAL'}"
+                        th:text="${buyerItem.item.name+' - NORMAL'}"></td>
+                    <td class="freezerItem" th:if="${buyerItem.item.type.toString() == 'FREEZER'}"
+                        th:text="${buyerItem.item.name+' - FREEZER'}"></td>
+                    <td th:text="${buyerItem.quantity}"></td>
+                    <td th:text="${buyerItem.buyerUnitPrice}"></td>
+                    <td th:text="${buyerItem.amount}"></td>
+
+                </tr>
+                </tbody>
+            </table>
+
+            <div style="float: left">
+                <h5>Total Payments Received - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${reportDetails.totalBuyerPayments}"></h5>
+            </div>
+            <div style="clear: both"></div>
+
+            <div style="float: left">
+                <h5>Total Payments Sent - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${reportDetails.totalSellerPayments}"></h5>
+            </div>
+            <div style="clear: both"></div>
+
+            <div style="float: left">
+                <h5>Total Expenses - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${reportDetails.totalExpenses}"></h5>
+            </div>
+            <div style="clear: both"></div>
+
+            <div style="float: left">
+                <h5>Total Atha Mita - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${reportDetails.totalAthaMita}"></h5>
+            </div>
+            <div style="clear: both"></div>
+
+            <div style="float: left">
+                <h5>Total In Wallet - </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${reportDetails.totalInWallet}"></h5>
+            </div>
+
+
+        </div>
+
 
         <div th:if="${showDailySales}">
             <h5>Sales Report</h5>
@@ -722,11 +870,18 @@
         document.getElementById('datePicker10').valueAsDate = new Date();
         document.getElementById('datePicker11').valueAsDate = new Date();
         document.getElementById('datePicker12').valueAsDate = new Date();
+        document.getElementById('datePicker13').valueAsDate = new Date();
     });
 
     function viewDailyPayment() {
         var selectedDate = document.getElementById('datePicker1').value;
         var url = "report/buyerIncome?date=" + selectedDate;
+        $("#resultBlock").load(url);
+    }
+
+    function viewDailyCash() {
+        var selectedDate = document.getElementById('datePicker13').value;
+        var url = "report/dailyWallet?date=" + selectedDate;
         $("#resultBlock").load(url);
     }
 

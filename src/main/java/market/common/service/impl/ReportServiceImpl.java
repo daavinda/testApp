@@ -249,4 +249,60 @@ public class ReportServiceImpl implements ReportService {
 
         return dto;
     }
+
+    @Override
+    public DailyWalletReportDto getDailyWalletReportDetails(String date) {
+        Date reportDate = helperService.formatDate(date);
+        DailyWalletReportDto dto = new DailyWalletReportDto();
+
+        List<Payment> buyerPayments = paymentService.getBuyerPaymentsByDate(date);
+        List<Payment> sellerPayments = paymentService.getSellerPaymentsByDate(date);
+        List<Expense> expenseList = expenseService.findByDate(reportDate);
+
+        BigDecimal totalBuyerAmount = new BigDecimal(0);
+        BigDecimal totalSellerAmount = new BigDecimal(0);
+        BigDecimal totalExpenses = new BigDecimal(0);
+        BigDecimal totalAthaMita = new BigDecimal(0);
+        BigDecimal totalInWallet = new BigDecimal(0);
+
+        Buyer buyer = buyerService.getBuyerByName("Atha Mita");
+        if (buyer != null) {
+            List<BuyerItem> buyerItems = buyerItemService.findByDateAndStatusAndBuyer(reportDate, buyer.getId());
+            if (buyerItems != null) {
+                for (BuyerItem item : buyerItems) {
+                    totalAthaMita = totalAthaMita.add(item.getAmount());
+                }
+                dto.setAthaMitaList(buyerItems);
+                dto.setTotalAthaMita(totalAthaMita);
+            }
+        }
+
+        if (buyerPayments != null) {
+            for (Payment payment : buyerPayments) {
+                totalBuyerAmount = totalBuyerAmount.add(payment.getAmount());
+            }
+        }
+        if (sellerPayments != null) {
+            for (Payment payment : sellerPayments) {
+                totalSellerAmount = totalSellerAmount.add(payment.getAmount());
+            }
+        }
+        if (expenseList != null) {
+            for (Expense expense : expenseList) {
+                totalExpenses = totalExpenses.add(expense.getAmount());
+            }
+        }
+        totalInWallet = totalBuyerAmount.add(totalAthaMita).subtract(totalExpenses).subtract(totalSellerAmount);
+
+        dto.setTotalSellerPayments(totalSellerAmount);
+        dto.setTotalBuyerPayments(totalBuyerAmount);
+        dto.setTotalExpenses(totalExpenses);
+        dto.setTotalInWallet(totalInWallet);
+
+        dto.setExpenses(expenseList);
+        dto.setBuyerPayments(buyerPayments);
+        dto.setSellerPayments(sellerPayments);
+
+        return dto;
+    }
 }

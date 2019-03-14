@@ -39,6 +39,11 @@ public class BuyerServiceImpl implements BuyerService {
     }
 
     @Override
+    public Buyer getBuyerByName(String name) {
+        return buyerRepository.findByName(name);
+    }
+
+    @Override
     public void saveBuyer(Buyer buyer) {
         Buyer savedBuyer = buyerRepository.saveAndFlush(buyer);
         if (buyer.getCode() == null) {

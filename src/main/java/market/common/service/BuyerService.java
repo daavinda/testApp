@@ -12,6 +12,8 @@ public interface BuyerService {
 
     Buyer getBuyerById(Long buyerId);
 
+    Buyer getBuyerByName(String buyerName);
+
     void saveBuyer(Buyer buyer);
 
     List<BuyerDto> getAllBuyerDetails();

@@ -21,4 +21,6 @@ public interface ReportService {
 
     DebtsAndCreditsReportDto getDebtsAndCreditsReport();
 
+    DailyWalletReportDto getDailyWalletReportDetails(String date);
+
 }
