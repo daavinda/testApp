@@ -213,6 +213,15 @@ public class ReportServiceImpl implements ReportService {
         BigDecimal totalProfitWithCr = new BigDecimal(0);
         BigDecimal totalProfitWithoutCr = new BigDecimal(0);
         List<MonthlyProfit> profitList = new ArrayList<>();
+        BigDecimal totalCrAmount = new BigDecimal(0);
+
+        List<CR> crList = crService.findByDate(toDate);
+
+        if (crList != null) {
+            for (CR cr : crList) {
+                totalCrAmount = totalCrAmount.add(cr.getAmount());
+            }
+        }
 
         do {
             MonthlyProfit monthlyProfit = new MonthlyProfit();
@@ -220,9 +229,9 @@ public class ReportServiceImpl implements ReportService {
             SalesReportDto salesReportDto = getSalesReportDetails(simpleDateFormat.format(c.getTime()), simpleDateFormat.format(c.getTime()));
 
             monthlyProfit.setDate(simpleDateFormat.format(c.getTime()));
-            monthlyProfit.setProfitWithCr(salesReportDto.getProfitWithCr());
+            //monthlyProfit.setProfitWithCr(salesReportDto.getProfitWithCr());
             monthlyProfit.setProfitWithoutCr(salesReportDto.getProfitWithoutCr());
-            totalProfitWithCr = totalProfitWithCr.add(salesReportDto.getProfitWithCr());
+            //totalProfitWithCr = totalProfitWithCr.add(salesReportDto.getProfitWithCr());
             totalProfitWithoutCr = totalProfitWithoutCr.add(salesReportDto.getProfitWithoutCr());
 
             profitList.add(monthlyProfit);
@@ -231,7 +240,7 @@ public class ReportServiceImpl implements ReportService {
         while (c.getTime().before(c2.getTime()));
 
         dto.setProfitList(profitList);
-        dto.setTotalProfitWithCr(totalProfitWithCr);
+        dto.setTotalProfitWithCr(totalProfitWithoutCr.add(totalCrAmount));
         dto.setTotalProfitWithoutCr(totalProfitWithoutCr);
         return dto;
     }

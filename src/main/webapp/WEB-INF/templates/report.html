@@ -867,14 +867,14 @@
             <thead>
             <tr>
                 <th th:text="#{Date}">Expense</th>
-                <th th:text="#{Profit With CR}">CR</th>
-                <th th:text="#{Profit Without CR}">WOCR</th>
+                <!--<th th:text="#{Profit With CR}">CR</th>-->
+                <th th:text="#{Profit}">WOCR</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="profit: ${profitDetails.profitList}">
                 <td th:text="${profit.date}"></td>
-                <td th:text="${profit.profitWithCr}"></td>
+                <!--<td th:text="${profit.profitWithCr}"></td>-->
                 <td th:text="${profit.profitWithoutCr}"></td>
             </tr>
             </tbody>
