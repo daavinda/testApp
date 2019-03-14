@@ -37,6 +37,8 @@ public class ReportController extends MessageResolver {
     private BuyerItemService buyerItemService;
     @Autowired
     private HelperService helperService;
+    @Autowired
+    private ExpenseTypeService expenseTypeService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model) {
@@ -45,6 +47,7 @@ public class ReportController extends MessageResolver {
         model.addAttribute("buyers", buyerService.getAllBuyers());
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("items", itemService.findAllItems());
+        model.addAttribute("expenseTypes", expenseTypeService.findAll());
         return "report";
     }
 
@@ -135,8 +138,9 @@ public class ReportController extends MessageResolver {
 
     @RequestMapping(value = "/expenseReport", method = RequestMethod.GET)
     public String expenseReport(Model model, @RequestParam("dateFrom") String dateFrom,
-                                @RequestParam("dateTo") String dateTo) {
-        model.addAttribute("expensesDto", reportService.getExpenseReportDetails(dateFrom, dateTo));
+                                @RequestParam("dateTo") String dateTo,
+                                @RequestParam("expenseType") Long expenseType) {
+        model.addAttribute("expensesDto", reportService.getExpenseReportDetails(dateFrom, dateTo, expenseType));
         model.addAttribute("showExpenseReport", true);
         model.addAttribute("dateFrom", dateFrom);
         model.addAttribute("dateTo", dateTo);

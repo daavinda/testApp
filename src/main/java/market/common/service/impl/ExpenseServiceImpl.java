@@ -54,4 +54,9 @@ public class ExpenseServiceImpl implements ExpenseService {
     public List<Expense> findByDateRange(Date dateFrom, Date dateTo) {
         return expenseRepository.findByDateRange(dateFrom, dateTo);
     }
+
+    @Override
+    public List<Expense> findByDateBetweenAndExpenseType(Date dateFrom, Date dateTo, ExpenseType expenseType) {
+        return expenseRepository.findByDateBetweenAndExpenseType(dateFrom, dateTo, expenseType);
+    }
 }

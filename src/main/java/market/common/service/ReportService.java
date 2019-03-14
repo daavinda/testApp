@@ -15,7 +15,7 @@ public interface ReportService {
 
     List<Payment> getBuyerChequePaymentDetails();
 
-    ExpenseReportDto getExpenseReportDetails(String dateFrom, String dateTo);
+    ExpenseReportDto getExpenseReportDetails(String dateFrom, String dateTo, Long expenseType);
 
     MonthlyProfitDto getMonthlyProfitDetails(String dateFrom, String dateTo);
 

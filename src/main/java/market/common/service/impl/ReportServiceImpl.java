@@ -36,6 +36,8 @@ public class ReportServiceImpl implements ReportService {
     private HelperService helperService;
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private ExpenseTypeService expenseTypeService;
 
     @Override
     public SalesReportDto getSalesReportDetails(String from, String to) {
@@ -165,10 +167,10 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public ExpenseReportDto getExpenseReportDetails(String dateFrom, String dateTo) {
+    public ExpenseReportDto getExpenseReportDetails(String dateFrom, String dateTo, Long expenseType) {
 
-        List<Expense> expenseList = expenseService.findByDateRange(helperService.formatDate(dateFrom),
-                helperService.formatDate(dateTo));
+        List<Expense> expenseList = expenseService.findByDateBetweenAndExpenseType(helperService.formatDate(dateFrom),
+                helperService.formatDate(dateTo), expenseTypeService.findById(expenseType));
         BigDecimal totalAmount = new BigDecimal(0);
 
         if (expenseList != null) {

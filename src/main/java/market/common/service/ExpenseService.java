@@ -22,4 +22,6 @@ public interface ExpenseService {
 
     List<Expense> findByDateRange(Date dateFrom, Date dateTo);
 
+    List<Expense> findByDateBetweenAndExpenseType(Date dateFrom, Date dateTo, ExpenseType expenseType);
+
 }

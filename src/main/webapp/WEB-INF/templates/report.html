@@ -131,6 +131,15 @@
                     To
                     <input style="border: 1px solid silver;" class="w3-input" id="datePicker6" type="date">
                 </div>
+                <div style="float: left; margin-left: 2%; margin-top: 18px">
+                    <select class="form-control w3-select" id="expenseType">
+                        <option disabled selected value>- - SELECT EXPENSE TYPE - -</option>
+                        <option th:each="expenseType : ${expenseTypes}"
+                                th:value="${expenseType.getId()}"
+                                th:text="${expenseType.getName()}">
+                        </option>
+                    </select>
+                </div>
                 <div style="float: left; margin-left: 10%; margin-top: 18px">
                     <button onclick="viewExpenseReport()" th:text="#{Expense Report}"
                             class="w3-btn w3-cyan w3-medium"></button>
@@ -928,7 +937,8 @@
     function viewExpenseReport() {
         var dateFrom = document.getElementById('datePicker5').value;
         var dateTo = document.getElementById('datePicker6').value;
-        var url = "report/expenseReport?dateFrom=" + dateFrom + "&dateTo=" + dateTo;
+        var expenseType = document.getElementById('expenseType').value;
+        var url = "report/expenseReport?dateFrom=" + dateFrom + "&dateTo=" + dateTo + "&expenseType=" + expenseType;
         $("#resultBlock").load(url);
     }
 
