@@ -499,42 +499,49 @@
                 </tbody>
             </table>
 
-            <div style="float: left">
-                <h5>Total Buyings - </h5>
-            </div>
-            <div style="float: left; margin-left: 10px">
+
+            <div style="float: right; margin-left: 10px">
                 <h5 th:text="${dto.totalAmountSeller}"></h5>
             </div>
-            <div style="clear: both"></div>
-
-            <div style="float: left">
-                <h5>Total Sellings - </h5>
+            <div style="float: right">
+                <h5>Total Buyings = </h5>
             </div>
-            <div style="float: left; margin-left: 10px">
+
+            <div style="clear: both"></div>
+            <div style="float: right; margin-left: 10px">
                 <h5 th:text="${dto.totalAmountBuyer}"></h5>
             </div>
-            <div style="clear: both"></div>
+            <div style="float: right">
+                <h5>Total Sellings = </h5>
+            </div>
 
+            <div style="clear: both"></div>
+            <div style="float: right; margin-left: 10px">
+                <h5 th:text="${dto.totalAmountExpense}"></h5>
+            </div>
+            <div style="float: right">
+                <h5>Total Expenses = </h5>
+            </div>
+
+            <div style="clear: both"></div>
+            <div style="float: right; margin-left: 10px">
+                <h5 th:text="${dto.profitWithCr}"></h5>
+            </div>
+            <div style="float: right">
+                <h5>Profit With CR = </h5>
+            </div>
+
+            <div style="clear: both"></div>
             <div style="float: left">
-                <h5>Total CR - </h5>
+                <h5>Total CR = </h5>
             </div>
             <div style="float: left; margin-left: 10px">
                 <h5 th:text="${dto.totalAmountCr}"></h5>
             </div>
 
             <div style="clear: both"></div>
-
             <div style="float: left">
-                <h5>Total Expenses - </h5>
-            </div>
-            <div style="float: left; margin-left: 10px">
-                <h5 th:text="${dto.totalAmountExpense}"></h5>
-            </div>
-
-            <div style="clear: both"></div>
-
-            <div style="float: left">
-                <h5>Total Freezer - </h5>
+                <h5>Total Freezer = </h5>
             </div>
             <div style="float: left; margin-left: 10px">
                 <h5 th:text="${dto.totalAmountFreezer}"></h5>
@@ -542,15 +549,7 @@
 
             <div style="clear: both"></div>
             <div style="float: left">
-                <h5>Profit With CR - </h5>
-            </div>
-            <div style="float: left; margin-left: 10px">
-                <h5 th:text="${dto.profitWithCr}"></h5>
-            </div>
-
-            <div style="clear: both"></div>
-            <div style="float: left">
-                <h5>Profit With CR And Freezer - </h5>
+                <h5>Profit With CR And Freezer = </h5>
             </div>
             <div style="float: left; margin-left: 10px;">
                 <h5 th:text="${dto.profitWithCrAndFreezer}"></h5>
@@ -558,7 +557,7 @@
 
             <div style="clear: both"></div>
             <div style="float: left">
-                <h5>Profit Without CR - </h5>
+                <h5>Profit Without CR = </h5>
             </div>
             <div style="float: left; margin-left: 10px; margin-bottom: 50px">
                 <h5 th:text="${dto.profitWithoutCr}"></h5>

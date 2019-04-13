@@ -76,7 +76,7 @@ public class ReportServiceImpl implements ReportService {
         for (Item item : freezerList) {
             //if (item.getQuantity().compareTo(BigDecimal.ZERO) > 0) {
             BigDecimal amount = item.getQuantity().multiply(item.getUnitPrice());
-            totalAmountFreezer = totalAmountFreezer.add(amount);
+            totalAmountFreezer = totalAmountFreezer.add(amount).setScale(2);
             //}
         }
         profitWithCr = totalAmountBuyer.add(totalAmountCr).subtract(totalAmountSeller).subtract(totalAmountExpense);
