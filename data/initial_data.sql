@@ -39,3 +39,6 @@ INSERT INTO system_role_permission (id, permission_id) VALUES (1, 15);
 
 -- users
 INSERT INTO system_user (id, username, password, state, role_id) VALUES (1, 'admin','$2a$10$nSLDupAfFuPhNrtLfnNk4.xwGCeO3yCXdm1ckmp.FVqkl3VIO1l2m', 'ACTIVE', 1);
+
+-- required buyer
+INSERT INTO buyer(id, code, name, phone) VALUES (1, 'B001', 'Atha Mita', '');
