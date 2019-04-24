@@ -1,0 +1,89 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="resultsList" class="results-block">
+    <div id="resultBlock">
+        <div th:replace="common-alerts :: body"></div>
+        <div th:replace="common-loader :: body"></div>
+        <div>
+            <div class="w3-cell-row">
+                <div class="w3-cell">
+                    <h1 class="w3-xxlarge w3-text-teal"><b><span
+                            th:text="#{seller.expense.management.page.heading}"></span></b>
+                    </h1>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label th:for="expenseType">Seller</label>
+                <select style="margin-bottom: 10px" class="form-control w3-select" name="seller" id="seller">
+                    <option disabled selected value>- - SELECT SELLER - -</option>
+                    <option th:each="seller : ${sellers}"
+                            th:value="${seller.getId()}"
+                            th:text="${seller.getName()}">
+                    </option>
+                </select>
+
+                <div>
+                    <div style="float: left;">
+                        <label th:for="amount">Amount</label>
+                        <input class="w3-input w3-border" name="amount" id="amount" type="number" step="0.01">
+                    </div>
+                    <div style="float: left; padding-left: 130px; padding-top: 18px; padding-bottom: 20px">
+                        <input type="submit" value="SAVE" onclick="" class="w3-button w3-teal"/>
+                    </div>
+                </div>
+            </div>
+
+            <table style="padding-top: 10px" id="expenseTable" class="display cell-border" cellspacing="0"
+                   width="100%">
+                <thead>
+                <tr>
+                    <th th:text="#{expense.management.table.heading.expense}">Expense</th>
+                    <th th:text="#{expense.management.table.heading.amount}">Amount</th>
+                    <th th:text="#{expense.management.table.heading.date}">Date</th>
+                    <th th:text="#{expense.management.table.heading.note}">Note</th>
+                    <th th:text="#{expense.management.table.heading.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="expense: ${expenses}">
+                    <td th:text="${expense.getSeller().getName()}"></td>
+                    <td th:text="${expense.amount}"></td>
+                    <td th:text="${expense.date}"></td>
+                    <td th:text="${expense.note}"></td>
+                    <td>
+                        <!--<a href="#" th:text="#{label.remove.link}"-->
+                           <!--th:onclick="'removeExpense(\'' + ${expense.id} + '\');'"></a>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#expenseTable').DataTable({})
+    });
+
+//    function addExpense() {
+//        var selectBox = document.getElementById("expenseType");
+//        var expenseType = selectBox.options[selectBox.selectedIndex].value;
+//        var amount = document.getElementById("amount").value;
+//        var url = "expense/add?expenseType=" + expenseType + "&amount=" + amount;
+//        $("#resultBlock").load(url);
+//    }
+//
+//    function removeExpense(expenseId) {
+//        if (confirm("Are you sure you need to remove this entry ?") == true) {
+//            var url = "expense/remove?expenseId=" + expenseId;
+//            $("#resultBlock").load(url);
+//        } else {
+//        }
+//    }
+
+</script>
+</html>

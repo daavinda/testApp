@@ -51,6 +51,9 @@
         <a sec:authorize="hasAuthority('ROLE_MANAGE_EXPENSE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/expense/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.expense.management.title}">
         </a>
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_EXPENSE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/sellerExpense/new}"
+           class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.seller.expense.management.title}">
+        </a>
         <a sec:authorize="hasAuthority('ROLE_MANAGE_CR')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/cr/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.cr.management.title}">
         </a>

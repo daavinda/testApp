@@ -84,6 +84,31 @@
             <div class="w3-container report-container">
                 <div style="float: left">
                     From
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker14" type="date">
+                </div>
+                <div style="float: left; margin-left: 2%">
+                    To
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker15" type="date">
+                </div>
+                <div style="float: left; margin-left: 2%; margin-top: 18px">
+                    <select class="form-control w3-select" id="seller2">
+                        <option disabled selected value>- - ගැණුම්කරු තෝරන්න - -</option>
+                        <option th:each="seller : ${sellers}"
+                                th:value="${seller.getId()}"
+                                th:text="${seller.getName()}">
+                        </option>
+                    </select>
+                </div>
+                <div style="float: left; margin-left: 2%; margin-top: 18px">
+                    <button onclick="viewSellerReportSummary()" th:text="#{Daily Report Summary}"
+                            class="w3-btn w3-cyan w3-medium"></button>
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------>
+            <div style="clear:left; margin-bottom:2%"></div>
+            <div class="w3-container report-container">
+                <div style="float: left">
+                    From
                     <input style="border: 1px solid silver;" class="w3-input" id="datePicker4" type="date">
                 </div>
                 <div style="float: left; margin-left: 2%">
@@ -910,6 +935,8 @@
         document.getElementById('datePicker11').valueAsDate = new Date();
         document.getElementById('datePicker12').valueAsDate = new Date();
         document.getElementById('datePicker13').valueAsDate = new Date();
+        document.getElementById('datePicker14').valueAsDate = new Date();
+        document.getElementById('datePicker15').valueAsDate = new Date();
     });
 
     function viewDailyPayment() {
@@ -944,6 +971,14 @@
         var toDate = document.getElementById('datePicker11').value;
         var seller = document.getElementById("seller").value;
         var url = "report/sellerReport?from=" + fromDate + "&to=" + toDate + "&seller=" + seller;
+        $("#resultBlock").load(url);
+    }
+
+    function viewSellerReportSummary() {
+        var fromDate = document.getElementById('datePicker14').value;
+        var toDate = document.getElementById('datePicker15').value;
+        var seller = document.getElementById("seller2").value;
+        var url = "report/sellerReportSummary?from=" + fromDate + "&to=" + toDate + "&seller=" + seller;
         $("#resultBlock").load(url);
     }
 

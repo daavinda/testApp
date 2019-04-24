@@ -120,6 +120,19 @@ public class ReportController extends MessageResolver {
         return "report :: resultsList";
     }
 
+    @RequestMapping(value = "/sellerReportSummary", method = RequestMethod.GET)
+    public String sellerReportSummaryq(Model model, @RequestParam("from") String from,
+                               @RequestParam("to") String to,
+                               @RequestParam("seller") Long sellerId) {
+        DailySellerReportDto dto = reportService.getDailySellerReportDetails(from, to, sellerId);
+        model.addAttribute("dailySellerSummaryDto", dto);
+        model.addAttribute("from", from);
+        model.addAttribute("to", to);
+        model.addAttribute("showDailySellerSummary", true);
+        model.addAttribute("seller", sellerService.findById(sellerId).getName());
+        return "report :: resultsList";
+    }
+
     @RequestMapping(value = "/debtsAndCreditsReport", method = RequestMethod.GET)
     public String debtsAndCreditsReport(Model model) {
 
