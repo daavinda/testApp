@@ -341,4 +341,46 @@ public class ReportServiceImpl implements ReportService {
 
         return dto;
     }
+
+    @Override
+    public DailySellerReportSummaryDto getDailySellerReportSummaryDetails(String from, String to, Long sellerId) {
+
+        Date fromDate = helperService.formatDate(from);
+        Date toDate = helperService.formatDate(to);
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fromDate);
+
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(toDate);
+        c2.add(Calendar.DATE, 1);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        DailySellerReportSummaryDto summaryDto = new DailySellerReportSummaryDto();
+        List<DailySellerSummary> summaryList = new ArrayList<>();
+
+        BigDecimal grandTotal = new BigDecimal(0);
+
+        do {
+            DailySellerReportDto dto = getDailySellerReportDetails(simpleDateFormat.format(c.getTime()),
+                    simpleDateFormat.format(c.getTime()), sellerId);
+            DailySellerSummary summary = new DailySellerSummary();
+            summary.setAmount(dto.getTotalAmount());
+            summary.setDate(simpleDateFormat.format(c.getTime()));
+            summary.setExpenses(dto.getTotalExpenses());
+            summary.setTotal(dto.getBalance());
+            summaryList.add(summary);
+            grandTotal = grandTotal.add(dto.getBalance());
+            c.add(Calendar.DATE, 1);
+        }
+        while (c.getTime().before(c2.getTime()));
+
+        summaryDto.setTotal(grandTotal);
+        summaryDto.setSummaryList(summaryList);
+
+        return summaryDto;
+    }
+
+
 }

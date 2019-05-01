@@ -23,4 +23,5 @@ public interface ReportService {
 
     DailyWalletReportDto getDailyWalletReportDetails(String date);
 
+    DailySellerReportSummaryDto getDailySellerReportSummaryDetails(String from, String to, Long sellerId);
 }

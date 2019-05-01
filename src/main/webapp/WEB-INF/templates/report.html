@@ -765,6 +765,55 @@
     </div>
 
 
+
+
+
+    <div th:if="${showDailySellerSummary}">
+        <h5>Summary Report for</h5>
+        <h6 th:text="${seller}"></h6>
+        <hr/>
+        From
+        <h6 th:text="${from}"></h6>
+        To
+        <h6 th:text="${to}"></h6>
+
+
+
+        <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+               width="100%">
+            <thead>
+            <tr>
+                <th th:text="#{expense.management.table.heading.date}">Date</th>
+                <th th:text="#{expense.management.table.heading.amount}">Amount</th>
+                <th th:text="#{expense.management.table.heading.expenses}">Expenses</th>
+                <th th:text="#{expense.management.table.heading.total}">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="summary: ${dailySellerSummaryDto.summaryList}">
+                <td th:text="${summary.date}"></td>
+                <td th:text="${summary.amount}"></td>
+                <td th:text="${summary.expenses}"></td>
+                <td th:text="${summary.total}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div style="float: left">
+            <h5>Grand Total - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${dailySellerSummaryDto.total}"></h5>
+        </div>
+
+
+
+
+
+    </div>
+
+
+
     <div th:if="${showDebtsAndCredits}">
         <h5>Debts And Credits Report</h5>
         <hr/>

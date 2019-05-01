@@ -124,7 +124,7 @@ public class ReportController extends MessageResolver {
     public String sellerReportSummaryq(Model model, @RequestParam("from") String from,
                                @RequestParam("to") String to,
                                @RequestParam("seller") Long sellerId) {
-        DailySellerReportDto dto = reportService.getDailySellerReportDetails(from, to, sellerId);
+        DailySellerReportSummaryDto dto = reportService.getDailySellerReportSummaryDetails(from, to, sellerId);
         model.addAttribute("dailySellerSummaryDto", dto);
         model.addAttribute("from", from);
         model.addAttribute("to", to);
