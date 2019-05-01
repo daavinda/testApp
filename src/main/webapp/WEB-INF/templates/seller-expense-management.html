@@ -14,7 +14,7 @@
             </div>
 
             <div class="form-group">
-                <label th:for="expenseType">Seller</label>
+                <label th:for="seller">Seller</label>
                 <select style="margin-bottom: 10px" class="form-control w3-select" name="seller" id="seller">
                     <option disabled selected value>- - SELECT SELLER - -</option>
                     <option th:each="seller : ${sellers}"
@@ -22,6 +22,8 @@
                             th:text="${seller.getName()}">
                     </option>
                 </select>
+                <label for="note">Note</label>
+                <input class="form-control w3-input" type="text" name="note" id="note">
 
                 <div>
                     <div style="float: left;">
@@ -29,7 +31,7 @@
                         <input class="w3-input w3-border" name="amount" id="amount" type="number" step="0.01">
                     </div>
                     <div style="float: left; padding-left: 130px; padding-top: 18px; padding-bottom: 20px">
-                        <input type="submit" value="SAVE" onclick="" class="w3-button w3-teal"/>
+                        <input type="submit" value="SAVE" onclick="addExpense()" class="w3-button w3-teal"/>
                     </div>
                 </div>
             </div>
@@ -52,8 +54,8 @@
                     <td th:text="${expense.date}"></td>
                     <td th:text="${expense.note}"></td>
                     <td>
-                        <!--<a href="#" th:text="#{label.remove.link}"-->
-                           <!--th:onclick="'removeExpense(\'' + ${expense.id} + '\');'"></a>-->
+                        <a href="#" th:text="#{label.remove.link}"
+                           th:onclick="'removeExpense(\'' + ${expense.id} + '\');'"></a>
                     </td>
                 </tr>
                 </tbody>
@@ -69,21 +71,22 @@
         $('#expenseTable').DataTable({})
     });
 
-//    function addExpense() {
-//        var selectBox = document.getElementById("expenseType");
-//        var expenseType = selectBox.options[selectBox.selectedIndex].value;
-//        var amount = document.getElementById("amount").value;
-//        var url = "expense/add?expenseType=" + expenseType + "&amount=" + amount;
-//        $("#resultBlock").load(url);
-//    }
-//
-//    function removeExpense(expenseId) {
-//        if (confirm("Are you sure you need to remove this entry ?") == true) {
-//            var url = "expense/remove?expenseId=" + expenseId;
-//            $("#resultBlock").load(url);
-//        } else {
-//        }
-//    }
+    function addExpense() {
+        var selectBox = document.getElementById("seller");
+        var seller = selectBox.options[selectBox.selectedIndex].value;
+        var amount = document.getElementById("amount").value;
+        var note = document.getElementById("note").value;
+        var url = "sellerExpense/add?seller=" + seller + "&amount=" + amount + "&note=" + note;
+        $("#resultBlock").load(url);
+    }
+
+    function removeExpense(expenseId) {
+        if (confirm("Are you sure you need to remove this entry ?") == true) {
+            var url = "sellerExpense/remove?expenseId=" + expenseId;
+            $("#resultBlock").load(url);
+        } else {
+        }
+    }
 
 </script>
 </html>

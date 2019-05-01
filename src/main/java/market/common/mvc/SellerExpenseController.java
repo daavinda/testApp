@@ -32,22 +32,22 @@ public class SellerExpenseController {
         return "seller-expense-management";
     }
 
-//    @RequestMapping(value = "/add", method = RequestMethod.GET)
-//    public String add(Model model, @RequestParam("expenseType") Long expenseType,
-//                          @RequestParam("amount") BigDecimal amount) {
-//
-//        expenseService.saveExpense(expenseType, amount);
-//        model.addAttribute("expenseTypes", expenseTypeService.findAll());
-//        model.addAttribute("expenses", expenseService.findAll());
-//        return "expense-management";
-//    }
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String add(Model model, @RequestParam("seller") Long seller,
+                          @RequestParam("amount") BigDecimal amount, @RequestParam("note") String note) {
 
-//    @RequestMapping(value = "/remove", method = RequestMethod.GET)
-//    public String remove(Model model, @RequestParam("expenseId") Long expenseId) {
-//
-//        expenseService.removeExpense(expenseId);
-//        model.addAttribute("expenseTypes", expenseTypeService.findAll());
-//        model.addAttribute("expenses", expenseService.findAll());
-//        return "expense-management";
-//    }
+        sellerExpenseService.saveExpense(seller, amount, note);
+        model.addAttribute("sellers", sellerService.getAllSellers());
+        model.addAttribute("expenses", sellerExpenseService.findAll());
+        return "seller-expense-management";
+    }
+
+    @RequestMapping(value = "/remove", method = RequestMethod.GET)
+    public String remove(Model model, @RequestParam("expenseId") Long expenseId) {
+
+        sellerExpenseService.removeExpense(expenseId);
+        model.addAttribute("sellers", sellerService.getAllSellers());
+        model.addAttribute("expenses", sellerExpenseService.findAll());
+        return "seller-expense-management";
+    }
 }

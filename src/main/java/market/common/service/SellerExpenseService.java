@@ -12,7 +12,7 @@ public interface SellerExpenseService {
 
     SellerExpense findById(Long expenseId);
 
-    void saveExpense(SellerExpense expense);
+    void saveExpense(Long seller, BigDecimal amount, String note);
 
     void removeExpense(Long expenseId);
 
