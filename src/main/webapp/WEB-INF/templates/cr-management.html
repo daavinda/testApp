@@ -97,8 +97,10 @@
                     <td th:text="${cr.unitPrice}"></td>
                     <td th:text="${cr.date}"></td>
                     <td>
-                        <a href="#" th:text="#{label.remove.link}"
+                        <a href="#" class="w3-button" th:text="#{label.remove.link}"
                            th:onclick="'removeItem(\'' + ${cr.id} + '\');'"></a>
+                        <a href="#" class="w3-button" th:text="#{label.add.to.freezer.link}"
+                           th:onclick="'addToFreezer(\'' + ${cr.id} + '\');'"></a>
                     </td>
                 </tr>
                 </tbody>
@@ -133,6 +135,14 @@
     function removeItem(itemId) {
         if (confirm("Are you sure you need to remove this entry ?") == true) {
             var url = "cr/remove?item=" + itemId;
+            $("#resultBlock").load(url);
+        } else {
+        }
+    }
+
+    function addToFreezer(itemId) {
+        if (confirm("Are you sure you need to add this entry to freezer ?") == true) {
+            var url = "cr/addToFreezer?item=" + itemId;
             $("#resultBlock").load(url);
         } else {
         }

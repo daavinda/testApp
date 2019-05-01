@@ -63,6 +63,21 @@ public class CRServiceImpl implements CRService {
     }
 
     @Override
+    public void addToFreezer(Long crId) {
+        CR cr = findById(crId);
+        Item item = cr.getItem();
+        if (item.getCrFreezerQty() != null && item.getCrFreezerQty().compareTo(new BigDecimal(0)) > 0) {
+            item.setCrFreezerQty(item.getCrFreezerQty().add(cr.getQuantity()));
+        } else {
+            item.setCrFreezerQty(cr.getQuantity());
+        }
+        item.setQuantity(new BigDecimal(0));
+        item.setUnitPrice(cr.getUnitPrice());
+        itemService.saveItem(item);
+        remove(cr);
+    }
+
+    @Override
     public void finishCr() {
 
         List<Item> allItems = itemService.findByType(Item.ItemType.NORMAL);

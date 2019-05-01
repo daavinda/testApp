@@ -28,7 +28,8 @@
         <tr th:each="item: ${items}">
             <td th:text="${item.name}"></td>
             <td th:text="${item.unitPrice}"></td>
-            <td th:text="${item.quantity}"></td>
+            <td th:if="${item.type.toString() == 'NORMAL'}" th:text="${item.crFreezerQty}"></td>
+            <td th:if="${item.type.toString() == 'FREEZER'}" th:text="${item.quantity}"></td>
             <td class="normalItem" th:if="${item.type.toString() == 'NORMAL'}" th:text="${item.type}"></td>
             <td class="freezerItem" th:if="${item.type.toString() == 'FREEZER'}" th:text="${item.type}"></td>
             <!--<td>-->

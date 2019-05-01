@@ -26,6 +26,9 @@ public class Item implements Serializable {
     @Column(name = "quantity")
     private BigDecimal quantity;
 
+    @Column(name = "cr_freezer_quantity")
+    private BigDecimal crFreezerQty;
+
     @Enumerated(EnumType.STRING)
     private ItemType type;
 
@@ -67,5 +70,13 @@ public class Item implements Serializable {
 
     public void setType(ItemType type) {
         this.type = type;
+    }
+
+    public BigDecimal getCrFreezerQty() {
+        return crFreezerQty;
+    }
+
+    public void setCrFreezerQty(BigDecimal crFreezerQty) {
+        this.crFreezerQty = crFreezerQty;
     }
 }

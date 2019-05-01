@@ -36,10 +36,20 @@
                         </select>
                     </div>
                     <div style="float: left; width: 10%; border-left: 6px solid #ffffff;  height: 10px; "></div>
-                    <div style="float: left; width: 45%" th:fragment="resultsList2" class="results-block" id="resultBlock2">
+                    <div style="float: left; width: 45%" th:fragment="resultsList2" class="results-block"
+                         id="resultBlock2">
                         <label th:for="itemType">Item Type</label>
                         <select class="w3-select" name="itemType" id="itemType" disabled>
                             <option th:text="${itemType}"></option>
+                        </select>
+                        <label th:for="saleType">Sale Type</label>
+                        <select th:if="${itemType == 'NORMAL'}" class="w3-select" name="saleType" id="saleType">
+                            <option value="1">Normal</option>
+                            <option value="2">CR Freezer</option>
+                        </select>
+                        <select th:if="${itemType == 'FREEZER'}" hidden="hidden" class="w3-select" name="saleType"
+                                id="saleType">
+                            <option value="1">Normal</option>
                         </select>
                     </div>
                 </div>
@@ -76,8 +86,10 @@
                 <tbody>
                 <tr th:each="buyerItem: ${buyerItems}">
                     <td th:text="${buyerItem.buyer.name}"></td>
-                    <td class="normalItem" th:if="${buyerItem.item.type.toString() == 'NORMAL'}" th:text="${buyerItem.item.name+' - NORMAL'}"></td>
-                    <td class="freezerItem" th:if="${buyerItem.item.type.toString() == 'FREEZER'}" th:text="${buyerItem.item.name+' - FREEZER'}"></td>
+                    <td class="normalItem" th:if="${buyerItem.item.type.toString() == 'NORMAL'}"
+                        th:text="${buyerItem.item.name+' - NORMAL'}"></td>
+                    <td class="freezerItem" th:if="${buyerItem.item.type.toString() == 'FREEZER'}"
+                        th:text="${buyerItem.item.name+' - FREEZER'}"></td>
                     <td th:text="${buyerItem.quantity}"></td>
                     <td th:text="${buyerItem.buyerUnitPrice}"></td>
                     <td th:text="${buyerItem.date}"></td>
@@ -115,7 +127,8 @@
         var item = selectBox.options[selectBox.selectedIndex].text;
         var unitPrice = document.getElementById("unitPrice").value;
         var quantity = document.getElementById("quantity").value;
-        var url = "selling/add?buyer=" + buyer + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
+        var saleType = document.getElementById("saleType").value;
+        var url = "selling/add?buyer=" + buyer + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&saleType=" + saleType + "&quantity=" + quantity ;
         $("#resultBlock").load(url);
     }
 

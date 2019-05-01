@@ -27,7 +27,7 @@ public class FreezerController extends MessageResolver {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String load(Model model) {
-        model.addAttribute("items", itemService.findByType(Item.ItemType.FREEZER));
+        model.addAttribute("items", itemService.findInFreezer());
         return "freezer-management";
     }
 

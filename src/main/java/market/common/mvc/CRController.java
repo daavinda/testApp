@@ -60,6 +60,13 @@ public class CRController {
         return "cr-management";
     }
 
+    @RequestMapping(value = "/addToFreezer", method = RequestMethod.GET)
+    public String addToFreezer(Model model, @RequestParam("item") Long item) {
+        crService.addToFreezer(item);
+        loadAttributes(model);
+        return "cr-management";
+    }
+
     @RequestMapping(value = "/finish", method = RequestMethod.GET)
     public String finishCr(Model model) {
         crService.finishCr();

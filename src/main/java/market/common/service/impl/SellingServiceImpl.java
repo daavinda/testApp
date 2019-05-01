@@ -29,13 +29,13 @@ public class SellingServiceImpl implements SellingService {
     private SystemUserService systemUserService;
 
     @Override
-    public void saveSale(Long buyerId, String itemName, BigDecimal unitPrice, BigDecimal quantity) {
+    public void saveSale(Long buyerId, String itemName, BigDecimal unitPrice, BigDecimal quantity, Long saleType) {
 
         BuyerItem buyerItem = new BuyerItem();
 
         Buyer buyer = buyerService.getBuyerById(buyerId);
         Item item = itemService.findByName(itemName);
-        itemService.updateWithSelling(item, quantity);
+        itemService.updateWithSelling(item, quantity, saleType);
         SystemUser currentUser = systemUserService.getCurrentUser();
         BigDecimal amount = quantity.multiply(unitPrice);
 

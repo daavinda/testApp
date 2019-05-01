@@ -20,9 +20,11 @@ public interface ItemService {
 
     void updateWithBuying(Item item, BigDecimal quantity);
 
-    void updateWithSelling(Item item, BigDecimal quantity);
+    void updateWithSelling(Item item, BigDecimal quantity, Long saleType);
 
     List<Item> findByType(Item.ItemType type);
 
     List<Item> findByTypeAndNotInCr(Item.ItemType type);
+
+    List<Item> findInFreezer();
 }

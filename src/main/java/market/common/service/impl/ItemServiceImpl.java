@@ -53,8 +53,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void updateWithSelling(Item item, BigDecimal quantity) {
-        item.setQuantity(item.getQuantity().subtract(quantity));
+    public void updateWithSelling(Item item, BigDecimal quantity, Long saleType) {
+        if (saleType == null || saleType == 1) {
+            item.setQuantity(item.getQuantity().subtract(quantity));
+        } else {
+            item.setCrFreezerQty(item.getCrFreezerQty().subtract(quantity));
+        }
         saveItem(item);
     }
 
@@ -86,5 +90,18 @@ public class ItemServiceImpl implements ItemService {
             }
         }
         return notInCr;
+    }
+
+    @Override
+    public List<Item> findInFreezer() {
+        List<Item> freezerList = findByType(Item.ItemType.FREEZER);
+        List<Item> normalList = findByType(Item.ItemType.NORMAL);
+
+        for (Item item : normalList) {
+            if (item.getCrFreezerQty() != null && item.getCrFreezerQty().compareTo(new BigDecimal(0)) > 0) {
+                freezerList.add(item);
+            }
+        }
+        return freezerList;
     }
 }

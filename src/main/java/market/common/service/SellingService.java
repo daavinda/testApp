@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  */
 public interface SellingService {
 
-    void saveSale(Long buyerId, String itemName, BigDecimal unitPrice, BigDecimal quantity);
+    void saveSale(Long buyerId, String itemName, BigDecimal unitPrice, BigDecimal quantity, Long saleType);
 
     void removeSale(Long item);
 }

@@ -46,12 +46,12 @@ public class SellingController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String loadOne(Model model, @RequestParam("buyer") Long buyerId,
-
                           @RequestParam("item") String itemName,
                           @RequestParam("unitPrice") BigDecimal unitPrice,
-                          @RequestParam("quantity") BigDecimal quantity) {
+                          @RequestParam("quantity") BigDecimal quantity,
+                          @RequestParam("saleType") String saleType) {
 
-        sellingService.saveSale(buyerId, itemName, unitPrice, quantity);
+        sellingService.saveSale(buyerId, itemName, unitPrice, quantity, Long.parseLong(saleType));
 
         model.addAttribute("buyers", buyerService.getAllBuyers());
         model.addAttribute("items", itemService.findAllItems());
