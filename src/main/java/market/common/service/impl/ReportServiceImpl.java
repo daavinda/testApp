@@ -38,6 +38,8 @@ public class ReportServiceImpl implements ReportService {
     private ItemService itemService;
     @Autowired
     private ExpenseTypeService expenseTypeService;
+    @Autowired
+    private SellerExpenseService sellerExpenseService;
 
     @Override
     public SalesReportDto getSalesReportDetails(String from, String to) {
@@ -139,13 +141,22 @@ public class ReportServiceImpl implements ReportService {
     public DailySellerReportDto getDailySellerReportDetails(String from, String to, Long sellerId) {
         Date fromDate = helperService.formatDate(from);
         Date toDate = helperService.formatDate(to);
+        Seller seller = sellerService.findById(sellerId);
 
         List<SellerItem> itemList = sellerItemService.findByStatusAndSellerAndDateBetween(fromDate, toDate, sellerId);
+        List<SellerExpense> expenseList = sellerExpenseService.findBySellerAndDateBetween(seller, fromDate, toDate);
 
         BigDecimal totalAmount = new BigDecimal(0);
         if (itemList != null) {
             for (SellerItem item : itemList) {
                 totalAmount = totalAmount.add(item.getAmount());
+            }
+        }
+
+        BigDecimal totalExpenses = new BigDecimal(0);
+        if (expenseList != null) {
+            for (SellerExpense expense : expenseList) {
+                totalExpenses = totalExpenses.add(expense.getAmount());
             }
         }
 
@@ -155,6 +166,9 @@ public class ReportServiceImpl implements ReportService {
         dto.setCreditAmount(totalCredits);
         dto.setTotalAmount(totalAmount);
         dto.setItemList(itemList);
+        dto.setSellerExpenses(expenseList);
+        dto.setTotalExpenses(totalExpenses);
+        dto.setBalance(totalAmount.subtract(totalExpenses));
 
         return dto;
     }

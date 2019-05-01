@@ -708,11 +708,50 @@
             </tbody>
         </table>
 
+        <h5> Expenses </h5>
+
+        <table style="padding-top: 10px" class="reportTable" cellspacing="0"
+               width="100%">
+            <thead>
+            <tr>
+                <th th:text="#{expense.management.table.heading.seller}">Seller</th>
+                <th th:text="#{expense.management.table.heading.amount}">Amount</th>
+                <th th:text="#{expense.management.table.heading.date}">Date</th>
+                <th th:text="#{expense.management.table.heading.note}">Note</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="expense: ${dailySellerDto.sellerExpenses}">
+                <td th:text="${expense.getSeller().getName()}"></td>
+                <td th:text="${expense.amount}"></td>
+                <td th:text="${expense.date}"></td>
+                <td th:text="${expense.note}"></td>
+            </tr>
+            </tbody>
+        </table>
+
         <div style="float: left">
             <h5>Total Amount - </h5>
         </div>
         <div style="float: left; margin-left: 10px">
             <h5 th:text="${dailySellerDto.totalAmount}"></h5>
+        </div>
+        <div style="clear: both"></div>
+
+        <div style="float: left">
+            <h5>Total Expenses - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${dailySellerDto.totalExpenses}"></h5>
+        </div>
+        <div style="clear: both"></div>
+
+
+        <div style="float: left">
+            <h5>Balance - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${dailySellerDto.balance}"></h5>
         </div>
         <div style="clear: both"></div>
 

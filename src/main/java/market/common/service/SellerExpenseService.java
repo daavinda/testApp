@@ -1,5 +1,6 @@
 package market.common.service;
 
+import market.common.orm.model.Seller;
 import market.common.orm.model.SellerExpense;
 
 import java.math.BigDecimal;
@@ -19,5 +20,7 @@ public interface SellerExpenseService {
     List<SellerExpense> findByDate(Date date);
 
     List<SellerExpense> findByDateRange(Date dateFrom, Date dateTo);
+
+    List<SellerExpense> findBySellerAndDateBetween(Seller seller, Date from, Date to);
 
 }

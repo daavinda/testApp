@@ -55,4 +55,9 @@ public class SellerExpenseServiceImpl implements SellerExpenseService {
     public List<SellerExpense> findByDateRange(Date dateFrom, Date dateTo) {
         return sellerExpenseRepository.findByDateRange(dateFrom, dateTo);
     }
+
+    @Override
+    public List<SellerExpense> findBySellerAndDateBetween(Seller seller, Date from, Date to) {
+        return sellerExpenseRepository.findBySellerAndDateBetween(seller, from, to);
+    }
 }
