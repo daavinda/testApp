@@ -1,5 +1,6 @@
 package market.common.service.impl;
 
+import market.common.orm.model.BuyerItem;
 import market.common.orm.model.CR;
 import market.common.orm.model.Item;
 import market.common.orm.repo.ItemRepository;
@@ -53,11 +54,22 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public void updateWithRemoveSale(BuyerItem buyerItem) {
+        Item item = buyerItem.getItem();
+        item.setCrFreezerQty(item.getCrFreezerQty().add(buyerItem.getQuantity()));
+        saveItem(item);
+    }
+
+    @Override
     public void updateWithSelling(Item item, BigDecimal quantity, Long saleType) {
         if (saleType == null || saleType == 1) {
             item.setQuantity(item.getQuantity().subtract(quantity));
         } else {
-            item.setCrFreezerQty(item.getCrFreezerQty().subtract(quantity));
+            if (item.getCrFreezerQty() != null) {
+                item.setCrFreezerQty(item.getCrFreezerQty().subtract(quantity));
+            } else {
+                item.setCrFreezerQty((new BigDecimal(0)).subtract(quantity));
+            }
         }
         saveItem(item);
     }
@@ -98,7 +110,10 @@ public class ItemServiceImpl implements ItemService {
         List<Item> normalList = findByType(Item.ItemType.NORMAL);
 
         for (Item item : normalList) {
-            if (item.getCrFreezerQty() != null && item.getCrFreezerQty().compareTo(new BigDecimal(0)) > 0) {
+//            if (item.getCrFreezerQty() != null && item.getCrFreezerQty().compareTo(new BigDecimal(0)) > 0) {
+//                freezerList.add(item);
+//            }
+            if (item.getCrFreezerQty() != null) {
                 freezerList.add(item);
             }
         }

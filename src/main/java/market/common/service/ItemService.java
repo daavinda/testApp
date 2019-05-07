@@ -1,5 +1,6 @@
 package market.common.service;
 
+import market.common.orm.model.BuyerItem;
 import market.common.orm.model.Item;
 
 import java.math.BigDecimal;
@@ -27,4 +28,6 @@ public interface ItemService {
     List<Item> findByTypeAndNotInCr(Item.ItemType type);
 
     List<Item> findInFreezer();
+
+    public void updateWithRemoveSale(BuyerItem item);
 }

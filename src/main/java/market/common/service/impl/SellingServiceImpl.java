@@ -47,7 +47,9 @@ public class SellingServiceImpl implements SellingService {
         buyerItem.setStatus(BuyerItem.Status.ACTIVE);
         buyerItem.setAddedUser(currentUser);
         buyerItem.setAmount(amount);
-
+        if (saleType == 2) {
+            buyerItem.setSaleType(saleType);
+        }
         pendingPaymentService.updateWithSelling(buyer, amount);
 
         buyerItemService.saveBuyerItem(buyerItem);
@@ -57,7 +59,11 @@ public class SellingServiceImpl implements SellingService {
     public void removeSale(Long item) {
 
         BuyerItem buyerItem = buyerItemService.findById(item);
-        itemService.updateWithBuying(buyerItem.getItem(), buyerItem.getQuantity());
+        if (buyerItem.getSaleType() != null && buyerItem.getSaleType() == 2) {
+            itemService.updateWithRemoveSale(buyerItem);
+        } else {
+            itemService.updateWithBuying(buyerItem.getItem(), buyerItem.getQuantity());
+        }
 
         BigDecimal amount = buyerItem.getBuyerUnitPrice().multiply(buyerItem.getQuantity());
         pendingPaymentService.updateWithDeleteSelling(buyerItem.getBuyer(), amount);

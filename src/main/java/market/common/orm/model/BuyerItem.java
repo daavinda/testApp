@@ -56,6 +56,9 @@ public class BuyerItem implements Serializable {
     @JoinColumn(name = "removed_by")
     private SystemUser removedUser;
 
+    @Column(name = "sale_type")
+    private Long saleType;
+
     public long getId() {
         return id;
     }
@@ -134,5 +137,13 @@ public class BuyerItem implements Serializable {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public Long getSaleType() {
+        return saleType;
+    }
+
+    public void setSaleType(Long saleType) {
+        this.saleType = saleType;
     }
 }
