@@ -77,7 +77,12 @@ public class ReportServiceImpl implements ReportService {
         }
         for (Item item : freezerList) {
             //if (item.getQuantity().compareTo(BigDecimal.ZERO) > 0) {
-            BigDecimal amount = item.getQuantity().multiply(item.getUnitPrice());
+            BigDecimal amount;
+            if (item.getUnitPrice() == null) {
+                amount = new BigDecimal(0);
+            } else {
+                amount = item.getQuantity().multiply(item.getUnitPrice());
+            }
             totalAmountFreezer = totalAmountFreezer.add(amount).setScale(2);
             //}
         }
