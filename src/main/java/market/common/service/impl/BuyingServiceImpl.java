@@ -29,7 +29,6 @@ public class BuyingServiceImpl implements BuyingService {
 
         Seller seller = sellerService.findById(sellerId);
         Item item = itemService.findByName(itemName);
-        itemService.updateWithBuying(item, quantity);
         SystemUser currentUser = systemUserService.getCurrentUser();
         BigDecimal amount = quantity.multiply(unitPrice);
 
@@ -42,9 +41,9 @@ public class BuyingServiceImpl implements BuyingService {
         sellerItem.setAddedUser(currentUser);
         sellerItem.setAmount(amount);
 
-        pendingPaymentService.updateWithBuying(seller, amount);
-
         sellerItemService.saveSellerItem(sellerItem);
+        pendingPaymentService.updateWithBuying(seller, amount);
+        itemService.updateWithBuying(item, quantity);
     }
 
     @Override
