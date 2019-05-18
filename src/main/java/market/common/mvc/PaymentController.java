@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 
 @Controller
@@ -29,7 +30,7 @@ public class PaymentController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String load(Model model) {
 
-        model.addAttribute("payments", paymentService.findAllPayments());
+        model.addAttribute("payments", paymentService.findByDate(new Date()));
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("buyers", buyerService.getAllBuyers());
         return "payment-management";
@@ -42,7 +43,7 @@ public class PaymentController {
                                     @RequestParam("chequeDate") String chequeDate) {
 
         paymentService.saveSellerPayment(seller, paymentType, amount, chequeDate);
-        model.addAttribute("payments", paymentService.findAllPayments());
+        model.addAttribute("payments", paymentService.findByDate(new Date()));
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("buyers", buyerService.getAllBuyers());
         return "payment-management";
@@ -55,7 +56,7 @@ public class PaymentController {
                                    @RequestParam("chequeDate") String chequeDate) {
 
         paymentService.saveBuyerPayment(buyer, paymentType, amount, chequeDate);
-        model.addAttribute("payments", paymentService.findAllPayments());
+        model.addAttribute("payments", paymentService.findByDate(new Date()));
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("buyers", buyerService.getAllBuyers());
         return "payment-management";
@@ -65,7 +66,7 @@ public class PaymentController {
     public String removePayment(Model model, @RequestParam("paymentId") Long paymentId) {
 
         paymentService.removePayment(paymentId);
-        model.addAttribute("payments", paymentService.findAllPayments());
+        model.addAttribute("payments", paymentService.findByDate(new Date()));
         model.addAttribute("sellers", sellerService.getAllSellers());
         model.addAttribute("buyers", buyerService.getAllBuyers());
         return "payment-management";

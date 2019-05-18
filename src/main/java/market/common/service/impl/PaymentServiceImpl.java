@@ -94,6 +94,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public List<Payment> findByDate(Date date) {
+        return paymentRepository.findByDate(date);
+    }
+
+    @Override
     public List<Payment> getBuyerPaymentsByDate(String date) {
 
         List<Payment> buyerPaymentList = new ArrayList<>();
