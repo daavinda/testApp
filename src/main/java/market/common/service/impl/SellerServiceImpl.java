@@ -38,6 +38,9 @@ public class SellerServiceImpl implements SellerService {
         if (seller.getCode() == null) {
             String sellerCode = "S" + String.format("%03d", savedSeller.getId());
             seller.setCode(sellerCode);
+            if (seller.getName() == null || seller.getName().equals("")) {
+                seller.setName(sellerCode);
+            }
             sellerRepository.saveAndFlush(seller);
         }
     }

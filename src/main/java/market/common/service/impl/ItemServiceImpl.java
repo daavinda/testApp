@@ -39,6 +39,9 @@ public class ItemServiceImpl implements ItemService {
         if (item.getQuantity() == null) {
             item.setQuantity(BigDecimal.ZERO);
         }
+        if (item.getUnitPrice() == null) {
+            item.setUnitPrice(BigDecimal.ZERO);
+        }
         itemRepository.saveAndFlush(item);
     }
 

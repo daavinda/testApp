@@ -75,6 +75,8 @@
 <!--ITEM CREATION FORM-->
 <form id="itemForm" class="w3-margin" th:action="@{/item/save}" th:object="${item}">
     <input readonly="true" hidden="hidden" type="number" th:field="*{id}" id="id"/>
+    <input hidden="hidden>" th:field="*{quantity}">
+    <input hidden="hidden>" th:field="*{crFreezerQty}">
     <label for="name" th:text="#{Item Name}"></label>
     <input id="name" type="text" class="w3-input" th:field="*{name}" th:placeholder="#{Item Name}"/>
 

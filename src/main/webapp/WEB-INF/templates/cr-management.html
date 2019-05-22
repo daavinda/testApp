@@ -62,6 +62,7 @@
                 <div style="clear:left;"></div>
                 <div th:fragment="resultsList2" class="results-block" id="resultBlock2">
                     <input readonly="true" hidden="hidden" type="number" th:value="*{itemId}" id="itemId"/>
+
                     <div style="float: left;">
                         <label th:for="unitPrice">Unit Price - 1 KG</label>
                         <input class="w3-input w3-border" name="unitPrice" id="unitPrice" th:value="${unitPrice}"
@@ -128,8 +129,13 @@
         var item = document.getElementById("itemId").value;
         var unitPrice = document.getElementById("unitPrice").value;
         var quantity = document.getElementById("quantity").value;
-        var url = "cr/add?item=" + item + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
-        $("#resultBlock").load(url);
+        if (item != "" && unitPrice != "" && quantity != "") {
+            var url = "cr/add?item=" + item + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
+            $("#resultBlock").load(url);
+        } else {
+            alert("Fill all the fields");
+        }
+
     }
 
     function removeItem(itemId) {

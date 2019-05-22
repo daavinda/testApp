@@ -128,8 +128,13 @@
         var unitPrice = document.getElementById("unitPrice").value;
         var quantity = document.getElementById("quantity").value;
         var saleType = document.getElementById("saleType").value;
-        var url = "selling/add?buyer=" + buyer + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&saleType=" + saleType + "&quantity=" + quantity ;
-        $("#resultBlock").load(url);
+        if (quantity != "" && unitPrice != "" && buyer != "" && item != "") {
+            var url = "selling/add?buyer=" + buyer + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&saleType=" + saleType + "&quantity=" + quantity;
+            $("#resultBlock").load(url);
+        } else {
+            alert("Fill all the fields");
+        }
+
     }
 
     function removeItem(itemId) {

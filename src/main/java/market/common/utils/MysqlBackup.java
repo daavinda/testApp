@@ -4,11 +4,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -24,7 +29,7 @@ public class MysqlBackup {
     private static String path = "/home/devinda/Desktop/";
 
     @RequestMapping(value = "/export", method = RequestMethod.GET)
-    public void export() throws Exception{
+    public void export(HttpServletResponse response) throws Exception{
         Date dateNow = new Date();
         SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("yyyyMMdd");
         String date_to_string = dateformatyyyyMMdd.format(dateNow);
@@ -51,30 +56,31 @@ public class MysqlBackup {
             exc.printStackTrace();
         }
 
-        downloadFile(fullName);
+        Path file = Paths.get(path, date_to_string + ss);
+        if (Files.exists(file))
+        {
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", "attachment; filename="+date_to_string + ss);
+            try
+            {
+                Files.copy(file, response.getOutputStream());
+                response.getOutputStream().flush();
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        //download(date_to_string + ss, path);
     }
 
-    private void downloadFile(String path) throws Exception {
 
-        System.out.println("http://localhost:8080"+path);
+    private static Path download(String sourceURL, String targetDirectory) throws IOException {
+        URL url = new URL(sourceURL);
+        String fileName = sourceURL.substring(sourceURL.lastIndexOf('/') + 1, sourceURL.length());
+        Path targetPath = new File(targetDirectory + File.separator + fileName).toPath();
+        Files.copy(url.openStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
 
-        String fileName = "fileName.sql";
-        URL link = new URL(path);
-
-        InputStream in = new BufferedInputStream(link.openStream());
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        byte[] buf = new byte[1024];
-        int n = 0;
-        while (-1!=(n=in.read(buf)))
-        {
-            out.write(buf, 0, n);
-        }
-        out.close();
-        in.close();
-        byte[] response = out.toByteArray();
-
-        FileOutputStream fos = new FileOutputStream(fileName);
-        fos.write(response);
-        fos.close();
+        return targetPath;
     }
 }

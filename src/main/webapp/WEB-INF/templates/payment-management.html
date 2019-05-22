@@ -147,8 +147,13 @@
                 var paymentType = document.getElementById("paymentType").value;
                 var amount = document.getElementById("amount").value;
                 var chequeDate = document.getElementById("datePicker1").value;
-                var url = "payment/saveSellerPayment?seller=" + seller + "&paymentType=" + paymentType + "&amount=" + amount + "&chequeDate=" + chequeDate;
-                $("#resultBlock").load(url);
+                if (seller != "" && amount != "") {
+                    var url = "payment/saveSellerPayment?seller=" + seller + "&paymentType=" + paymentType + "&amount=" + amount + "&chequeDate=" + chequeDate;
+                    $("#resultBlock").load(url);
+                } else {
+                    alert("Fill all the fields");
+                }
+
             }
 
             function saveBuyerPayment() {
@@ -156,8 +161,12 @@
                 var paymentType = document.getElementById("paymentType2").value;
                 var amount = document.getElementById("amount2").value;
                 var chequeDate = document.getElementById("datePicker2").value;
-                var url = "payment/saveBuyerPayment?buyer=" + buyer + "&paymentType=" + paymentType + "&amount=" + amount + "&chequeDate=" + chequeDate;
-                $("#resultBlock").load(url);
+                if (buyer != "" && amount != "") {
+                    var url = "payment/saveBuyerPayment?buyer=" + buyer + "&paymentType=" + paymentType + "&amount=" + amount + "&chequeDate=" + chequeDate;
+                    $("#resultBlock").load(url);
+                } else {
+                    alert("Fill all the fields");
+                }
             }
 
         </script>

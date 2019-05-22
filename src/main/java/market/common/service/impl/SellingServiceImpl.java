@@ -5,6 +5,8 @@ import market.common.orm.model.BuyerItem;
 import market.common.orm.model.Item;
 import market.common.orm.model.SystemUser;
 import market.common.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,8 @@ import java.util.Date;
 
 @Service
 public class SellingServiceImpl implements SellingService {
+
+    private final static Logger logger = LoggerFactory.getLogger(SellingServiceImpl.class);
 
     @Autowired
     private ItemService itemService;
@@ -31,12 +35,19 @@ public class SellingServiceImpl implements SellingService {
     @Override
     public void saveSale(Long buyerId, String itemName, BigDecimal unitPrice, BigDecimal quantity, Long saleType) {
 
+        logger.info("Save Sale Request Received" + " - " + buyerId + " - " + itemName + " - " + unitPrice + " - " + quantity + " - " + saleType);
+
         BuyerItem buyerItem = new BuyerItem();
 
         Buyer buyer = buyerService.getBuyerById(buyerId);
         Item item = itemService.findByName(itemName);
         SystemUser currentUser = systemUserService.getCurrentUser();
-        BigDecimal amount = quantity.multiply(unitPrice);
+        BigDecimal amount;
+        try {
+            amount = quantity.multiply(unitPrice);
+        } catch (Exception e) {
+            amount = BigDecimal.ZERO;
+        }
 
         buyerItem.setBuyer(buyer);
         buyerItem.setItem(item);

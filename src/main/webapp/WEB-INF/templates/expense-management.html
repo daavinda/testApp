@@ -71,8 +71,13 @@
         var selectBox = document.getElementById("expenseType");
         var expenseType = selectBox.options[selectBox.selectedIndex].value;
         var amount = document.getElementById("amount").value;
-        var url = "expense/add?expenseType=" + expenseType + "&amount=" + amount;
-        $("#resultBlock").load(url);
+        if (expenseType != "" && amount != "") {
+            var url = "expense/add?expenseType=" + expenseType + "&amount=" + amount;
+            $("#resultBlock").load(url);
+        } else {
+            alert("Fill all the fields");
+        }
+
     }
 
     function removeExpense(expenseId) {

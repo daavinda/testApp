@@ -36,7 +36,8 @@
                         </select>
                     </div>
                     <div style="float: left; width: 10%; border-left: 6px solid #ffffff;  height: 10px; "></div>
-                    <div style="float: left; width: 45%" th:fragment="resultsList2" class="results-block" id="resultBlock2">
+                    <div style="float: left; width: 45%" th:fragment="resultsList2" class="results-block"
+                         id="resultBlock2">
                         <label th:for="itemType">Item Type</label>
                         <select class="w3-select" name="itemType" id="itemType" disabled>
                             <option th:text="${itemType}"></option>
@@ -75,8 +76,10 @@
                 <tbody>
                 <tr th:each="sellerItem: ${sellerItems}">
                     <td th:text="${sellerItem.seller.name}"></td>
-                    <td class="normalItem" th:if="${sellerItem.item.type.toString() == 'NORMAL'}" th:text="${sellerItem.item.name+' - NORMAL'}"></td>
-                    <td class="freezerItem" th:if="${sellerItem.item.type.toString() == 'FREEZER'}" th:text="${sellerItem.item.name+' - FREEZER'}"></td>
+                    <td class="normalItem" th:if="${sellerItem.item.type.toString() == 'NORMAL'}"
+                        th:text="${sellerItem.item.name+' - NORMAL'}"></td>
+                    <td class="freezerItem" th:if="${sellerItem.item.type.toString() == 'FREEZER'}"
+                        th:text="${sellerItem.item.name+' - FREEZER'}"></td>
                     <td th:text="${sellerItem.quantity}"></td>
                     <td th:text="${sellerItem.sellerUnitPrice}"></td>
                     <td th:text="${sellerItem.date}"></td>
@@ -114,8 +117,13 @@
         var item = selectBox.options[selectBox.selectedIndex].text;
         var unitPrice = document.getElementById("unitPrice").value;
         var quantity = document.getElementById("quantity").value;
-        var url = "buying/add?seller=" + seller + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
-        $("#resultBlock").load(url);
+        if (unitPrice != "" && quantity != "" && seller != "" && item != "") {
+            var url = "buying/add?seller=" + seller + "&item=" + encodeURIComponent(item) + "&unitPrice=" + unitPrice + "&quantity=" + quantity;
+            $("#resultBlock").load(url);
+        } else {
+            alert("Fill all the fields");
+        }
+
     }
 
     function removeItem(itemId) {

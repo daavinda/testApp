@@ -76,8 +76,13 @@
         var seller = selectBox.options[selectBox.selectedIndex].value;
         var amount = document.getElementById("amount").value;
         var note = document.getElementById("note").value;
-        var url = "sellerExpense/add?seller=" + seller + "&amount=" + amount + "&note=" + note;
-        $("#resultBlock").load(url);
+        if (seller != "" && amount != "") {
+            var url = "sellerExpense/add?seller=" + seller + "&amount=" + amount + "&note=" + note;
+            $("#resultBlock").load(url);
+        } else {
+            alert("Fill all the fields");
+        }
+
     }
 
     function removeExpense(expenseId) {

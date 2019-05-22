@@ -49,6 +49,9 @@ public class BuyerServiceImpl implements BuyerService {
         if (buyer.getCode() == null) {
             String buyerCode = "B" + String.format("%03d", savedBuyer.getId());
             buyer.setCode(buyerCode);
+            if (buyer.getName() == null || buyer.getName().equals("")) {
+                buyer.setName(buyerCode);
+            }
             buyerRepository.saveAndFlush(buyer);
         }
     }
