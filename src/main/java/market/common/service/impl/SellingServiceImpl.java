@@ -61,8 +61,11 @@ public class SellingServiceImpl implements SellingService {
             buyerItem.setSaleType(saleType);
         }
         buyerItemService.saveBuyerItem(buyerItem);
+        logger.info("Buyer Item Saved Successfully ----- " + buyerItem.getQuantity());
         pendingPaymentService.updateWithSelling(buyer, amount);
+        logger.info("Buyer payment updated ------- " + amount);
         itemService.updateWithSelling(item, quantity, saleType);
+        logger.info("Item updated successfully ----- " + item.toString());
     }
 
     @Override

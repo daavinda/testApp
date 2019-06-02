@@ -6,6 +6,8 @@ import market.common.orm.model.Item;
 import market.common.orm.repo.ItemRepository;
 import market.common.service.CRService;
 import market.common.service.ItemService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService {
+
+    private final static Logger logger = LoggerFactory.getLogger(ItemServiceImpl.class);
 
     @Autowired
     private ItemRepository itemRepository;
@@ -36,6 +40,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void saveItem(Item item) {
+        logger.info("Save Item request received - " + item.toString());
         if (item.getQuantity() == null) {
             item.setQuantity(BigDecimal.ZERO);
         }
@@ -65,9 +70,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void updateWithSelling(Item item, BigDecimal quantity, Long saleType) {
+        logger.info("Update With Selling Request - " + item.toString() + " - " + quantity + " - " + saleType);
         if (saleType == null || saleType == 1) {
+            logger.info("Inside Normal Sale");
             item.setQuantity(item.getQuantity().subtract(quantity));
         } else {
+            logger.info("Inside CR freezer sale");
             if (item.getCrFreezerQty() != null) {
                 item.setCrFreezerQty(item.getCrFreezerQty().subtract(quantity));
             } else {

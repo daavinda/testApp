@@ -79,4 +79,9 @@ public class Item implements Serializable {
     public void setCrFreezerQty(BigDecimal crFreezerQty) {
         this.crFreezerQty = crFreezerQty;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Item{id=%d, name='%s', unitPrice='%s', quantity='%s', crFreezerQuantity='%s', type='%s'}", id, name, unitPrice, quantity, crFreezerQty, type);
+    }
 }
