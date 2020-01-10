@@ -69,7 +69,9 @@ public class CRController {
 
     @RequestMapping(value = "/finish", method = RequestMethod.GET)
     public String finishCr(Model model) {
+        logger.info("------------------------ Finish CR request received ---------------------");
         crService.finishCr();
+        logger.info("------------------------ CR finished successfully for the day -------------------------");
         loadAttributes(model);
         return "cr-management";
     }
