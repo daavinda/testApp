@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Date;
 import java.util.List;
 
@@ -63,18 +64,19 @@ public class CRServiceImpl implements CRService {
     }
 
     @Override
-    public void addToFreezer(Long crId) {
+    public void addToFreezer(Long crId, BigDecimal qty) {
         CR cr = findById(crId);
         Item item = cr.getItem();
         if (item.getCrFreezerQty() != null && item.getCrFreezerQty().compareTo(new BigDecimal(0)) > 0) {
-            item.setCrFreezerQty(item.getCrFreezerQty().add(cr.getQuantity()));
+            item.setCrFreezerQty(item.getCrFreezerQty().add(qty));
         } else {
-            item.setCrFreezerQty(cr.getQuantity());
+            item.setCrFreezerQty(qty);
         }
         item.setQuantity(new BigDecimal(0));
         item.setUnitPrice(cr.getUnitPrice());
         itemService.saveItem(item);
-        remove(cr);
+        cr.setQuantity(cr.getQuantity().subtract(qty));
+        crRepository.saveAndFlush(cr);
     }
 
     @Override

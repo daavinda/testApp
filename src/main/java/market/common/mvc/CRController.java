@@ -46,8 +46,8 @@ public class CRController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String saveCr(Model model, @RequestParam("item") Long itemId,
-                          @RequestParam("unitPrice") BigDecimal unitPrice,
-                          @RequestParam("quantity") BigDecimal quantity) {
+                         @RequestParam("unitPrice") BigDecimal unitPrice,
+                         @RequestParam("quantity") BigDecimal quantity) {
         crService.save(itemId, unitPrice, quantity);
         loadAttributes(model);
         return "cr-management";
@@ -61,8 +61,9 @@ public class CRController {
     }
 
     @RequestMapping(value = "/addToFreezer", method = RequestMethod.GET)
-    public String addToFreezer(Model model, @RequestParam("item") Long item) {
-        crService.addToFreezer(item);
+    public String addToFreezer(Model model, @RequestParam("item") Long item,
+                               @RequestParam("quantity") BigDecimal qty) {
+        crService.addToFreezer(item, qty);
         loadAttributes(model);
         return "cr-management";
     }

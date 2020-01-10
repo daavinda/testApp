@@ -147,10 +147,13 @@
     }
 
     function addToFreezer(itemId) {
-        if (confirm("Are you sure you need to add this entry to freezer ?") == true) {
-            var url = "cr/addToFreezer?item=" + itemId;
-            $("#resultBlock").load(url);
+        var qty = prompt("Please enter freezer quantity:", "0");
+        var number = parseFloat(qty);
+        if (isNaN(number)) {
+            alert("Please enter a valid quantity")
         } else {
+            var url = "cr/addToFreezer?item=" + itemId + "&quantity=" + number;
+            $("#resultBlock").load(url);
         }
     }
 

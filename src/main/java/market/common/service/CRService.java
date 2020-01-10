@@ -23,5 +23,5 @@ public interface CRService {
 
     List<CR> findByDateBetween(Date from, Date to);
 
-    void addToFreezer(Long item);
+    void addToFreezer(Long item, BigDecimal qty);
 }
