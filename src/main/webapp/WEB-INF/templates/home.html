@@ -27,7 +27,7 @@
 <nav class="w3-sidebar w3-teal w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;"
      id="mySidebar"><br>
     <!--<a href="#" onclick="w3_close(); load(this.id)" th:id="@{/dump/export}"-->
-       <!--class="w3-bar-item w3-button w3-hover-white" th:text="#{Get DB Dump}">-->
+    <!--class="w3-bar-item w3-button w3-hover-white" th:text="#{Get DB Dump}">-->
     <!--</a>-->
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
        style="width:100%;font-size:22px">Close Menu</a>
@@ -39,49 +39,64 @@
     </div>
     <div class="w3-bar-block" style="margin-bottom: 50px">
         <!--<a href="#" onclick="w3_close(); load(this.id)" th:id="@{/homeview/view}" class="w3-bar-item w3-button w3-hover-white">Home</a>-->
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_SELLING')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/selling/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_SELLING')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/selling/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.selling.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_BUYING')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/buying/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_BUYING')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/buying/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.buying.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_PAYMENT')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/payment/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_PAYMENT')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/payment/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.payment.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_EXPENSE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/expense/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_EXPENSE')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/expense/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.expense.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_EXPENSE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/sellerExpense/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_EXPENSE')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/sellerExpense/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.seller.expense.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_CR')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/cr/new}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_CR')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/cr/new}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.cr.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_BUYER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/buyer/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_BUYER')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/buyer/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.buyer.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_SELLER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/seller/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_SELLER')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/seller/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.seller.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_ITEM')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/item/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_ITEM')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/item/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.item.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_EXPENSE_TYPE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/expenseType/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_EXPENSE_TYPE')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/expenseType/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.expense.type.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_FREEZER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/freezer/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_FREEZER')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/freezer/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.freezer.management.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_REMOVAL')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/removal/load}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_REMOVAL')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/removal/load}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.removal.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_REPORT')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/report/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_REPORT')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/report/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.report.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_ROLE')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/system/role/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_ROLE')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/system/role/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.user.role.title}">
         </a>
-        <a sec:authorize="hasAuthority('ROLE_MANAGE_USER')" href="#" onclick="w3_close(); load(this.id)" th:id="@{/system/user/list}"
+        <a sec:authorize="hasAuthority('ROLE_MANAGE_USER')" href="#" onclick="w3_close(); load(this.id)"
+           th:id="@{/system/user/list}"
            class="w3-bar-item w3-button w3-hover-white" th:text="#{nav.user.user.title}"></a>
         <a th:href="@{/logout}" class="w3-bar-item w3-button w3-hover-white">
             <span th:text="#{nav.logout.title}"></span>
@@ -91,8 +106,9 @@
 
 <!-- Top menu on small screens -->
 <header class="w3-container w3-hide-large w3-red w3-xlarge">
-    <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">&#9776;</a>
-    <span>T H S</span>
+    <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">
+        <img class="w3-padding-16" src="images/thsLogo2.png" th:width="280" th:height="160"></a>
+    <!--<span><font size="50">T H S</font></span>-->
 </header>
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -116,15 +132,15 @@
 </div>
 
 <!--<div id="footer" class="footer">-->
-        <!--<hr/>-->
-        <!--<p>Copyright © 2019 THS Pvt LTD. All rights reserved.</p>-->
+<!--<hr/>-->
+<!--<p>Copyright © 2019 THS Pvt LTD. All rights reserved.</p>-->
 <!--</div>-->
 
 <script>
 
     var loading = $('#fountainG');
 
-    $(window).load(function() {
+    $(window).load(function () {
         load('selling/new');
         loading.fadeOut(1500);
     });
@@ -135,7 +151,7 @@
             if ($(response).find('.form-signin').length) {
                 document.body.innerHTML = response;
             }
-            if (status == "error" ) {
+            if (status == "error") {
                 $('#mainContent').html('<div class="w3-panel w3-deep-orange w3-animate-top">' +
                 '<h2>Oops..! Server not responding, please wait a moment.</h2>' +
                 '<span>This may be caused of due to server down or internet failure.</span>' +

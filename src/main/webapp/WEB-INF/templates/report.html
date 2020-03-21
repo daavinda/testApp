@@ -592,13 +592,20 @@
 
 
     <div th:if="${showDailyBuyer}">
-        <h5>Daily Report for</h5>
-        <h6 th:text="${buyer}"></h6>
+        <h5 style="float:left">Daily Report For  -  </h5>
+        <h5 style="float:left" th:text="${buyer}"></h5>
         <hr/>
-        From
-        <h6 th:text="${from}"></h6>
-        To
-        <h6 th:text="${to}"></h6>
+        <div style="clear: both"></div>
+        <div>
+            <div style="float: left; margin-right: 50px">
+                From
+                <h6 th:text="${from}"></h6></div>
+            <div style="float: left">
+                To
+                <h6 th:text="${to}"></h6>
+            </div>
+        </div>
+
 
         <table style="padding-top: 10px" class="reportTable" cellspacing="0"
                width="100%">
@@ -626,19 +633,12 @@
         </table>
 
         <div style="float: left">
-            <h5>Total Amount - </h5>
+            <h5>Total Amount = </h5>
         </div>
         <div style="float: left; margin-left: 10px">
             <h5 th:text="${dailyBuyerDto.totalAmount}"></h5>
         </div>
         <div style="clear: both"></div>
-
-        <div style="float: left">
-            <h5>Total Credits - </h5>
-        </div>
-        <div style="float: left; margin-left: 10px">
-            <h5 th:text="${dailyBuyerDto.creditAmount}"></h5>
-        </div>
 
         <div style="clear: both"></div>
         <h6>Payment From</h6>
@@ -665,10 +665,17 @@
         </table>
 
         <div style="float: left">
-            <h5>Total Payments - </h5>
+            <h5>Total Payments = </h5>
         </div>
         <div style="float: left; margin-left: 10px">
             <h5 th:text="${dailyBuyerDto.totalPayments}"></h5>
+        </div>
+
+        <div style="float: right; margin-left: 10px">
+            <h2 th:text="${dailyBuyerDto.creditAmount}"></h2>
+        </div>
+        <div style="float: right">
+            <h2>Balance = </h2>
         </div>
 
     </div>
@@ -765,9 +772,6 @@
     </div>
 
 
-
-
-
     <div th:if="${showDailySellerSummary}">
         <h5>Summary Report for</h5>
         <h6 th:text="${seller}"></h6>
@@ -776,7 +780,6 @@
         <h6 th:text="${from}"></h6>
         To
         <h6 th:text="${to}"></h6>
-
 
 
         <table style="padding-top: 10px" class="reportTable" cellspacing="0"
@@ -807,11 +810,7 @@
         </div>
 
 
-
-
-
     </div>
-
 
 
     <div th:if="${showDebtsAndCredits}">
