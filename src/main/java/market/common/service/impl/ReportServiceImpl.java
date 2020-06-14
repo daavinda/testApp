@@ -56,8 +56,10 @@ public class ReportServiceImpl implements ReportService {
         List<Item> crFreezerList = itemService.findCrFreezer();
         for (Item item : crFreezerList) {
             Item crItem = item;
-            crItem.setQuantity(item.getCrFreezerQty());
-            freezerList.add(crItem);
+            if (item.getCrFreezerQty().compareTo(BigDecimal.ZERO) > 0) {
+                crItem.setQuantity(item.getCrFreezerQty());
+                freezerList.add(crItem);
+            }
         }
 
         List<CR> yesterdayCrList = new ArrayList<>();
@@ -71,9 +73,8 @@ public class ReportServiceImpl implements ReportService {
         BigDecimal totalAmountCr = new BigDecimal(0);
         BigDecimal totalAmountExpense = new BigDecimal(0);
         BigDecimal totalAmountFreezer = new BigDecimal(0);
-        BigDecimal profitWithCr;
-        BigDecimal profitWithoutCrFreezer;
-        BigDecimal profitWithCrAndFreezer;
+        BigDecimal profit;
+        BigDecimal profitWithFreezer;
         BigDecimal yesterdayCrAmount = new BigDecimal(0);
 
 
@@ -103,9 +104,9 @@ public class ReportServiceImpl implements ReportService {
             totalAmountFreezer = totalAmountFreezer.add(amount).setScale(2);
             //}
         }
-        profitWithCr = totalAmountBuyer.add(totalAmountCr).subtract(totalAmountSeller).subtract(totalAmountExpense).subtract(yesterdayCrAmount);
-        profitWithCrAndFreezer = totalAmountBuyer.add(totalAmountCr).add(totalAmountFreezer).subtract(totalAmountSeller).subtract(totalAmountExpense);
-        profitWithoutCrFreezer = totalAmountBuyer.subtract(totalAmountSeller).subtract(totalAmountExpense).subtract(yesterdayCrAmount);
+
+        profit = totalAmountBuyer.add(totalAmountCr).subtract(totalAmountSeller).subtract(totalAmountExpense).subtract(yesterdayCrAmount);
+        profitWithFreezer = profit.add(totalAmountFreezer);
 
         dto.setBuyerItems(buyerItemList);
         dto.setSellerItems(sellerItemList);
@@ -115,9 +116,8 @@ public class ReportServiceImpl implements ReportService {
         dto.setTotalAmountCr(totalAmountCr);
         dto.setExpenseList(expenseList);
         dto.setTotalAmountExpense(totalAmountExpense);
-        dto.setProfitWithCr(profitWithCr);
-        dto.setProfitWithoutCrAndFreezer(profitWithoutCrFreezer);
-        dto.setProfitWithCrAndFreezer(profitWithCrAndFreezer);
+        dto.setProfit(profit);
+        dto.setProfitWithFreezer(profitWithFreezer);
         dto.setFreezerItems(freezerList);
         dto.setTotalAmountFreezer(totalAmountFreezer);
         dto.setYesterdayCr(yesterdayCrAmount);
@@ -266,10 +266,10 @@ public class ReportServiceImpl implements ReportService {
             SalesReportDto salesReportDto = getSalesReportDetails(simpleDateFormat.format(c.getTime()), simpleDateFormat.format(c.getTime()), null);
 
             monthlyProfit.setDate(simpleDateFormat.format(c.getTime()));
-            //monthlyProfit.setProfitWithCr(salesReportDto.getProfitWithCr());
-            monthlyProfit.setProfitWithoutCr(salesReportDto.getProfitWithoutCrAndFreezer());
-            //totalProfitWithCr = totalProfitWithCr.add(salesReportDto.getProfitWithCr());
-            totalProfitWithoutCr = totalProfitWithoutCr.add(salesReportDto.getProfitWithoutCrAndFreezer());
+            //monthlyProfit.setProfit(salesReportDto.getProfit());
+            monthlyProfit.setProfitWithoutCr(salesReportDto.getProfit());
+            //totalProfitWithCr = totalProfitWithCr.add(salesReportDto.getProfit());
+            totalProfitWithoutCr = totalProfitWithoutCr.add(salesReportDto.getProfit());
 
             profitList.add(monthlyProfit);
             c.add(Calendar.DATE, 1);
