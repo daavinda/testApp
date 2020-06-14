@@ -54,6 +54,10 @@ public class ItemController extends MessageResolver {
         if (result.hasErrors()) {
             return "common-forms :: #itemForm";
         }
+        if (item.getName() != null) {
+            String itemName = item.getName().trim();
+            item.setName(itemName);
+        }
         itemService.saveItem(item);
         model.addAttribute("items", itemService.findAllItems());
         model.addAttribute("success", getMessage("alert.save.success"));

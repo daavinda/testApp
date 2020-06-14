@@ -58,6 +58,14 @@ public class SellerController extends MessageResolver {
         if (result.hasErrors()) {
             return "common-forms :: #sellerForm";
         }
+        if (seller.getName() != null) {
+            String name = seller.getName().trim();
+            seller.setName(name);
+        }
+        if (seller.getPhone() != null) {
+            String phone = seller.getPhone().trim();
+            seller.setPhone(phone);
+        }
         sellerService.saveSeller(seller);
         model.addAttribute("sellerDetails", sellerService.getAllSellerDetails());
         model.addAttribute("success", getMessage("alert.save.success"));

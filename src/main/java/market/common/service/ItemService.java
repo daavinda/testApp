@@ -30,4 +30,6 @@ public interface ItemService {
     List<Item> findInFreezer();
 
     public void updateWithRemoveSale(BuyerItem item);
+
+    List<Item> findCrFreezer();
 }

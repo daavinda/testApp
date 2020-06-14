@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReportService {
 
-    SalesReportDto getSalesReportDetails(String from, String to);
+    SalesReportDto getSalesReportDetails(String from, String to, String cr);
 
     DailyBuyerReportDto getDailyBuyerReportDetails(String from, String to, Long buyerId);
 

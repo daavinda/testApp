@@ -69,6 +69,18 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<Item> findCrFreezer() {
+        List<Item> crFreezerList = new ArrayList<>();
+        List<Item> items = itemRepository.findAll();
+        for (Item item : items) {
+            if (item.getCrFreezerQty() != null) {
+                crFreezerList.add(item);
+            }
+        }
+        return crFreezerList;
+    }
+
+    @Override
     public void updateWithSelling(Item item, BigDecimal quantity, Long saleType) {
         logger.info("Update With Selling Request - " + item.toString() + " - " + quantity + " - " + saleType);
         if (saleType == null || saleType == 1) {

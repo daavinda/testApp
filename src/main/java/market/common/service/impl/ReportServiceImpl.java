@@ -42,7 +42,7 @@ public class ReportServiceImpl implements ReportService {
     private SellerExpenseService sellerExpenseService;
 
     @Override
-    public SalesReportDto getSalesReportDetails(String from, String to) {
+    public SalesReportDto getSalesReportDetails(String from, String to, String cr) {
 
         SalesReportDto dto = new SalesReportDto();
         Date fromDate = helperService.formatDate(from);
@@ -53,6 +53,18 @@ public class ReportServiceImpl implements ReportService {
         List<CR> crList = crService.findByDate(toDate);
         List<Expense> expenseList = expenseService.findByDateRange(fromDate, toDate);
         List<Item> freezerList = itemService.findByType(Item.ItemType.FREEZER);
+        List<Item> crFreezerList = itemService.findCrFreezer();
+        for (Item item : crFreezerList) {
+            Item crItem = item;
+            crItem.setQuantity(item.getCrFreezerQty());
+            freezerList.add(crItem);
+        }
+
+        List<CR> yesterdayCrList = new ArrayList<>();
+        if (cr != null) {
+            Date crDate = helperService.formatDate(cr);
+            yesterdayCrList = crService.findByDate(crDate);
+        }
 
         BigDecimal totalAmountSeller = new BigDecimal(0);
         BigDecimal totalAmountBuyer = new BigDecimal(0);
@@ -60,8 +72,10 @@ public class ReportServiceImpl implements ReportService {
         BigDecimal totalAmountExpense = new BigDecimal(0);
         BigDecimal totalAmountFreezer = new BigDecimal(0);
         BigDecimal profitWithCr;
-        BigDecimal profitWithoutCr;
+        BigDecimal profitWithoutCrFreezer;
         BigDecimal profitWithCrAndFreezer;
+        BigDecimal yesterdayCrAmount = new BigDecimal(0);
+
 
         for (BuyerItem item : buyerItemList) {
             totalAmountBuyer = totalAmountBuyer.add(item.getAmount());
@@ -69,8 +83,11 @@ public class ReportServiceImpl implements ReportService {
         for (SellerItem item : sellerItemList) {
             totalAmountSeller = totalAmountSeller.add(item.getAmount());
         }
-        for (CR cr : crList) {
-            totalAmountCr = totalAmountCr.add(cr.getAmount());
+        for (CR todayCr : crList) {
+            totalAmountCr = totalAmountCr.add(todayCr.getAmount());
+        }
+        for (CR yesterdayCr : yesterdayCrList) {
+            yesterdayCrAmount = yesterdayCrAmount.add(yesterdayCr.getAmount());
         }
         for (Expense expense : expenseList) {
             totalAmountExpense = totalAmountExpense.add(expense.getAmount());
@@ -86,9 +103,9 @@ public class ReportServiceImpl implements ReportService {
             totalAmountFreezer = totalAmountFreezer.add(amount).setScale(2);
             //}
         }
-        profitWithCr = totalAmountBuyer.add(totalAmountCr).subtract(totalAmountSeller).subtract(totalAmountExpense);
+        profitWithCr = totalAmountBuyer.add(totalAmountCr).subtract(totalAmountSeller).subtract(totalAmountExpense).subtract(yesterdayCrAmount);
         profitWithCrAndFreezer = totalAmountBuyer.add(totalAmountCr).add(totalAmountFreezer).subtract(totalAmountSeller).subtract(totalAmountExpense);
-        profitWithoutCr = totalAmountBuyer.subtract(totalAmountSeller).subtract(totalAmountExpense);
+        profitWithoutCrFreezer = totalAmountBuyer.subtract(totalAmountSeller).subtract(totalAmountExpense).subtract(yesterdayCrAmount);
 
         dto.setBuyerItems(buyerItemList);
         dto.setSellerItems(sellerItemList);
@@ -99,10 +116,11 @@ public class ReportServiceImpl implements ReportService {
         dto.setExpenseList(expenseList);
         dto.setTotalAmountExpense(totalAmountExpense);
         dto.setProfitWithCr(profitWithCr);
-        dto.setProfitWithoutCr(profitWithoutCr);
+        dto.setProfitWithoutCrAndFreezer(profitWithoutCrFreezer);
         dto.setProfitWithCrAndFreezer(profitWithCrAndFreezer);
         dto.setFreezerItems(freezerList);
         dto.setTotalAmountFreezer(totalAmountFreezer);
+        dto.setYesterdayCr(yesterdayCrAmount);
 
         return dto;
     }
@@ -245,13 +263,13 @@ public class ReportServiceImpl implements ReportService {
         do {
             MonthlyProfit monthlyProfit = new MonthlyProfit();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            SalesReportDto salesReportDto = getSalesReportDetails(simpleDateFormat.format(c.getTime()), simpleDateFormat.format(c.getTime()));
+            SalesReportDto salesReportDto = getSalesReportDetails(simpleDateFormat.format(c.getTime()), simpleDateFormat.format(c.getTime()), null);
 
             monthlyProfit.setDate(simpleDateFormat.format(c.getTime()));
             //monthlyProfit.setProfitWithCr(salesReportDto.getProfitWithCr());
-            monthlyProfit.setProfitWithoutCr(salesReportDto.getProfitWithoutCr());
+            monthlyProfit.setProfitWithoutCr(salesReportDto.getProfitWithoutCrAndFreezer());
             //totalProfitWithCr = totalProfitWithCr.add(salesReportDto.getProfitWithCr());
-            totalProfitWithoutCr = totalProfitWithoutCr.add(salesReportDto.getProfitWithoutCr());
+            totalProfitWithoutCr = totalProfitWithoutCr.add(salesReportDto.getProfitWithoutCrAndFreezer());
 
             profitList.add(monthlyProfit);
             c.add(Calendar.DATE, 1);

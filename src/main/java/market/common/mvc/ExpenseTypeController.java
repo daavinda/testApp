@@ -41,6 +41,10 @@ public class ExpenseTypeController extends MessageResolver {
         if (result.hasErrors()) {
             return "common-forms :: #expenseTypeForm";
         }
+        if (expenseType.getName() != null) {
+            String name = expenseType.getName().trim();
+            expenseType.setName(name);
+        }
         expenseTypeService.saveExpenseType(expenseType);
         model.addAttribute("expenseTypes", expenseTypeService.findAll());
         model.addAttribute("success", getMessage("alert.save.success"));

@@ -65,6 +65,16 @@ public class BuyerController extends MessageResolver {
         if (result.hasErrors()) {
             return "common-forms :: #buyerForm";
         }
+
+        if (buyer.getName() != null) {
+            String name = buyer.getName().trim();
+            buyer.setName(name);
+        }
+        if (buyer.getPhone() != null) {
+            String phone = buyer.getPhone().trim();
+            buyer.setPhone(phone);
+        }
+
         buyerService.saveBuyer(buyer);
         model.addAttribute("buyerDetails", buyerService.getAllBuyerDetails());
         model.addAttribute("success", getMessage("alert.save.success"));

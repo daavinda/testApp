@@ -31,7 +31,9 @@ public class SalesReportDto {
 
     private BigDecimal profitWithCr;
 
-    private BigDecimal profitWithoutCr;
+    private BigDecimal profitWithoutCrAndFreezer;
+
+    private BigDecimal yesterdayCr;
 
     public List<SellerItem> getSellerItems() {
         return sellerItems;
@@ -89,12 +91,12 @@ public class SalesReportDto {
         this.profitWithCr = profitWithCr;
     }
 
-    public BigDecimal getProfitWithoutCr() {
-        return profitWithoutCr;
+    public BigDecimal getProfitWithoutCrAndFreezer() {
+        return profitWithoutCrAndFreezer;
     }
 
-    public void setProfitWithoutCr(BigDecimal profitWithoutCr) {
-        this.profitWithoutCr = profitWithoutCr;
+    public void setProfitWithoutCrAndFreezer(BigDecimal profitWithoutCrAndFreezer) {
+        this.profitWithoutCrAndFreezer = profitWithoutCrAndFreezer;
     }
 
     public List<Expense> getExpenseList() {
@@ -135,5 +137,13 @@ public class SalesReportDto {
 
     public void setProfitWithCrAndFreezer(BigDecimal profitWithCrAndFreezer) {
         this.profitWithCrAndFreezer = profitWithCrAndFreezer;
+    }
+
+    public BigDecimal getYesterdayCr() {
+        return yesterdayCr;
+    }
+
+    public void setYesterdayCr(BigDecimal yesterdayCr) {
+        this.yesterdayCr = yesterdayCr;
     }
 }

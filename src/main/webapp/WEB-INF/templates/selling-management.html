@@ -13,63 +13,64 @@
                 </div>
             </div>
 
+            <form id="myForm" onsubmit="return false">
+                <div class="form-group">
+                    <label th:for="selectBuyer">Buyer</label>
+                    <select style="margin-bottom: 10px" class="form-control w3-select" name="buyer" id="buyer">
+                        <option disabled selected value>- - SELECT BUYER - -</option>
+                        <option th:each="buyer : ${buyers}"
+                                th:value="${buyer.getId()}"
+                                th:text="${buyer.getName()}">
+                        </option>
+                    </select>
 
-            <div class="form-group">
-                <label th:for="selectBuyer">Buyer</label>
-                <select style="margin-bottom: 10px" class="form-control w3-select" name="buyer" id="buyer">
-                    <option disabled selected value>- - SELECT BUYER - -</option>
-                    <option th:each="buyer : ${buyers}"
-                            th:value="${buyer.getId()}"
-                            th:text="${buyer.getName()}">
-                    </option>
-                </select>
+                    <div>
+                        <div style="float: left; width: 45%">
+                            <label th:for="selectItem">Item</label>
+                            <select class="w3-select" name="item" id="item" onchange="getUnitPrice()">
+                                <option disabled selected value>- - SELECT ITEM - -</option>
+                                <option th:each="item : ${items}"
+                                        th:value="${item.getUnitPrice()}"
+                                        th:text="${item.getName()}">
+                                </option>
+                            </select>
+                        </div>
+                        <div style="float: left; width: 10%; border-left: 6px solid #ffffff;  height: 10px; "></div>
+                        <div style="float: left; width: 45%" th:fragment="resultsList2" class="results-block"
+                             id="resultBlock2">
+                            <label th:for="itemType">Item Type</label>
+                            <select class="w3-select" name="itemType" id="itemType" disabled>
+                                <option th:text="${itemType}"></option>
+                            </select>
+                            <label th:for="saleType">Sale Type</label>
+                            <select th:if="${itemType == 'NORMAL'}" class="w3-select" name="saleType" id="saleType">
+                                <option value="1">Normal</option>
+                                <option value="2">CR Freezer</option>
+                            </select>
+                            <select th:if="${itemType == 'FREEZER'}" hidden="hidden" class="w3-select" name="saleType"
+                                    id="saleType">
+                                <option value="1">Normal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="clear:left;"></div>
 
-                <div>
-                    <div style="float: left; width: 45%">
-                        <label th:for="selectItem">Item</label>
-                        <select class="w3-select" name="item" id="item" onchange="getUnitPrice()">
-                            <option disabled selected value>- - SELECT ITEM - -</option>
-                            <option th:each="item : ${items}"
-                                    th:value="${item.getUnitPrice()}"
-                                    th:text="${item.getName()}">
-                            </option>
-                        </select>
+                    <div>
+                        <div style="float: left;">
+                            <label th:for="unitPrice">Unit Price - 1 KG</label>
+                            <input class="w3-input w3-border" name="unitPrice" id="unitPrice" type="number" step="0.01">
+                        </div>
+                        <div style="float: left; padding-left: 20%">
+                            <label th:for="quantity">Quantity - KG </label>
+                            <input class="w3-input w3-border" name="quantity" id="quantity" type="number" step="0.001">
+                        </div>
+                        <div style="float: right; padding-top: 18px; padding-bottom: 20px">
+                            <input id="sub" type="submit" value="SAVE" onclick="addItem()" class="w3-button w3-teal"/>
+                        </div>
                     </div>
-                    <div style="float: left; width: 10%; border-left: 6px solid #ffffff;  height: 10px; "></div>
-                    <div style="float: left; width: 45%" th:fragment="resultsList2" class="results-block"
-                         id="resultBlock2">
-                        <label th:for="itemType">Item Type</label>
-                        <select class="w3-select" name="itemType" id="itemType" disabled>
-                            <option th:text="${itemType}"></option>
-                        </select>
-                        <label th:for="saleType">Sale Type</label>
-                        <select th:if="${itemType == 'NORMAL'}" class="w3-select" name="saleType" id="saleType">
-                            <option value="1">Normal</option>
-                            <option value="2">CR Freezer</option>
-                        </select>
-                        <select th:if="${itemType == 'FREEZER'}" hidden="hidden" class="w3-select" name="saleType"
-                                id="saleType">
-                            <option value="1">Normal</option>
-                        </select>
-                    </div>
+
                 </div>
-                <div style="clear:left;"></div>
-
-                <div>
-                    <div style="float: left;">
-                        <label th:for="unitPrice">Unit Price - 1 KG</label>
-                        <input class="w3-input w3-border" name="unitPrice" id="unitPrice" type="number" step="0.01">
-                    </div>
-                    <div style="float: left; padding-left: 20%">
-                        <label th:for="quantity">Quantity - KG </label>
-                        <input class="w3-input w3-border" name="quantity" id="quantity" type="number" step="0.001">
-                    </div>
-                    <div style="float: right; padding-top: 18px; padding-bottom: 20px">
-                        <input type="submit" value="SAVE" onclick="addItem()" class="w3-button w3-teal"/>
-                    </div>
-                </div>
-
-            </div>
+            </form>
 
             <table style="padding-top: 10px" id="buyerItemTable" class="display cell-border" cellspacing="0"
                    width="100%">

@@ -45,11 +45,15 @@
                     From
                     <input style="border: 1px solid silver;" class="w3-input" id="datePicker2" type="date">
                 </div>
-                <div style="float: left; margin-left: 10%">
+                <div style="float: left; margin-left: 2%">
                     To
                     <input style="border: 1px solid silver;" class="w3-input" id="datePicker9" type="date">
                 </div>
-                <div style="float: left; margin-left: 10%; margin-top: 18px">
+                <div style="float: left; margin-left: 2%">
+                    CR Date
+                    <input style="border: 1px solid silver;" class="w3-input" id="datePicker16" type="date">
+                </div>
+                <div style="float: left; margin-left: 2%; margin-top: 18px">
                     <button onclick="viewSalesReport()" th:text="#{3. Sales Report}"
                             class="w3-btn w3-cyan w3-medium"></button>
                 </div>
@@ -534,6 +538,22 @@
 
             <div style="clear: both"></div>
             <div style="float: right; margin-left: 10px">
+                <h5 th:text="${dto.yesterdayCr}"></h5>
+            </div>
+            <div style="float: right">
+                <h5>Past CR = </h5>
+            </div>
+
+            <div style="clear: both"></div>
+            <div style="float: right; margin-left: 10px">
+                <h5 th:text="${dto.yesterdayCr + dto.totalAmountSeller}"></h5>
+            </div>
+            <div style="float: right">
+                <h5>Total Buying & Past CR = </h5>
+            </div>
+
+            <div style="clear: both"></div>
+            <div style="float: right; margin-left: 10px">
                 <h5 th:text="${dto.totalAmountBuyer}"></h5>
             </div>
             <div style="float: right">
@@ -548,17 +568,17 @@
                 <h5>Total Expenses = </h5>
             </div>
 
-            <div style="clear: both"></div>
-            <div style="float: right; margin-left: 10px">
-                <h5 th:text="${dto.profitWithCr}"></h5>
-            </div>
-            <div style="float: right">
-                <h5>Profit With CR = </h5>
-            </div>
+            <!--<div style="clear: both"></div>-->
+            <!--<div style="float: right; margin-left: 10px">-->
+                <!--<h5 th:text="${dto.profitWithCr}"></h5>-->
+            <!--</div>-->
+            <!--<div style="float: right">-->
+                <!--<h5>Profit With CR = </h5>-->
+            <!--</div>-->
 
             <div style="clear: both"></div>
             <div style="float: left">
-                <h5>Total CR = </h5>
+                <h5>Total Today CR = </h5>
             </div>
             <div style="float: left; margin-left: 10px">
                 <h5 th:text="${dto.totalAmountCr}"></h5>
@@ -582,17 +602,17 @@
 
             <div style="clear: both"></div>
             <div style="float: left">
-                <h5>Profit Without CR = </h5>
+                <h5>Profit Without CR And Freezer = </h5>
             </div>
             <div style="float: left; margin-left: 10px; margin-bottom: 50px">
-                <h5 th:text="${dto.profitWithoutCr}"></h5>
+                <h5 th:text="${dto.profitWithoutCrAndFreezer}"></h5>
             </div>
         </div>
     </div>
 
 
     <div th:if="${showDailyBuyer}">
-        <h5 style="float:left">Daily Report For  -  </h5>
+        <h5 style="float:left">Daily Report For - </h5>
         <h5 style="float:left" th:text="${buyer}"></h5>
         <hr/>
         <div style="clear: both"></div>
@@ -1024,6 +1044,10 @@
         document.getElementById('datePicker13').valueAsDate = new Date();
         document.getElementById('datePicker14').valueAsDate = new Date();
         document.getElementById('datePicker15').valueAsDate = new Date();
+
+        var crDate = new Date();
+        crDate.setDate(crDate.getDate() - 1);
+        document.getElementById('datePicker16').valueAsDate = crDate;
     });
 
     function viewDailyPayment() {
@@ -1041,7 +1065,8 @@
     function viewSalesReport() {
         var fromDate = document.getElementById('datePicker2').value;
         var toDate = document.getElementById('datePicker9').value;
-        var url = "report/salesReport?from=" + fromDate + "&to=" + toDate;
+        var crDate = document.getElementById('datePicker16').value;
+        var url = "report/salesReport?from=" + fromDate + "&to=" + toDate + "&cr=" + crDate;
         $("#resultBlock").load(url);
     }
 
