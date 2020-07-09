@@ -76,6 +76,7 @@ public class CRServiceImpl implements CRService {
         item.setUnitPrice(cr.getUnitPrice());
         itemService.saveItem(item);
         cr.setQuantity(cr.getQuantity().subtract(qty));
+        cr.setAmount(cr.getQuantity().multiply(cr.getUnitPrice()));
         crRepository.saveAndFlush(cr);
     }
 

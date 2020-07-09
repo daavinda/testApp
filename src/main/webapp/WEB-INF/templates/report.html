@@ -570,10 +570,10 @@
 
             <!--<div style="clear: both"></div>-->
             <!--<div style="float: right; margin-left: 10px">-->
-                <!--<h5 th:text="${dto.profitWithCr}"></h5>-->
+            <!--<h5 th:text="${dto.profitWithCr}"></h5>-->
             <!--</div>-->
             <!--<div style="float: right">-->
-                <!--<h5>Profit With CR = </h5>-->
+            <!--<h5>Profit With CR = </h5>-->
             <!--</div>-->
 
             <div style="clear: both"></div>
@@ -597,16 +597,16 @@
                 <h5>Profit = </h5>
             </div>
             <div style="float: left; margin-left: 10px;">
-                <h5 th:text="${dto.profit}"></h5>
+                <h5 th:text="${dto.profit - dto.todayFreezerSelling}"></h5>
             </div>
 
-            <div style="clear: both"></div>
-            <div style="float: left">
-                <h5>Profit With Freezer = </h5>
-            </div>
-            <div style="float: left; margin-left: 10px; margin-bottom: 50px">
-                <h5 th:text="${dto.profitWithFreezer}"></h5>
-            </div>
+            <!--<div style="clear: both"></div>-->
+            <!--<div style="float: left">-->
+            <!--<h5>Profit With Freezer = </h5>-->
+            <!--</div>-->
+            <!--<div style="float: left; margin-left: 10px; margin-bottom: 50px">-->
+            <!--<h5 th:text="${dto.profitWithFreezer}"></h5>-->
+            <!--</div>-->
         </div>
     </div>
 
@@ -890,6 +890,35 @@
         <div style="float: left; margin-left: 10px">
             <h5 th:text="${reportDetails.totalSellerPayments}"></h5>
         </div>
+        <div style="clear: both"></div>
+        <div style="float: left">
+            <h5>Total Freezer - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${reportDetails.totalFreezer}"></h5>
+        </div>
+        <div style="clear: both"></div>
+        <div style="float: left">
+            <h5>Total CR - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${reportDetails.totalCr}"></h5>
+        </div>
+        <div style="clear: both"></div>
+        <div style="float: left">
+            <h5>Final Credits (Credit + CR + Freezer) - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${reportDetails.totalCr+reportDetails.totalFreezer+reportDetails.totalBuyerPayments}"></h5>
+        </div>
+        <div style="clear: both"></div>
+        <div style="float: left">
+            <h5>Balance (Final Credits - Total Debts) - </h5>
+        </div>
+        <div style="float: left; margin-left: 10px">
+            <h5 th:text="${reportDetails.totalCr+reportDetails.totalFreezer+reportDetails.totalBuyerPayments-reportDetails.totalSellerPayments}"></h5>
+        </div>
+
 
     </div>
 

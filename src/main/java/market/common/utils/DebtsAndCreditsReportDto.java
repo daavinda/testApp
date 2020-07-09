@@ -11,6 +11,8 @@ public class DebtsAndCreditsReportDto {
     private List<PendingPayment> sellerPayments;
     private BigDecimal totalBuyerPayments;
     private BigDecimal totalSellerPayments;
+    private BigDecimal totalFreezer;
+    private BigDecimal totalCr;
 
     public List<PendingPayment> getBuyerPayments() {
         return buyerPayments;
@@ -42,5 +44,21 @@ public class DebtsAndCreditsReportDto {
 
     public void setTotalSellerPayments(BigDecimal totalSellerPayments) {
         this.totalSellerPayments = totalSellerPayments;
+    }
+
+    public BigDecimal getTotalFreezer() {
+        return totalFreezer;
+    }
+
+    public void setTotalFreezer(BigDecimal totalFreezer) {
+        this.totalFreezer = totalFreezer;
+    }
+
+    public BigDecimal getTotalCr() {
+        return totalCr;
+    }
+
+    public void setTotalCr(BigDecimal totalCr) {
+        this.totalCr = totalCr;
     }
 }

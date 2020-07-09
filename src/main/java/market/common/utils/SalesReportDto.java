@@ -33,6 +33,8 @@ public class SalesReportDto {
 
     private BigDecimal yesterdayCr;
 
+    private BigDecimal todayFreezerSelling;
+
     public List<SellerItem> getSellerItems() {
         return sellerItems;
     }
@@ -135,5 +137,13 @@ public class SalesReportDto {
 
     public void setYesterdayCr(BigDecimal yesterdayCr) {
         this.yesterdayCr = yesterdayCr;
+    }
+
+    public BigDecimal getTodayFreezerSelling() {
+        return todayFreezerSelling;
+    }
+
+    public void setTodayFreezerSelling(BigDecimal todayFreezerSelling) {
+        this.todayFreezerSelling = todayFreezerSelling;
     }
 }

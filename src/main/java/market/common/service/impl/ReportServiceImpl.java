@@ -76,10 +76,14 @@ public class ReportServiceImpl implements ReportService {
         BigDecimal profit;
         BigDecimal profitWithFreezer;
         BigDecimal yesterdayCrAmount = new BigDecimal(0);
+        BigDecimal todayFreezerSelling = new BigDecimal(0);
 
 
         for (BuyerItem item : buyerItemList) {
             totalAmountBuyer = totalAmountBuyer.add(item.getAmount());
+            if (item.getItem().getType() == Item.ItemType.FREEZER) {
+                todayFreezerSelling = todayFreezerSelling.add(item.getAmount());
+            }
         }
         for (SellerItem item : sellerItemList) {
             totalAmountSeller = totalAmountSeller.add(item.getAmount());
@@ -121,6 +125,7 @@ public class ReportServiceImpl implements ReportService {
         dto.setFreezerItems(freezerList);
         dto.setTotalAmountFreezer(totalAmountFreezer);
         dto.setYesterdayCr(yesterdayCrAmount);
+        dto.setTodayFreezerSelling(todayFreezerSelling);
 
         return dto;
     }
@@ -287,8 +292,14 @@ public class ReportServiceImpl implements ReportService {
         DebtsAndCreditsReportDto dto = new DebtsAndCreditsReportDto();
         List<PendingPayment> buyerPayments = pendingPaymentService.findByAllBuyers();
         List<PendingPayment> sellerPayments = pendingPaymentService.findByAllSellers();
+        List<CR> crList = crService.findByDate(new Date());
+        List<Item> freezerList = itemService.findByType(Item.ItemType.FREEZER);
+        List<Item> normalItemList = itemService.findByType(Item.ItemType.NORMAL);
+
         BigDecimal totalBuyerAmount = new BigDecimal(0);
         BigDecimal totalSellerAmount = new BigDecimal(0);
+        BigDecimal totalAmountCr = new BigDecimal(0);
+        BigDecimal totalAmountFreezer = new BigDecimal(0);
 
         if (buyerPayments != null) {
             for (PendingPayment pendingPayment : buyerPayments) {
@@ -300,11 +311,37 @@ public class ReportServiceImpl implements ReportService {
                 totalSellerAmount = totalSellerAmount.add(pendingPayment.getAmount());
             }
         }
+        for (CR todayCr : crList) {
+            totalAmountCr = totalAmountCr.add(todayCr.getAmount());
+        }
+        for (Item item : freezerList) {
+            BigDecimal amount;
+            if (item.getUnitPrice() == null) {
+                amount = new BigDecimal(0);
+            } else {
+                amount = item.getQuantity().multiply(item.getUnitPrice());
+            }
+            totalAmountFreezer = totalAmountFreezer.add(amount).setScale(2);
+        }
+
+        for (Item item : normalItemList) {
+            if (item.getCrFreezerQty() != null && item.getCrFreezerQty().compareTo(BigDecimal.ZERO) > 0) {
+                BigDecimal amount;
+                if (item.getUnitPrice() == null) {
+                    amount = new BigDecimal(0);
+                } else {
+                    amount = item.getCrFreezerQty().multiply(item.getUnitPrice());
+                }
+                totalAmountFreezer = totalAmountFreezer.add(amount).setScale(2);
+            }
+        }
 
         dto.setBuyerPayments(buyerPayments);
         dto.setSellerPayments(sellerPayments);
         dto.setTotalBuyerPayments(totalBuyerAmount);
         dto.setTotalSellerPayments(totalSellerAmount);
+        dto.setTotalCr(totalAmountCr);
+        dto.setTotalFreezer(totalAmountFreezer);
 
         return dto;
     }
