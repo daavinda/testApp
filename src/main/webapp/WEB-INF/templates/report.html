@@ -554,14 +554,6 @@
 
             <div style="clear: both"></div>
             <div style="float: right; margin-left: 10px">
-                <h5 th:text="${dto.totalAmountBuyer}"></h5>
-            </div>
-            <div style="float: right">
-                <h5>Total Sellings = </h5>
-            </div>
-
-            <div style="clear: both"></div>
-            <div style="float: right; margin-left: 10px">
                 <h5 th:text="${dto.totalAmountExpense}"></h5>
             </div>
             <div style="float: right">
@@ -575,6 +567,16 @@
             <!--<div style="float: right">-->
             <!--<h5>Profit With CR = </h5>-->
             <!--</div>-->
+
+
+            <div style="clear: both"></div>
+            <div style="float: left">
+                <h5>Total Sellings = </h5>
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <h5 th:text="${dto.totalAmountBuyer}"></h5>
+            </div>
+
 
             <div style="clear: both"></div>
             <div style="float: left">
@@ -594,12 +596,11 @@
 
             <div style="clear: both"></div>
             <div style="float: left">
-                <h5>Profit = </h5>
+                <h5>Profit (Sellings + Today CR + Freezer - Buyings - Past CR - Expenses) = </h5>
             </div>
             <div style="float: left; margin-left: 10px;">
-                <h5 th:text="${dto.profit - dto.todayFreezerSelling}"></h5>
+                <h5 th:text="${dto.totalAmountBuyer+dto.totalAmountCr+dto.totalAmountFreezer-dto.yesterdayCr-dto.totalAmountSeller-dto.totalAmountExpense}"></h5>
             </div>
-
             <!--<div style="clear: both"></div>-->
             <!--<div style="float: left">-->
             <!--<h5>Profit With Freezer = </h5>-->
