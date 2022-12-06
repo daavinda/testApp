@@ -34,7 +34,7 @@
         <thymeleaf-extras-springsecurity4.version>3.0.2.RELEASE</thymeleaf-extras-springsecurity4.version>
         <thymeleaf-spring4.version>3.0.5.RELEASE</thymeleaf-spring4.version>
         <apache.commons.csv.version>1.4</apache.commons.csv.version>
-        <ftp.commons-net.version>3.6</ftp.commons-net.version>
+        <ftp.commons-net.version>3.9.0</ftp.commons-net.version>
     </properties>
 
     <dependencies>
